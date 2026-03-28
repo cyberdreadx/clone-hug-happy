@@ -15,17 +15,17 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "", date: "", location: "", description: "", status: "draft", max_guests: 100,
+    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
   });
 
   useEffect(() => {
     if (event) {
       setForm({
-        name: event.name || "", date: event.date || "", location: event.location || "",
+        name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
       });
     } else {
-      setForm({ name: "", date: "", location: "", description: "", status: "draft", max_guests: 100 });
+      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
     }
   }, [event, open]);
 
@@ -36,6 +36,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
       const payload = {
         name: form.name,
         date: form.date || null,
+        time: form.time || null,
         location: form.location || null,
         description: form.description || null,
         status: form.status,
@@ -69,10 +70,14 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-sidebar-foreground mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Time</label>
+            <input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass} />
           </div>
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Max Guests</label>
