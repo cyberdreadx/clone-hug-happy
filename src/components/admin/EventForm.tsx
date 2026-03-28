@@ -36,6 +36,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
       const payload = {
         name: form.name,
         date: form.date || null,
+        time: form.time || null,
         location: form.location || null,
         description: form.description || null,
         status: form.status,
