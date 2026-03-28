@@ -27,7 +27,7 @@ const Hero = () => {
           connections, and purposeful living in an intimate desert oasis.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="/rsvp"
             className="inline-block bg-gold text-primary-foreground px-8 py-3 rounded-full text-sm font-medium tracking-wide hover:opacity-90 transition-opacity"
