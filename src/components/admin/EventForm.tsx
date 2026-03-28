@@ -15,17 +15,17 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "", date: "", location: "", description: "", status: "draft", max_guests: 100,
+    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
   });
 
   useEffect(() => {
     if (event) {
       setForm({
-        name: event.name || "", date: event.date || "", location: event.location || "",
+        name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
       });
     } else {
-      setForm({ name: "", date: "", location: "", description: "", status: "draft", max_guests: 100 });
+      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
     }
   }, [event, open]);
 
