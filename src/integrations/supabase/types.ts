@@ -118,6 +118,7 @@ export type Database = {
           max_guests: number | null
           name: string
           status: string
+          time: string | null
           updated_at: string
         }
         Insert: {
@@ -129,6 +130,7 @@ export type Database = {
           max_guests?: number | null
           name: string
           status?: string
+          time?: string | null
           updated_at?: string
         }
         Update: {
@@ -140,6 +142,7 @@ export type Database = {
           max_guests?: number | null
           name?: string
           status?: string
+          time?: string | null
           updated_at?: string
         }
         Relationships: []
