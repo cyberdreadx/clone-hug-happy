@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import AdminModal from "./AdminModal";
+import LocationAutocomplete from "@/components/LocationAutocomplete";
 
 interface EventFormProps {
   open: boolean;
@@ -68,7 +69,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         </div>
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Location</label>
-          <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className={inputClass} />
+          <LocationAutocomplete value={form.location} onChange={(val) => setForm({ ...form, location: val })} className={inputClass} />
         </div>
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Description</label>
