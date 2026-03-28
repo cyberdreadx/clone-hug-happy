@@ -64,11 +64,12 @@ const AdminEvents = () => {
     },
   });
 
-  const now = new Date().toISOString().split("T")[0];
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
   const filtered = events
     .filter((ev) => {
-      if (timeFilter === "upcoming") return ev.status !== "cancelled" && (!ev.date || ev.date >= now);
-      if (timeFilter === "past") return ev.status !== "cancelled" && ev.date && ev.date < now;
+      if (timeFilter === "upcoming") return ev.status !== "cancelled" && (!ev.date || ev.date >= todayStr);
+      if (timeFilter === "past") return ev.status !== "cancelled" && ev.date && ev.date < todayStr;
       if (timeFilter === "cancelled") return ev.status === "cancelled";
       return true;
     })
