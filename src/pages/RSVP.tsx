@@ -36,12 +36,13 @@ const RSVPPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.from("guests").insert({
+      const { data, error } = await supabase.from("guests").insert({
         ...form,
         event_id: events?.[0]?.id || null,
         status: "pending",
-      });
+      }).select("id").single();
       if (error) throw error;
+      setGuestId(data.id);
       setSubmitted(true);
       toast.success("RSVP submitted successfully!");
     } catch (err) {
