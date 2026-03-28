@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   Search, Plus, Download, Pencil, Trash2, CheckCircle, Clock, XCircle,
+  Send, Loader2,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
@@ -15,6 +16,28 @@ const AdminEvents = () => {
   const [timeFilter, setTimeFilter] = useState<"upcoming" | "past" | "cancelled">("upcoming");
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
+  const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
+
+  const runFollowUp = async (eventId: string, eventName: string) => {
+    if (!confirm(`Run post-event follow-up for "${eventName}"?\n\nThis will:\n• Mark confirmed/checked-in guests as "attended"\n• Mark pending guests as "no-show"\n• Set event status to "completed"`)) return;
+    setFollowUpLoading(eventId);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Not authenticated");
+
+      const { data, error } = await supabase.functions.invoke("post-event-followup", {
+        body: { event_id: eventId },
+      });
+      if (error) throw error;
+      toast.success(data.message || "Follow-up complete!");
+      queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-guest-counts"] });
+    } catch (err: any) {
+      toast.error(err.message || "Follow-up failed");
+    } finally {
+      setFollowUpLoading(null);
+    }
+  };
 
   const { data: events = [] } = useQuery({
     queryKey: ["admin-events"],
@@ -155,6 +178,16 @@ const AdminEvents = () => {
                   <td className="px-5 py-4">{statusBadge(ev.status)}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-1">
+                      {ev.status === "active" && (
+                        <button
+                          onClick={() => runFollowUp(ev.id, ev.name)}
+                          disabled={followUpLoading === ev.id}
+                          title="Run Post-Event Follow-Up"
+                          className="p-1.5 rounded-lg hover:bg-emerald-500/10 transition-colors text-sidebar-foreground/40 hover:text-emerald-400 disabled:opacity-50"
+                        >
+                          {followUpLoading === ev.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                        </button>
+                      )}
                       <button
                         onClick={() => setEventModal({ open: true, event: ev })}
                         className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
