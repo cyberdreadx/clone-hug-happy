@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       deliverables: {
         Row: {
+          asset_type: string
           created_at: string
           description: string | null
           due_date: string | null
@@ -27,6 +28,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          asset_type?: string
           created_at?: string
           description?: string | null
           due_date?: string | null
@@ -38,6 +40,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          asset_type?: string
           created_at?: string
           description?: string | null
           due_date?: string | null
@@ -149,6 +152,63 @@ export type Database = {
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_recaps: {
+        Row: {
+          created_at: string
+          engagement_rate: number | null
+          event_id: string
+          id: string
+          impressions: number | null
+          notes: string | null
+          partner_id: string
+          photos_count: number | null
+          recap_url: string | null
+          social_mentions: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          engagement_rate?: number | null
+          event_id: string
+          id?: string
+          impressions?: number | null
+          notes?: string | null
+          partner_id: string
+          photos_count?: number | null
+          recap_url?: string | null
+          social_mentions?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          engagement_rate?: number | null
+          event_id?: string
+          id?: string
+          impressions?: number | null
+          notes?: string | null
+          partner_id?: string
+          photos_count?: number | null
+          recap_url?: string | null
+          social_mentions?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_recaps_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_recaps_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
             referencedColumns: ["id"]
           },
         ]
