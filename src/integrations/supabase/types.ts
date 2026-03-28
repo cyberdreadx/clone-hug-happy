@@ -14,16 +14,220 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      deliverables: {
+        Row: {
+          created_at: string
+          description: string | null
+          due_date: string | null
+          file_url: string | null
+          id: string
+          partner_id: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          file_url?: string | null
+          id?: string
+          partner_id: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          file_url?: string | null
+          id?: string
+          partner_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliverables_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          created_at: string
+          date: string | null
+          description: string | null
+          id: string
+          location: string | null
+          max_guests: number | null
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          max_guests?: number | null
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          max_guests?: number | null
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      guests: {
+        Row: {
+          check_in_time: string | null
+          company: string | null
+          created_at: string
+          dietary_requirements: string | null
+          email: string
+          event_id: string | null
+          first_name: string
+          id: string
+          last_name: string
+          notes: string | null
+          phone: string | null
+          rsvp_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          check_in_time?: string | null
+          company?: string | null
+          created_at?: string
+          dietary_requirements?: string | null
+          email: string
+          event_id?: string | null
+          first_name: string
+          id?: string
+          last_name: string
+          notes?: string | null
+          phone?: string | null
+          rsvp_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          check_in_time?: string | null
+          company?: string | null
+          created_at?: string
+          dietary_requirements?: string | null
+          email?: string
+          event_id?: string | null
+          first_name?: string
+          id?: string
+          last_name?: string
+          notes?: string | null
+          phone?: string | null
+          rsvp_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guests_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partners: {
+        Row: {
+          company_name: string
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          notes: string | null
+          phone: string | null
+          status: string
+          tier: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          company_name: string
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "partner"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +354,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "partner"],
+    },
   },
 } as const
