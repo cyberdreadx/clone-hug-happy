@@ -2,11 +2,13 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CheckCircle, ArrowLeft } from "lucide-react";
+import { CheckCircle, ArrowLeft, Download } from "lucide-react";
 import { Link } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [guestId, setGuestId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
@@ -34,12 +36,13 @@ const RSVPPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.from("guests").insert({
+      const { data, error } = await supabase.from("guests").insert({
         ...form,
         event_id: events?.[0]?.id || null,
         status: "pending",
-      });
+      }).select("id").single();
       if (error) throw error;
+      setGuestId(data.id);
       setSubmitted(true);
       toast.success("RSVP submitted successfully!");
     } catch (err) {
@@ -50,6 +53,7 @@ const RSVPPage = () => {
   };
 
   if (submitted) {
+    const qrValue = guestId ? `bb-checkin:${guestId}` : "";
     return (
       <div className="min-h-screen bg-section-light flex items-center justify-center px-6">
         <div className="bg-card rounded-2xl p-12 max-w-md text-center shadow-lg">
@@ -59,6 +63,21 @@ const RSVPPage = () => {
             Thank you for your interest in Breathe &amp; Bloom. We'll review your application
             and be in touch soon with next steps.
           </p>
+
+          {guestId && (
+            <div className="mb-6">
+              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+                Your Check-In QR Code
+              </p>
+              <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
+                <QRCodeSVG value={qrValue} size={180} level="M" />
+              </div>
+              <p className="text-muted-foreground text-xs mt-3 leading-relaxed">
+                Screenshot this code — show it at the door for instant check-in
+              </p>
+            </div>
+          )}
+
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-gold text-sm hover:opacity-80 transition-opacity"
