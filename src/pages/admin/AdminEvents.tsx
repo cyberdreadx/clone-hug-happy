@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   Search, Plus, Download, Pencil, Trash2, CheckCircle, Clock, XCircle,
+  Send, Loader2,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
@@ -15,6 +16,28 @@ const AdminEvents = () => {
   const [timeFilter, setTimeFilter] = useState<"upcoming" | "past" | "cancelled">("upcoming");
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
+  const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
+
+  const runFollowUp = async (eventId: string, eventName: string) => {
+    if (!confirm(`Run post-event follow-up for "${eventName}"?\n\nThis will:\n• Mark confirmed/checked-in guests as "attended"\n• Mark pending guests as "no-show"\n• Set event status to "completed"`)) return;
+    setFollowUpLoading(eventId);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Not authenticated");
+
+      const { data, error } = await supabase.functions.invoke("post-event-followup", {
+        body: { event_id: eventId },
+      });
+      if (error) throw error;
+      toast.success(data.message || "Follow-up complete!");
+      queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-guest-counts"] });
+    } catch (err: any) {
+      toast.error(err.message || "Follow-up failed");
+    } finally {
+      setFollowUpLoading(null);
+    }
+  };
 
   const { data: events = [] } = useQuery({
     queryKey: ["admin-events"],
