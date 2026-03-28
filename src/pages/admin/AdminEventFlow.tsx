@@ -122,13 +122,21 @@ const AdminEventFlow = () => {
     <AdminLayout
       title="Event Flow"
       actions={
-        <button
-          onClick={() => setFormModal({ open: true })}
-          disabled={!selectedEventId}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
-        >
-          <Plus className="w-4 h-4" /> Add Segment
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-sidebar-border text-sidebar-foreground/60 text-sm hover:text-sidebar-foreground transition-colors"
+          >
+            <Printer className="w-4 h-4" /> Print
+          </button>
+          <button
+            onClick={() => setFormModal({ open: true })}
+            disabled={!selectedEventId}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            <Plus className="w-4 h-4" /> Add Segment
+          </button>
+        </div>
       }
     >
       {/* Event Selector */}
