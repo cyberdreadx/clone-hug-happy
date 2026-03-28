@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [guestId, setGuestId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
