@@ -33,19 +33,31 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const payload = {
+        name: form.name,
+        date: form.date || null,
+        location: form.location || null,
+        description: form.description || null,
+        status: form.status,
+        max_guests: form.max_guests,
+      };
       if (event) {
-        const { error } = await supabase.from("events").update(form).eq("id", event.id);
+        const { error } = await supabase.from("events").update(payload).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
-        const { error } = await supabase.from("events").insert(form);
+        const { error } = await supabase.from("events").insert(payload);
         if (error) throw error;
         toast.success("Event created!");
       }
       queryClient.invalidateQueries({ queryKey: ["admin-events"] });
       onClose();
-    } catch (err: any) { toast.error(err.message); }
-    finally { setLoading(false); }
+    } catch (err: any) {
+      console.error("Event save error:", err);
+      toast.error(err.message || "Failed to save event");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = "w-full px-4 py-2.5 rounded-lg bg-sidebar-accent border border-sidebar-border text-sidebar-foreground text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50";
