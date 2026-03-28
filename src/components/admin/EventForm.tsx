@@ -70,10 +70,14 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-sidebar-foreground mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Time</label>
+            <input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass} />
           </div>
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Max Guests</label>
