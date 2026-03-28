@@ -25,7 +25,9 @@ const UpcomingEvent = () => {
     <section className="bg-card border-b border-border">
       <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
-          <h3 className="font-serif text-lg text-foreground">{event.name}</h3>
+          <Link to={`/event/${event.id}`} className="hover:opacity-80 transition-opacity">
+            <h3 className="font-serif text-lg text-foreground">{event.name}</h3>
+          </Link>
           <div className="flex items-center gap-5 text-sm text-muted-foreground">
             {event.date && (
               <span className="inline-flex items-center gap-1.5">
