@@ -77,7 +77,17 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           </div>
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Time</label>
-            <input type="time" value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass} />
+            <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass}>
+              <option value="">Select time</option>
+              {Array.from({ length: 48 }, (_, i) => {
+                const h = Math.floor(i / 2);
+                const m = i % 2 === 0 ? "00" : "30";
+                const val = `${String(h).padStart(2, "0")}:${m}`;
+                const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                const ampm = h < 12 ? "AM" : "PM";
+                return <option key={val} value={val}>{`${hour12}:${m} ${ampm}`}</option>;
+              })}
+            </select>
           </div>
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Max Guests</label>
