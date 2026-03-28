@@ -30,14 +30,14 @@ const DeleteConfirm = ({ open, onClose, table, id, label, queryKey }: DeleteConf
   return (
     <AdminModal open={open} onClose={onClose} title="Confirm Delete">
       <div className="text-center">
-        <AlertTriangle className="w-12 h-12 text-destructive mx-auto mb-4" />
-        <p className="text-foreground mb-2">Are you sure you want to delete this {label.toLowerCase()}?</p>
-        <p className="text-muted-foreground text-sm mb-6">This action cannot be undone.</p>
+        <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+        <p className="text-sidebar-foreground mb-2">Are you sure you want to delete this {label.toLowerCase()}?</p>
+        <p className="text-sidebar-foreground/40 text-sm mb-6">This action cannot be undone.</p>
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 py-2.5 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={onClose} className="flex-1 py-2.5 rounded-full border border-sidebar-border text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors">
             Cancel
           </button>
-          <button onClick={handleDelete} className="flex-1 bg-destructive text-destructive-foreground py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
+          <button onClick={handleDelete} className="flex-1 bg-red-500 text-white py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity">
             Delete
           </button>
         </div>
