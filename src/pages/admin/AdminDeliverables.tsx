@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Plus, Pencil, Trash2, CheckCircle, Clock, FileText as FileIcon } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, FileText as FileIcon } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import AdminModal from "@/components/admin/AdminModal";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
@@ -209,10 +209,5 @@ function DeliverableForm({ open, onClose, deliverable, partners }: { open: boole
     </AdminModal>
   );
 }
-
-import React from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 export default AdminDeliverables;
