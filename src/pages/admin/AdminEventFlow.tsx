@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   Plus, GripVertical, Pencil, Trash2, Clock, User, ChevronDown,
-  Loader2, Play, Mic, Music, Heart, MessageCircle, Sparkles, Coffee,
+  Loader2, Play, Mic, Music, Heart, MessageCircle, Sparkles, Coffee, Printer,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import AdminModal from "@/components/admin/AdminModal";

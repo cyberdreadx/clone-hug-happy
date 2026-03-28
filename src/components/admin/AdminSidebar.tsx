@@ -12,7 +12,8 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 
 const manageItems = [
-  { title: "Events", url: "/admin", icon: CalendarDays },
+  { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
+  { title: "Events", url: "/admin/events", icon: CalendarDays },
   { title: "Event Flow", url: "/admin/event-flow", icon: ListOrdered },
   { title: "Guests", url: "/admin/guests", icon: Users },
   { title: "Partners", url: "/admin/partners", icon: Handshake },
