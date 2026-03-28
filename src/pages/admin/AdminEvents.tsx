@@ -178,6 +178,16 @@ const AdminEvents = () => {
                   <td className="px-5 py-4">{statusBadge(ev.status)}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-1">
+                      {ev.status === "active" && (
+                        <button
+                          onClick={() => runFollowUp(ev.id, ev.name)}
+                          disabled={followUpLoading === ev.id}
+                          title="Run Post-Event Follow-Up"
+                          className="p-1.5 rounded-lg hover:bg-emerald-500/10 transition-colors text-sidebar-foreground/40 hover:text-emerald-400 disabled:opacity-50"
+                        >
+                          {followUpLoading === ev.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                        </button>
+                      )}
                       <button
                         onClick={() => setEventModal({ open: true, event: ev })}
                         className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
