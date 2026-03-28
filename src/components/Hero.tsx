@@ -27,12 +27,20 @@ const Hero = () => {
           connections, and purposeful living in an intimate desert oasis.
         </p>
 
-        <a
-          href="#experience"
-          className="inline-block bg-gold text-primary-foreground px-8 py-3 rounded-full text-sm font-medium tracking-wide hover:opacity-90 transition-opacity"
-        >
-          Apply to Attend
-        </a>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <a
+            href="/rsvp"
+            className="inline-block bg-gold text-primary-foreground px-8 py-3 rounded-full text-sm font-medium tracking-wide hover:opacity-90 transition-opacity"
+          >
+            Apply to Attend
+          </a>
+          <a
+            href="/login"
+            className="inline-block bg-card/60 backdrop-blur text-foreground px-8 py-3 rounded-full text-sm font-medium tracking-wide hover:bg-card transition-colors"
+          >
+            Partner Login
+          </a>
+        </div>
       </div>
     </section>
   );
