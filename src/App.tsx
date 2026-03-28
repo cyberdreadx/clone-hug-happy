@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import RSVPPage from "./pages/RSVP.tsx";
 import Login from "./pages/Login.tsx";
+import CheckIn from "./pages/CheckIn.tsx";
 import AdminEvents from "./pages/admin/AdminEvents.tsx";
 import AdminGuests from "./pages/admin/AdminGuests.tsx";
 import AdminPartners from "./pages/admin/AdminPartners.tsx";
