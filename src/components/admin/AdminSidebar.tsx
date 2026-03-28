@@ -1,6 +1,6 @@
 import {
   CalendarDays, Users, Handshake, FileText, Settings, LogOut,
-  LayoutDashboard, Globe, ChevronLeft,
+  LayoutDashboard, Globe, ChevronLeft, ListOrdered,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const manageItems = [
   { title: "Events", url: "/admin", icon: CalendarDays },
+  { title: "Event Flow", url: "/admin/event-flow", icon: ListOrdered },
   { title: "Guests", url: "/admin/guests", icon: Users },
   { title: "Partners", url: "/admin/partners", icon: Handshake },
   { title: "Deliverables", url: "/admin/deliverables", icon: FileText },

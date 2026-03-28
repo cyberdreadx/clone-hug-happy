@@ -61,6 +61,53 @@ export type Database = {
           },
         ]
       }
+      event_flow_segments: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_minutes: number
+          event_id: string
+          facilitator: string | null
+          id: string
+          segment_order: number
+          segment_type: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          event_id: string
+          facilitator?: string | null
+          id?: string
+          segment_order?: number
+          segment_type?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          event_id?: string
+          facilitator?: string | null
+          id?: string
+          segment_order?: number
+          segment_type?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_flow_segments_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           created_at: string
