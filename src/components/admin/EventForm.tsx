@@ -33,7 +33,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload = {
+      const payload: any = {
         name: form.name,
         date: form.date || null,
         time: form.time || null,
@@ -43,11 +43,11 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         max_guests: form.max_guests,
       };
       if (event) {
-        const { error } = await supabase.from("events").update(payload).eq("id", event.id);
+        const { error } = await supabase.from("events").update(payload as any).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
-        const { error } = await supabase.from("events").insert(payload);
+        const { error } = await supabase.from("events").insert(payload as any);
         if (error) throw error;
         toast.success("Event created!");
       }
