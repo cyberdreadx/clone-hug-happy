@@ -116,12 +116,12 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         toast.success("Event updated!");
       } else {
         // Create event first without image
-        const { data: inserted, error } = await supabase.from("events").insert(payload).select().single();
+        const { data: inserted, error } = await supabase.from("events").insert(payload as any).select().single();
         if (error) throw error;
         // Then upload image if provided
         if (imageFile && inserted) {
           const coverUrl = await uploadImage(inserted.id);
-          await supabase.from("events").update({ cover_image: coverUrl }).eq("id", inserted.id);
+          await supabase.from("events").update({ cover_image: coverUrl } as any).eq("id", inserted.id);
         }
         toast.success("Event created!");
       }
