@@ -1,16 +1,37 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Plus, Download, Pencil, Trash2, CheckCircle, XCircle, Clock, UserCheck, AlertCircle } from "lucide-react";
+import { Search, Plus, Download, Pencil, Trash2, CheckCircle, XCircle, Clock, Users, UserCheck, UserX, AlertCircle } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import GuestForm from "@/components/admin/GuestForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+} from "@/components/ui/table";
+
+const STATUS_OPTIONS = [
+  { value: "all", label: "All Statuses" },
+  { value: "pending", label: "Pending" },
+  { value: "confirmed", label: "Confirmed" },
+  { value: "checked_in", label: "Checked In" },
+  { value: "declined", label: "Declined" },
+  { value: "waitlisted", label: "Waitlisted" },
+  { value: "no_show", label: "No Show" },
+  { value: "attended", label: "Attended" },
+];
 
 const AdminGuests = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [eventFilter, setEventFilter] = useState("all");
   const [guestModal, setGuestModal] = useState<{ open: boolean; guest?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
   const [bulkSelected, setBulkSelected] = useState<Set<string>>(new Set());
@@ -18,7 +39,7 @@ const AdminGuests = () => {
   const { data: guests = [] } = useQuery({
     queryKey: ["admin-guests"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("guests").select("*").order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("guests").select("*, events(name)").order("last_name", { ascending: true });
       if (error) throw error;
       return data;
     },
@@ -54,27 +75,23 @@ const AdminGuests = () => {
 
   const filtered = guests
     .filter((g) => statusFilter === "all" || g.status === statusFilter)
+    .filter((g) => eventFilter === "all" || g.event_id === eventFilter)
     .filter((g) => `${g.first_name} ${g.last_name} ${g.email} ${g.company}`.toLowerCase().includes(search.toLowerCase()));
 
+  const totalCount = guests.length;
   const pendingCount = guests.filter((g) => g.status === "pending").length;
+  const confirmedCount = guests.filter((g) => g.status === "confirmed").length;
+  const checkedInCount = guests.filter((g) => g.status === "checked_in" || g.status === "attended").length;
 
-  const statuses = ["all", "pending", "confirmed", "checked_in", "declined", "waitlisted", "no_show", "attended"];
-
-  const statusBadge = (status: string) => {
-    const colors: Record<string, string> = {
-      confirmed: "bg-green-500/20 text-green-400",
-      checked_in: "bg-emerald-500/20 text-emerald-400",
-      pending: "bg-yellow-500/20 text-yellow-400",
-      waitlisted: "bg-blue-500/20 text-blue-400",
-      declined: "bg-red-500/20 text-red-400",
-      no_show: "bg-red-500/20 text-red-400",
-      attended: "bg-purple-500/20 text-purple-400",
-    };
-    return (
-      <span className={`text-xs px-2.5 py-1 rounded-full capitalize ${colors[status] || "bg-sidebar-accent text-sidebar-foreground"}`}>
-        {status.replace("_", " ")}
-      </span>
-    );
+  const statusColor = (s: string) => {
+    switch (s) {
+      case "confirmed": return "default";
+      case "checked_in": case "attended": return "default";
+      case "pending": return "secondary";
+      case "waitlisted": return "outline";
+      case "declined": case "no_show": return "destructive";
+      default: return "secondary";
+    }
   };
 
   const toggleBulk = (id: string) => {
@@ -104,142 +121,186 @@ const AdminGuests = () => {
   };
 
   return (
-    <AdminLayout
-      title="Guests"
-      actions={
-        <div className="flex items-center gap-2">
-          {pendingCount > 0 && (
-            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-500/10 text-yellow-400 text-xs font-medium">
-              <AlertCircle className="w-3.5 h-3.5" /> {pendingCount} pending approval
-            </span>
-          )}
-          <button onClick={() => setGuestModal({ open: true })}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
-            <Plus className="w-4 h-4" /> Add Guest
-          </button>
+    <AdminLayout title="Guests">
+      {/* Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div className="rounded-lg border border-border bg-card p-4">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Total Guests</p>
+          <p className="text-2xl font-semibold text-foreground flex items-center gap-1.5">
+            <Users className="h-5 w-5 text-primary" />
+            {totalCount}
+          </p>
         </div>
-      }
-    >
-      <div className="flex flex-col sm:flex-row gap-4 mb-4 items-start sm:items-center justify-between">
-        <div className="relative">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-sidebar-foreground/40" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search guests..."
-            className="pl-9 pr-4 py-2 rounded-lg bg-sidebar-accent border border-sidebar-border text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50 w-64" />
+        <div className="rounded-lg border border-border bg-card p-4">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Pending</p>
+          <p className="text-2xl font-semibold text-foreground flex items-center gap-1.5">
+            <AlertCircle className="h-5 w-5 text-yellow-500" />
+            {pendingCount}
+          </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex rounded-lg overflow-hidden border border-sidebar-border flex-wrap">
-            {statuses.map((s) => (
-              <button key={s} onClick={() => setStatusFilter(s)}
-                className={`px-3 py-2 text-xs font-medium capitalize transition-colors ${
-                  statusFilter === s ? "bg-sidebar-accent text-sidebar-foreground" : "text-sidebar-foreground/40 hover:text-sidebar-foreground/70"
-                }`}>
-                {s === "all" ? `All (${guests.length})` : s.replace("_", " ")}
-              </button>
+        <div className="rounded-lg border border-border bg-card p-4">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Confirmed</p>
+          <p className="text-2xl font-semibold text-foreground flex items-center gap-1.5">
+            <UserCheck className="h-5 w-5 text-green-500" />
+            {confirmedCount}
+          </p>
+        </div>
+        <div className="rounded-lg border border-border bg-card p-4">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Checked In</p>
+          <p className="text-2xl font-semibold text-foreground flex items-center gap-1.5">
+            <CheckCircle className="h-5 w-5 text-primary" />
+            {checkedInCount}
+          </p>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search name, email, or company"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+
+        <Select value={eventFilter} onValueChange={setEventFilter}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Event" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Events</SelectItem>
+            {events.map((e) => (
+              <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
             ))}
-          </div>
-          <button onClick={exportCSV}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-sidebar-border text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors">
-            <Download className="w-4 h-4" /> CSV
-          </button>
-        </div>
+          </SelectContent>
+        </Select>
+
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-[160px]">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent>
+            {STATUS_OPTIONS.map((s) => (
+              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Button variant="outline" size="sm" onClick={exportCSV} className="gap-1.5">
+          <Download className="h-4 w-4" /> Export
+        </Button>
+
+        <Button size="sm" onClick={() => setGuestModal({ open: true })} className="gap-1.5">
+          <Plus className="h-4 w-4" /> Add Guest
+        </Button>
       </div>
 
       {/* Bulk Actions */}
       {bulkSelected.size > 0 && (
-        <div className="flex items-center gap-3 mb-4 px-4 py-3 rounded-xl bg-sidebar-accent border border-sidebar-border">
-          <span className="text-sm text-sidebar-foreground">{bulkSelected.size} selected</span>
+        <div className="flex items-center gap-3 mb-4 px-4 py-3 rounded-lg bg-muted border border-border">
+          <span className="text-sm text-foreground">{bulkSelected.size} selected</span>
           <div className="flex gap-2 ml-auto">
-            <button onClick={() => bulkUpdateStatus("confirmed")} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-green-500/20 text-green-400 text-xs font-medium hover:bg-green-500/30">
+            <Button size="sm" variant="outline" onClick={() => bulkUpdateStatus("confirmed")} className="gap-1 text-green-600">
               <CheckCircle className="w-3.5 h-3.5" /> Approve
-            </button>
-            <button onClick={() => bulkUpdateStatus("waitlisted")} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-medium hover:bg-blue-500/30">
+            </Button>
+            <Button size="sm" variant="outline" onClick={() => bulkUpdateStatus("waitlisted")} className="gap-1 text-blue-600">
               <Clock className="w-3.5 h-3.5" /> Waitlist
-            </button>
-            <button onClick={() => bulkUpdateStatus("declined")} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/30">
+            </Button>
+            <Button size="sm" variant="outline" onClick={() => bulkUpdateStatus("declined")} className="gap-1 text-destructive">
               <XCircle className="w-3.5 h-3.5" /> Decline
-            </button>
+            </Button>
           </div>
         </div>
       )}
 
-      <div className="rounded-xl border border-sidebar-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-sidebar-border">
-              <th className="px-3 py-3 w-10">
+      {/* Table */}
+      <div className="rounded-lg border border-border overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-10">
                 <input type="checkbox" checked={bulkSelected.size === filtered.length && filtered.length > 0} onChange={toggleAll}
-                  className="rounded border-sidebar-border" />
-              </th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Name</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Email</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Company</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Status</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Quick Actions</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((g) => (
-              <tr key={g.id} className={`border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors ${g.status === "pending" ? "bg-yellow-500/5" : ""}`}>
-                <td className="px-3 py-4">
-                  <input type="checkbox" checked={bulkSelected.has(g.id)} onChange={() => toggleBulk(g.id)}
-                    className="rounded border-sidebar-border" />
-                </td>
-                <td className="px-5 py-4">
-                  <p className="text-sidebar-foreground font-medium">{g.first_name} {g.last_name}</p>
-                  {g.dietary_requirements && <p className="text-yellow-400 text-[10px] mt-0.5">{g.dietary_requirements}</p>}
-                </td>
-                <td className="px-5 py-4 text-sidebar-foreground/60 text-xs">{g.email}</td>
-                <td className="px-5 py-4 text-sidebar-foreground/60 text-xs">{g.company || "—"}</td>
-                <td className="px-5 py-4">{statusBadge(g.status)}</td>
-                <td className="px-5 py-4">
-                  {g.status === "pending" ? (
+                  className="rounded border-border" />
+              </TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Event</TableHead>
+              <TableHead>Company</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filtered.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                  No guests found
+                </TableCell>
+              </TableRow>
+            ) : (
+              filtered.map((g) => (
+                <TableRow key={g.id} className={g.status === "pending" ? "bg-yellow-500/5" : ""}>
+                  <TableCell>
+                    <input type="checkbox" checked={bulkSelected.has(g.id)} onChange={() => toggleBulk(g.id)}
+                      className="rounded border-border" />
+                  </TableCell>
+                  <TableCell>
+                    <p className="font-medium">{g.first_name} {g.last_name}</p>
+                    {g.dietary_requirements && (
+                      <p className="text-yellow-600 text-[10px] mt-0.5">{g.dietary_requirements}</p>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs">{g.email}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs">
+                    {(g as any).events?.name ?? "—"}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs">{g.company || "—"}</TableCell>
+                  <TableCell>
+                    <Select value={g.status} onValueChange={(v) => updateStatus(g.id, v)}>
+                      <SelectTrigger className="h-7 w-[120px] text-xs">
+                        <Badge variant={statusColor(g.status) as any} className="capitalize text-[10px]">
+                          {g.status.replace("_", " ")}
+                        </Badge>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {STATUS_OPTIONS.filter((s) => s.value !== "all").map((s) => (
+                          <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => updateStatus(g.id, "confirmed")} title="Approve"
-                        className="p-1.5 rounded-lg hover:bg-green-500/10 text-sidebar-foreground/40 hover:text-green-400 transition-colors">
-                        <CheckCircle className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => updateStatus(g.id, "waitlisted")} title="Waitlist"
-                        className="p-1.5 rounded-lg hover:bg-blue-500/10 text-sidebar-foreground/40 hover:text-blue-400 transition-colors">
-                        <Clock className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => updateStatus(g.id, "declined")} title="Decline"
-                        className="p-1.5 rounded-lg hover:bg-red-500/10 text-sidebar-foreground/40 hover:text-red-400 transition-colors">
-                        <XCircle className="w-4 h-4" />
-                      </button>
+                      {g.status === "pending" && (
+                        <>
+                          <Button size="icon" variant="ghost" onClick={() => updateStatus(g.id, "confirmed")} title="Approve"
+                            className="h-7 w-7 text-green-600 hover:text-green-700 hover:bg-green-500/10">
+                            <CheckCircle className="w-4 h-4" />
+                          </Button>
+                          <Button size="icon" variant="ghost" onClick={() => updateStatus(g.id, "declined")} title="Decline"
+                            className="h-7 w-7 text-destructive hover:bg-destructive/10">
+                            <XCircle className="w-4 h-4" />
+                          </Button>
+                        </>
+                      )}
+                      <Button size="icon" variant="ghost" onClick={() => setGuestModal({ open: true, guest: g })}
+                        className="h-7 w-7">
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <Button size="icon" variant="ghost" onClick={() => setDeleteModal({ open: true, id: g.id })}
+                        className="h-7 w-7 text-destructive hover:bg-destructive/10">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </div>
-                  ) : (
-                    <select value={g.status} onChange={(e) => updateStatus(g.id, e.target.value)}
-                      className="text-xs px-2 py-1 rounded bg-sidebar-accent border border-sidebar-border text-sidebar-foreground">
-                      <option value="pending">Pending</option>
-                      <option value="confirmed">Confirmed</option>
-                      <option value="declined">Declined</option>
-                      <option value="waitlisted">Waitlisted</option>
-                      <option value="checked_in">Checked In</option>
-                      <option value="no_show">No Show</option>
-                      <option value="attended">Attended</option>
-                    </select>
-                  )}
-                </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-1">
-                    <button onClick={() => setGuestModal({ open: true, guest: g })}
-                      className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground">
-                      <Pencil className="w-4 h-4" />
-                    </button>
-                    <button onClick={() => setDeleteModal({ open: true, id: g.id })}
-                      className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {filtered.length === 0 && (
-              <tr><td colSpan={7} className="px-5 py-12 text-center text-sidebar-foreground/30">No guests found</td></tr>
+                  </TableCell>
+                </TableRow>
+              ))
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
       <GuestForm open={guestModal.open} onClose={() => setGuestModal({ open: false })} guest={guestModal.guest} events={events} />
