@@ -35,6 +35,8 @@ const UpcomingEvent = () => {
     el.scrollBy({ left: dir === "left" ? -320 : 320, behavior: "smooth" });
   };
 
+  console.log("UpcomingEvent debug:", { events, isLoading, eventsLength: events.length });
+  if (isLoading) return null;
   if (!events.length) return null;
 
   const gradientStyles = [
