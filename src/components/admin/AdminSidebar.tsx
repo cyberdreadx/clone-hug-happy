@@ -16,6 +16,7 @@ const manageItems = [
   { title: "Events", url: "/admin/events", icon: CalendarDays },
   { title: "Guests", url: "/admin/guests", icon: Users },
   { title: "Partners", url: "/admin/partners", icon: Handshake },
+  { title: "Orders", url: "/admin/orders", icon: FileText },
   { title: "Deliverables", url: "/admin/deliverables", icon: FileText },
 ];
 
