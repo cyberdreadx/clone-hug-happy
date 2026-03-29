@@ -215,6 +215,75 @@ export type Database = {
           },
         ]
       }
+      orders: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          guest_id: string | null
+          id: string
+          notes: string | null
+          order_number: string
+          payment_method: string | null
+          purchaser_email: string
+          purchaser_name: string
+          quantity: number
+          status: string
+          ticket_type: string
+          total_amount: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          guest_id?: string | null
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_method?: string | null
+          purchaser_email: string
+          purchaser_name: string
+          quantity?: number
+          status?: string
+          ticket_type?: string
+          total_amount?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          guest_id?: string | null
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_method?: string | null
+          purchaser_email?: string
+          purchaser_name?: string
+          quantity?: number
+          status?: string
+          ticket_type?: string
+          total_amount?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_recaps: {
         Row: {
           created_at: string
