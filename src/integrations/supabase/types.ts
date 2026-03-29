@@ -114,6 +114,7 @@ export type Database = {
           created_at: string
           date: string | null
           description: string | null
+          highlights: Json | null
           id: string
           location: string | null
           max_guests: number | null
@@ -127,6 +128,7 @@ export type Database = {
           created_at?: string
           date?: string | null
           description?: string | null
+          highlights?: Json | null
           id?: string
           location?: string | null
           max_guests?: number | null
@@ -140,6 +142,7 @@ export type Database = {
           created_at?: string
           date?: string | null
           description?: string | null
+          highlights?: Json | null
           id?: string
           location?: string | null
           max_guests?: number | null
