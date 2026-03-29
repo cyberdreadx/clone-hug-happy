@@ -111,7 +111,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         } else {
           payload.cover_image = imagePreview; // keep existing or null
         }
-        const { error } = await supabase.from("events").update(payload).eq("id", event.id);
+        const { error } = await supabase.from("events").update(payload as any).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
