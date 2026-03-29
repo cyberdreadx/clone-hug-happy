@@ -110,6 +110,7 @@ export type Database = {
       }
       events: {
         Row: {
+          cover_image: string | null
           created_at: string
           date: string | null
           description: string | null
@@ -122,6 +123,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          cover_image?: string | null
           created_at?: string
           date?: string | null
           description?: string | null
@@ -134,6 +136,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          cover_image?: string | null
           created_at?: string
           date?: string | null
           description?: string | null

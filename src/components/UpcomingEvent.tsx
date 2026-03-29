@@ -107,8 +107,11 @@ const UpcomingEvent = () => {
               {/* Card visual */}
               <div
                 className="relative h-64 rounded-2xl overflow-hidden mb-4"
-                style={gradientStyles[i % gradientStyles.length]}
+                style={event.cover_image ? undefined : gradientStyles[i % gradientStyles.length]}
               >
+                {event.cover_image && (
+                  <img src={event.cover_image} alt={event.name} className="absolute inset-0 w-full h-full object-cover" />
+                )}
                 {/* Decorative pattern */}
                 <div className="absolute inset-0 opacity-[0.08]">
                   <div className="absolute top-6 left-6 w-20 h-20 border-2 border-foreground rounded-full" />
