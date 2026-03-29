@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ImagePlus, X } from "lucide-react";
+import { ImagePlus, X, Plus, Trash2 } from "lucide-react";
 import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
 
@@ -12,11 +12,19 @@ interface EventFormProps {
   event?: any;
 }
 
+interface Highlight {
+  label: string;
+  value: string;
+}
+
+const HIGHLIGHT_PRESETS = ["Age Info", "Door Time", "Parking", "Dress Code", "What to Bring", "Accessibility"];
+
 const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [form, setForm] = useState({
     name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
   });
@@ -28,9 +36,11 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
       });
       setImagePreview(event.cover_image || null);
+      setHighlights(Array.isArray(event.highlights) ? event.highlights : []);
     } else {
       setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
       setImagePreview(null);
+      setHighlights([]);
     }
     setImageFile(null);
   }, [event, open]);
@@ -51,6 +61,20 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     setImagePreview(null);
   };
 
+  const addHighlight = (preset?: string) => {
+    setHighlights([...highlights, { label: preset || "", value: "" }]);
+  };
+
+  const updateHighlight = (idx: number, field: keyof Highlight, val: string) => {
+    const updated = [...highlights];
+    updated[idx] = { ...updated[idx], [field]: val };
+    setHighlights(updated);
+  };
+
+  const removeHighlight = (idx: number) => {
+    setHighlights(highlights.filter((_, i) => i !== idx));
+  };
+
   const uploadImage = async (eventId: string): Promise<string | null> => {
     if (!imageFile) return imagePreview; // keep existing
     const ext = imageFile.name.split(".").pop();
@@ -65,7 +89,10 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload: any = {
+      // Filter out empty highlights
+      const validHighlights = highlights.filter(h => h.label.trim() && h.value.trim());
+
+      const payload: Record<string, any> = {
         name: form.name,
         date: form.date || null,
         time: form.time || null,
@@ -73,20 +100,28 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         description: form.description || null,
         status: form.status,
         max_guests: form.max_guests,
+        highlights: validHighlights,
       };
 
       if (event) {
-        const coverUrl = await uploadImage(event.id);
-        payload.cover_image = coverUrl;
-        const { error } = await supabase.from("events").update(payload as any).eq("id", event.id);
+        // Only upload image if a new file was selected
+        if (imageFile) {
+          const coverUrl = await uploadImage(event.id);
+          payload.cover_image = coverUrl;
+        } else {
+          payload.cover_image = imagePreview; // keep existing or null
+        }
+        const { error } = await supabase.from("events").update(payload).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
-        const { data: inserted, error } = await supabase.from("events").insert(payload as any).select().single();
+        // Create event first without image
+        const { data: inserted, error } = await supabase.from("events").insert(payload).select().single();
         if (error) throw error;
+        // Then upload image if provided
         if (imageFile && inserted) {
           const coverUrl = await uploadImage(inserted.id);
-          await supabase.from("events").update({ cover_image: coverUrl } as any).eq("id", inserted.id);
+          await supabase.from("events").update({ cover_image: coverUrl }).eq("id", inserted.id);
         }
         toast.success("Event created!");
       }
@@ -161,6 +196,50 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-sidebar-foreground mb-1.5">Description</label>
           <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className={`${inputClass} resize-none`} />
         </div>
+
+        {/* Good to Know / Highlights */}
+        <div>
+          <label className="block text-sm text-sidebar-foreground mb-2">Good to Know</label>
+          {highlights.map((h, idx) => (
+            <div key={idx} className="flex items-center gap-2 mb-2">
+              <input
+                value={h.label}
+                onChange={(e) => updateHighlight(idx, "label", e.target.value)}
+                placeholder="Label (e.g. Parking)"
+                className={`${inputClass} w-1/3`}
+              />
+              <input
+                value={h.value}
+                onChange={(e) => updateHighlight(idx, "value", e.target.value)}
+                placeholder="Details..."
+                className={`${inputClass} flex-1`}
+              />
+              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-sidebar-foreground/30 hover:text-red-400 transition-colors">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+          <div className="flex flex-wrap gap-2 mt-1">
+            {HIGHLIGHT_PRESETS.filter(p => !highlights.some(h => h.label === p)).map(preset => (
+              <button
+                key={preset}
+                type="button"
+                onClick={() => addHighlight(preset)}
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-sidebar-border text-xs text-sidebar-foreground/50 hover:text-sidebar-foreground hover:border-sidebar-foreground/30 transition-colors"
+              >
+                <Plus className="w-3 h-3" /> {preset}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => addHighlight()}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dashed border-sidebar-border text-xs text-sidebar-foreground/30 hover:text-sidebar-foreground/50 transition-colors"
+            >
+              <Plus className="w-3 h-3" /> Custom
+            </button>
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Status</label>
           <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className={inputClass}>
