@@ -14,7 +14,6 @@ import AdminEvents from "./pages/admin/AdminEvents.tsx";
 import AdminGuests from "./pages/admin/AdminGuests.tsx";
 import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminDeliverables from "./pages/admin/AdminDeliverables.tsx";
-import AdminEventFlow from "./pages/admin/AdminEventFlow.tsx";
 import PartnerPortal from "./pages/PartnerPortal.tsx";
 
 const queryClient = new QueryClient();
@@ -36,7 +35,6 @@ const App = () => (
           <Route path="/admin/guests" element={<AdminGuests />} />
           <Route path="/admin/partners" element={<AdminPartners />} />
           <Route path="/admin/deliverables" element={<AdminDeliverables />} />
-          <Route path="/admin/event-flow" element={<AdminEventFlow />} />
           <Route path="/partner-portal" element={<PartnerPortal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
