@@ -230,7 +230,18 @@ const EventDetail = () => {
                         <div className="flex items-center gap-3 mt-1">
                           <span className="text-muted-foreground text-xs">{seg.duration_minutes} min</span>
                           {seg.facilitator && (
-                            <span className="text-muted-foreground text-xs">Led by {seg.facilitator}</span>
+                            seg.facilitator_instagram ? (
+                              <a
+                                href={`https://instagram.com/${seg.facilitator_instagram}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gold text-xs hover:underline flex items-center gap-1"
+                              >
+                                Led by {seg.facilitator} ↗
+                              </a>
+                            ) : (
+                              <span className="text-muted-foreground text-xs">Led by {seg.facilitator}</span>
+                            )
                           )}
                         </div>
                         {seg.description && (

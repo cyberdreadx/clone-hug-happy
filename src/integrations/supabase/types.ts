@@ -68,6 +68,7 @@ export type Database = {
           duration_minutes: number
           event_id: string
           facilitator: string | null
+          facilitator_instagram: string | null
           id: string
           segment_order: number
           segment_type: string
@@ -80,6 +81,7 @@ export type Database = {
           duration_minutes?: number
           event_id: string
           facilitator?: string | null
+          facilitator_instagram?: string | null
           id?: string
           segment_order?: number
           segment_type?: string
@@ -92,6 +94,7 @@ export type Database = {
           duration_minutes?: number
           event_id?: string
           facilitator?: string | null
+          facilitator_instagram?: string | null
           id?: string
           segment_order?: number
           segment_type?: string
