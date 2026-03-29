@@ -17,6 +17,7 @@ const AdminEvents = () => {
   const [timeFilter, setTimeFilter] = useState<"upcoming" | "past" | "cancelled">("upcoming");
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
+  const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
   const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
 
   const runFollowUp = async (eventId: string, eventName: string) => {
