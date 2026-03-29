@@ -36,7 +36,6 @@ const App = () => (
           <Route path="/admin/partners" element={<AdminPartners />} />
           <Route path="/admin/deliverables" element={<AdminDeliverables />} />
           <Route path="/partner-portal" element={<PartnerPortal />} />
-          <Route path="/partner-portal" element={<PartnerPortal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
