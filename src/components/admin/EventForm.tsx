@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { ImagePlus, X } from "lucide-react";
 import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
 
@@ -14,6 +15,8 @@ interface EventFormProps {
 const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
   });
@@ -24,10 +27,39 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
       });
+      setImagePreview(event.cover_image || null);
     } else {
       setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
+      setImagePreview(null);
     }
+    setImageFile(null);
   }, [event, open]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image must be under 5MB");
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+  };
+
+  const uploadImage = async (eventId: string): Promise<string | null> => {
+    if (!imageFile) return imagePreview; // keep existing
+    const ext = imageFile.name.split(".").pop();
+    const path = `${eventId}.${ext}`;
+    const { error } = await supabase.storage.from("event-images").upload(path, imageFile, { upsert: true });
+    if (error) throw error;
+    const { data } = supabase.storage.from("event-images").getPublicUrl(path);
+    return data.publicUrl;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,16 +74,24 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         status: form.status,
         max_guests: form.max_guests,
       };
+
       if (event) {
+        const coverUrl = await uploadImage(event.id);
+        payload.cover_image = coverUrl;
         const { error } = await supabase.from("events").update(payload as any).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
-        const { error } = await supabase.from("events").insert(payload as any);
+        const { data: inserted, error } = await supabase.from("events").insert(payload as any).select().single();
         if (error) throw error;
+        if (imageFile && inserted) {
+          const coverUrl = await uploadImage(inserted.id);
+          await supabase.from("events").update({ cover_image: coverUrl } as any).eq("id", inserted.id);
+        }
         toast.success("Event created!");
       }
       queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      queryClient.invalidateQueries({ queryKey: ["active-events-carousel"] });
       onClose();
     } catch (err: any) {
       console.error("Event save error:", err);
@@ -66,6 +106,25 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   return (
     <AdminModal open={open} onClose={onClose} title={event ? "Edit Event" : "Create Event"}>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Cover Image */}
+        <div>
+          <label className="block text-sm text-sidebar-foreground mb-1.5">Cover Image</label>
+          {imagePreview ? (
+            <div className="relative rounded-lg overflow-hidden h-40">
+              <img src={imagePreview} alt="Cover" className="w-full h-full object-cover" />
+              <button type="button" onClick={removeImage} className="absolute top-2 right-2 p-1 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <label className="flex flex-col items-center justify-center h-32 rounded-lg border-2 border-dashed border-sidebar-border hover:border-sidebar-foreground/30 cursor-pointer transition-colors">
+              <ImagePlus className="w-8 h-8 text-sidebar-foreground/30 mb-2" />
+              <span className="text-xs text-sidebar-foreground/40">Click to upload</span>
+              <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+            </label>
+          )}
+        </div>
+
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
