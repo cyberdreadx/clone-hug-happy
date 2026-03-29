@@ -12,19 +12,15 @@ const UpcomingEvent = () => {
   const { data: events = [], isLoading } = useQuery({
     queryKey: ["active-events-carousel"],
     queryFn: async () => {
-      console.log("[UpcomingEvent] fetching active events...");
       const { data, error } = await supabase
         .from("events")
         .select("*")
         .eq("status", "active")
         .order("date", { ascending: true });
-      console.log("[UpcomingEvent] result:", { data, error });
       if (error) throw error;
       return data ?? [];
     },
   });
-
-  console.log("[UpcomingEvent] render, events:", events.length, "isLoading:", isLoading);
 
   const updateScrollButtons = () => {
     const el = scrollRef.current;
