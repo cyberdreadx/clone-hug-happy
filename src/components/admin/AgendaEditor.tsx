@@ -219,7 +219,7 @@ function SegmentFormModal({
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    title: "", description: "", duration_minutes: 15, facilitator: "", segment_type: "custom",
+    title: "", description: "", duration_minutes: 15, facilitator: "", facilitator_instagram: "", segment_type: "custom",
   });
 
   useEffect(() => {
@@ -227,10 +227,11 @@ function SegmentFormModal({
       setForm({
         title: segment.title || "", description: segment.description || "",
         duration_minutes: segment.duration_minutes || 15, facilitator: segment.facilitator || "",
+        facilitator_instagram: segment.facilitator_instagram || "",
         segment_type: segment.segment_type || "custom",
       });
     } else {
-      setForm({ title: "", description: "", duration_minutes: 15, facilitator: "", segment_type: "custom" });
+      setForm({ title: "", description: "", duration_minutes: 15, facilitator: "", facilitator_instagram: "", segment_type: "custom" });
     }
   }, [segment, open]);
 
@@ -289,6 +290,13 @@ function SegmentFormModal({
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Facilitator</label>
           <input value={form.facilitator} onChange={(e) => setForm({ ...form, facilitator: e.target.value })} className={inputClass} placeholder="e.g. DJ Soleil" />
+        </div>
+        <div>
+          <label className="block text-sm text-sidebar-foreground mb-1.5">Instagram Handle</label>
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sidebar-foreground/30 text-sm">@</span>
+            <input value={form.facilitator_instagram} onChange={(e) => setForm({ ...form, facilitator_instagram: e.target.value.replace(/^@/, "") })} className={`${inputClass} pl-8`} placeholder="username" />
+          </div>
         </div>
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Notes</label>
