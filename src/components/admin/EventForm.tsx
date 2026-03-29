@@ -82,7 +82,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     const { error } = await supabase.storage.from("event-images").upload(path, imageFile, { upsert: true });
     if (error) throw error;
     const { data } = supabase.storage.from("event-images").getPublicUrl(path);
-    return data.publicUrl;
+    return `${data.publicUrl}?t=${Date.now()}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
