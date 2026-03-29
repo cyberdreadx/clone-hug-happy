@@ -76,8 +76,8 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   };
 
   const uploadImage = async (eventId: string): Promise<string | null> => {
-    if (!imageFile) return imagePreview; // keep existing
-    const ext = imageFile.name.split(".").pop();
+    if (!imageFile) return imagePreview;
+    const ext = imageFile.name.split(".").pop() || "jpg";
     const path = `${eventId}.${ext}`;
     const { error } = await supabase.storage.from("event-images").upload(path, imageFile, { upsert: true });
     if (error) throw error;
@@ -87,10 +87,11 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
+
     try {
-      // Filter out empty highlights
-      const validHighlights = highlights.filter(h => h.label.trim() && h.value.trim());
+      const validHighlights = highlights.filter((h) => h.label.trim() && h.value.trim());
 
       const payload: Record<string, any> = {
         name: form.name,
@@ -104,30 +105,32 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
       };
 
       if (event) {
-        // Only upload image if a new file was selected
         if (imageFile) {
-          const coverUrl = await uploadImage(event.id);
-          payload.cover_image = coverUrl;
+          payload.cover_image = await uploadImage(event.id);
         } else {
-          payload.cover_image = imagePreview; // keep existing or null
+          payload.cover_image = imagePreview;
         }
+
         const { error } = await supabase.from("events").update(payload as any).eq("id", event.id);
         if (error) throw error;
         toast.success("Event updated!");
       } else {
-        // Create event first without image
-        const { data: inserted, error } = await supabase.from("events").insert(payload as any).select().single();
+        const eventId = crypto.randomUUID();
+        const coverImage = imageFile ? await uploadImage(eventId) : null;
+
+        const { error } = await supabase.from("events").insert({
+          ...payload,
+          id: eventId,
+          cover_image: coverImage,
+        } as any);
+
         if (error) throw error;
-        // Then upload image if provided
-        if (imageFile && inserted) {
-          const coverUrl = await uploadImage(inserted.id);
-          await supabase.from("events").update({ cover_image: coverUrl } as any).eq("id", inserted.id);
-        }
         toast.success("Event created!");
       }
-      queryClient.invalidateQueries({ queryKey: ["admin-events"] });
-      queryClient.invalidateQueries({ queryKey: ["active-events-carousel"] });
+
       onClose();
+      void queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      void queryClient.invalidateQueries({ queryKey: ["active-events-carousel"] });
     } catch (err: any) {
       console.error("Event save error:", err);
       toast.error(err.message || "Failed to save event");
