@@ -3,12 +3,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
-  Search, Plus, Download, Pencil, Trash2, CheckCircle, Clock, XCircle,
-  Send, Loader2,
+  Search, Plus, Download, Pencil, Trash2, ChevronDown, ChevronRight,
+  Send, Loader2, ListOrdered,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
+import AgendaEditor from "@/components/admin/AgendaEditor";
 
 const AdminEvents = () => {
   const queryClient = useQueryClient();
