@@ -9,7 +9,7 @@ const UpcomingEvent = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const { data: events = [] } = useQuery({
+  const { data: events = [], isLoading } = useQuery({
     queryKey: ["active-events-carousel"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -37,12 +37,11 @@ const UpcomingEvent = () => {
 
   if (!events.length) return null;
 
-  // Gradient colors for cards without images
-  const gradients = [
-    "from-[hsl(80,25%,72%)] to-[hsl(80,20%,82%)]",
-    "from-[hsl(42,35%,65%)] to-[hsl(42,30%,78%)]",
-    "from-[hsl(160,18%,72%)] to-[hsl(160,15%,82%)]",
-    "from-[hsl(30,25%,70%)] to-[hsl(30,20%,82%)]",
+  const gradientStyles = [
+    { background: "linear-gradient(135deg, hsl(80,25%,72%), hsl(80,20%,82%))" },
+    { background: "linear-gradient(135deg, hsl(42,35%,65%), hsl(42,30%,78%))" },
+    { background: "linear-gradient(135deg, hsl(160,18%,72%), hsl(160,15%,82%))" },
+    { background: "linear-gradient(135deg, hsl(30,25%,70%), hsl(30,20%,82%))" },
   ];
 
   const formatDate = (date: string | null, time: string | null) => {
@@ -107,7 +106,8 @@ const UpcomingEvent = () => {
             >
               {/* Card visual */}
               <div
-                className={`relative h-64 rounded-2xl bg-gradient-to-br ${gradients[i % gradients.length]} overflow-hidden mb-4`}
+                className="relative h-64 rounded-2xl overflow-hidden mb-4"
+                style={gradientStyles[i % gradientStyles.length]}
               >
                 {/* Decorative pattern */}
                 <div className="absolute inset-0 opacity-[0.08]">
