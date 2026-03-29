@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
-import { Search, Download, DollarSign, CalendarDays } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Search, Download, DollarSign, CalendarDays, Plus } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
+import AdminModal from "@/components/admin/AdminModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -12,6 +15,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { format, subDays, subMonths, startOfDay, isAfter } from "date-fns";
 
 const DATE_RANGES = [
@@ -23,6 +27,8 @@ const DATE_RANGES = [
 ] as const;
 
 const STATUS_OPTIONS = ["all", "completed", "pending", "refunded", "cancelled"] as const;
+const TICKET_TYPES = ["general", "vip", "early_bird", "comp", "sponsor"] as const;
+const PAYMENT_METHODS = ["manual", "cash", "card", "transfer", "comp"] as const;
 
 function getDateCutoff(range: string): Date | null {
   const now = new Date();
@@ -35,11 +41,27 @@ function getDateCutoff(range: string): Date | null {
   }
 }
 
+const emptyForm = {
+  purchaser_name: "",
+  purchaser_email: "",
+  event_id: "",
+  ticket_type: "general",
+  quantity: 1,
+  unit_price: 0,
+  status: "completed",
+  payment_method: "manual",
+  notes: "",
+};
+
 const AdminOrders = () => {
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState("3m");
   const [statusFilter, setStatusFilter] = useState("all");
   const [eventFilter, setEventFilter] = useState("all");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [form, setForm] = useState({ ...emptyForm });
+  const [saving, setSaving] = useState(false);
 
   const { data: events } = useQuery({
     queryKey: ["admin-events-list"],
@@ -80,6 +102,40 @@ const AdminOrders = () => {
     .reduce((sum, o) => sum + Number(o.total_amount), 0) ?? 0;
   const completedCount = orders?.filter((o) => o.status === "completed").length ?? 0;
 
+  const openCreate = () => {
+    setForm({ ...emptyForm });
+    setModalOpen(true);
+  };
+
+  const handleSave = async () => {
+    if (!form.purchaser_name.trim() || !form.purchaser_email.trim()) {
+      toast.error("Name and email are required");
+      return;
+    }
+    setSaving(true);
+    const total = form.quantity * form.unit_price;
+    const { error } = await supabase.from("orders").insert({
+      purchaser_name: form.purchaser_name.trim(),
+      purchaser_email: form.purchaser_email.trim(),
+      event_id: form.event_id || null,
+      ticket_type: form.ticket_type,
+      quantity: form.quantity,
+      unit_price: form.unit_price,
+      total_amount: total,
+      status: form.status,
+      payment_method: form.payment_method,
+      notes: form.notes.trim() || null,
+    });
+    setSaving(false);
+    if (error) {
+      toast.error("Failed to create order");
+      return;
+    }
+    toast.success("Order created");
+    setModalOpen(false);
+    queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+  };
+
   const exportCSV = () => {
     if (!orders?.length) return;
     const headers = ["Order #", "Purchaser", "Email", "Event", "Type", "Qty", "Amount", "Status", "Date"];
@@ -113,6 +169,8 @@ const AdminOrders = () => {
       default: return "secondary";
     }
   };
+
+  const set = (key: string, value: any) => setForm((f) => ({ ...f, [key]: value }));
 
   return (
     <AdminLayout title="Orders">
@@ -190,6 +248,10 @@ const AdminOrders = () => {
         <Button variant="outline" size="sm" onClick={exportCSV} className="gap-1.5">
           <Download className="h-4 w-4" /> Export
         </Button>
+
+        <Button size="sm" onClick={openCreate} className="gap-1.5">
+          <Plus className="h-4 w-4" /> New Order
+        </Button>
       </div>
 
       {/* Table */}
@@ -245,6 +307,138 @@ const AdminOrders = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Create Order Modal */}
+      <AdminModal open={modalOpen} onClose={() => setModalOpen(false)} title="New Order">
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label>Purchaser Name *</Label>
+              <Input
+                value={form.purchaser_name}
+                onChange={(e) => set("purchaser_name", e.target.value)}
+                placeholder="Full name"
+                maxLength={100}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Email *</Label>
+              <Input
+                type="email"
+                value={form.purchaser_email}
+                onChange={(e) => set("purchaser_email", e.target.value)}
+                placeholder="email@example.com"
+                maxLength={255}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>Event</Label>
+            <Select value={form.event_id} onValueChange={(v) => set("event_id", v)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select event (optional)" />
+              </SelectTrigger>
+              <SelectContent>
+                {events?.map((e) => (
+                  <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label>Ticket Type</Label>
+              <Select value={form.ticket_type} onValueChange={(v) => set("ticket_type", v)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TICKET_TYPES.map((t) => (
+                    <SelectItem key={t} value={t} className="capitalize">
+                      {t.replace("_", " ")}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label>Payment Method</Label>
+              <Select value={form.payment_method} onValueChange={(v) => set("payment_method", v)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {PAYMENT_METHODS.map((m) => (
+                    <SelectItem key={m} value={m} className="capitalize">{m}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-1.5">
+              <Label>Quantity</Label>
+              <Input
+                type="number"
+                min={1}
+                value={form.quantity}
+                onChange={(e) => set("quantity", Math.max(1, parseInt(e.target.value) || 1))}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Unit Price ($)</Label>
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                value={form.unit_price}
+                onChange={(e) => set("unit_price", Math.max(0, parseFloat(e.target.value) || 0))}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Total</Label>
+              <div className="h-10 flex items-center rounded-md border border-input bg-muted/30 px-3 text-sm font-medium">
+                ${(form.quantity * form.unit_price).toFixed(2)}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>Status</Label>
+            <Select value={form.status} onValueChange={(v) => set("status", v)}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {(["completed", "pending", "refunded", "cancelled"] as const).map((s) => (
+                  <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>Notes</Label>
+            <Textarea
+              value={form.notes}
+              onChange={(e) => set("notes", e.target.value)}
+              placeholder="Optional notes…"
+              maxLength={500}
+              rows={2}
+            />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-2">
+            <Button variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>
+            <Button onClick={handleSave} disabled={saving}>
+              {saving ? "Saving…" : "Create Order"}
+            </Button>
+          </div>
+        </div>
+      </AdminModal>
     </AdminLayout>
   );
 };
