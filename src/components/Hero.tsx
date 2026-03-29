@@ -53,7 +53,7 @@ const Hero = () => {
               to={`/event/${nextEvent.id}`}
               className="inline-block bg-gold text-primary-foreground px-10 py-3.5 rounded-full text-sm font-medium tracking-wide hover:opacity-90 transition-opacity"
             >
-              View {nextEvent.name}
+              Next Event
             </Link>
           </div>
         )}
