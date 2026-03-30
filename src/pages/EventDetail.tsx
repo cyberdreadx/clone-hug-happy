@@ -85,6 +85,21 @@ const EventDetail = () => {
     enabled: !!id && sponsorsEnabled,
   });
 
+  const { data: ticketTiers = [] } = useQuery({
+    queryKey: ["public-ticket-tiers", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("ticket_tiers")
+        .select("*")
+        .eq("event_id", id!)
+        .in("status", ["active", "sold_out"])
+        .order("display_order", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id,
+  });
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-section-light flex items-center justify-center">
