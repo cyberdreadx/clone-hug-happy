@@ -67,6 +67,7 @@ const SponsorEditModal = ({ open, onClose, sponsor, eventId, onSaved }: SponsorE
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!form.name.trim()) {
       toast.error("Sponsor name is required");
       return;
