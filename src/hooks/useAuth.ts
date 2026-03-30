@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
-import type { User } from "@supabase/supabase-js";
+import type { User, Session } from "@supabase/supabase-js";
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -13,12 +13,25 @@ export const useAuth = () => {
   useEffect(() => {
     mountedRef.current = true;
 
-    const fetchRoles = async (userId: string) => {
+    const applySession = async (session: Session | null) => {
+      if (!mountedRef.current) return;
+
+      const nextUser = session?.user ?? null;
+      setUser(nextUser);
+
+      if (!nextUser) {
+        setIsAdmin(false);
+        setIsPartner(false);
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data: roles } = await supabase
           .from("user_roles")
           .select("role")
-          .eq("user_id", userId);
+          .eq("user_id", nextUser.id);
+
         if (!mountedRef.current) return;
         setIsAdmin(roles?.some((r) => r.role === "admin") ?? false);
         setIsPartner(roles?.some((r) => r.role === "partner") ?? false);
@@ -26,38 +39,18 @@ export const useAuth = () => {
         if (!mountedRef.current) return;
         setIsAdmin(false);
         setIsPartner(false);
+      } finally {
+        if (mountedRef.current) setLoading(false);
       }
     };
 
-    // Get initial session first
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!mountedRef.current) return;
-      const u = session?.user ?? null;
-      setUser(u);
-      if (u) {
-        await fetchRoles(u.id);
-      }
-      if (mountedRef.current) setLoading(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      void applySession(session);
     });
 
-    // Then listen for changes (sign in, sign out, token refresh)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (!mountedRef.current) return;
-        // Skip INITIAL_SESSION since getSession handles it
-        if (event === "INITIAL_SESSION") return;
-
-        const u = session?.user ?? null;
-        setUser(u);
-        if (u) {
-          await fetchRoles(u.id);
-        } else {
-          setIsAdmin(false);
-          setIsPartner(false);
-        }
-        if (mountedRef.current) setLoading(false);
-      }
-    );
+    void supabase.auth.getSession().then(({ data: { session } }) => {
+      void applySession(session);
+    });
 
     return () => {
       mountedRef.current = false;

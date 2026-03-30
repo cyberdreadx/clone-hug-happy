@@ -8,15 +8,15 @@ const Navbar = () => {
   const { user, isAdmin, isPartner, loading, signOut } = useAuth();
 
   const publicLinks = [
-    { label: "Home", href: "/" },
-    { label: "Experience", href: "/#experience" },
-    { label: "RSVP", href: "/rsvp" },
+    { label: "Home", to: "/" },
+    { label: "Experience", to: "/#experience" },
+    { label: "RSVP", to: "/rsvp" },
   ];
 
   const dashboardLink = isAdmin
-    ? { label: "Dashboard", href: "/admin" }
+    ? { label: "Dashboard", to: "/admin" }
     : isPartner
-    ? { label: "Portal", href: "/partner-portal" }
+    ? { label: "Portal", to: "/partner-portal" }
     : null;
 
   return (
@@ -26,35 +26,34 @@ const Navbar = () => {
           BREATHE &amp; BLOOM
         </Link>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           {publicLinks.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
+              to={l.to}
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
 
           {!loading && !user && (
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
               Partner Login
-            </a>
+            </Link>
           )}
 
           {!loading && user && dashboardLink && (
-            <a
-              href={dashboardLink.href}
+            <Link
+              to={dashboardLink.to}
               className="inline-flex items-center gap-1.5 text-gold text-xs tracking-wide uppercase hover:opacity-80 transition-opacity"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
               {dashboardLink.label}
-            </a>
+            </Link>
           )}
 
           {!loading && user && (
@@ -68,7 +67,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-foreground"
@@ -78,30 +76,29 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-card border-t border-border/50 px-6 py-4 space-y-3">
           {publicLinks.map((l) => (
-            <a
+            <Link
               key={l.label}
-              href={l.href}
+              to={l.to}
               onClick={() => setOpen(false)}
               className="block text-muted-foreground text-sm hover:text-foreground transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
 
           {!loading && !user && (
-            <a href="/login" onClick={() => setOpen(false)} className="block text-muted-foreground text-sm hover:text-foreground transition-colors">
+            <Link to="/login" onClick={() => setOpen(false)} className="block text-muted-foreground text-sm hover:text-foreground transition-colors">
               Partner Login
-            </a>
+            </Link>
           )}
 
           {!loading && user && dashboardLink && (
-            <a href={dashboardLink.href} onClick={() => setOpen(false)} className="block text-gold text-sm hover:opacity-80 transition-opacity">
+            <Link to={dashboardLink.to} onClick={() => setOpen(false)} className="block text-gold text-sm hover:opacity-80 transition-opacity">
               {dashboardLink.label}
-            </a>
+            </Link>
           )}
 
           {!loading && user && (
