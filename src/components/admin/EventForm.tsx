@@ -29,20 +29,20 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [form, setForm] = useState({
-    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
+    name: "", date: "", time: "", end_time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
   });
 
   useEffect(() => {
     if (event) {
       setForm({
-        name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
-        description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
-        ticket_price: event.ticket_price != null ? String(event.ticket_price) : "",
+        name: event.name || "", date: event.date || "", time: event.time || "", end_time: event.end_time || "",
+        location: event.location || "", description: event.description || "", status: event.status || "draft",
+        max_guests: event.max_guests || 100, ticket_price: event.ticket_price != null ? String(event.ticket_price) : "",
       });
       setImagePreview(event.cover_image || null);
       setHighlights(Array.isArray(event.highlights) ? event.highlights : []);
     } else {
-      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
+      setForm({ name: "", date: "", time: "", end_time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
       setImagePreview(null);
       setHighlights([]);
     }
@@ -101,6 +101,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         name: form.name,
         date: form.date || null,
         time: form.time || null,
+        end_time: form.end_time || null,
         location: form.location || null,
         description: form.description || null,
         status: form.status,
@@ -172,15 +173,29 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-[#022701] mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm text-[#022701] mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm text-[#022701] mb-1.5">Time</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Start Time</label>
             <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass}>
-              <option value="">Select time</option>
+              <option value="">Select</option>
+              {Array.from({ length: 48 }, (_, i) => {
+                const h = Math.floor(i / 2);
+                const m = i % 2 === 0 ? "00" : "30";
+                const val = `${String(h).padStart(2, "0")}:${m}`;
+                const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                const ampm = h < 12 ? "AM" : "PM";
+                return <option key={val} value={val}>{`${hour12}:${m} ${ampm}`}</option>;
+              })}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm text-[#022701] mb-1.5">End Time</label>
+            <select value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} className={inputClass}>
+              <option value="">Select</option>
               {Array.from({ length: 48 }, (_, i) => {
                 const h = Math.floor(i / 2);
                 const m = i % 2 === 0 ? "00" : "30";
