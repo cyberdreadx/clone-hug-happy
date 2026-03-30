@@ -64,6 +64,20 @@ const AdminEvents = () => {
     },
   });
 
+  const { data: orderTotals = {} } = useQuery({
+    queryKey: ["admin-event-gross"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("orders").select("event_id, total_amount, status");
+      if (error) throw error;
+      const totals: Record<string, number> = {};
+      data.forEach((o) => {
+        if (!o.event_id || o.status === "cancelled") return;
+        totals[o.event_id] = (totals[o.event_id] || 0) + (o.total_amount || 0);
+      });
+      return totals;
+    },
+  });
+
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
   const filtered = events
@@ -154,9 +168,9 @@ const AdminEvents = () => {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-sidebar-border">
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Event Info</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Date</th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Event</th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">RSVPs</th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Gross</th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Status</th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Action</th>
             </tr>
@@ -164,19 +178,60 @@ const AdminEvents = () => {
           <tbody>
             {filtered.map((ev) => {
               const counts = guestCounts[ev.id as keyof typeof guestCounts] as { total: number; confirmed: number } | undefined;
+              const gross = (orderTotals as Record<string, number>)[ev.id] || 0;
+              const eventDate = ev.date ? new Date(ev.date + "T00:00:00") : null;
+              const monthStr = eventDate ? eventDate.toLocaleDateString("en-US", { month: "short" }).toUpperCase() : "";
+              const dayStr = eventDate ? eventDate.getDate().toString().padStart(2, "0") : "";
+
               return (
                 <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors">
                   <td className="px-5 py-4">
-                    <div>
-                      <p className="text-sidebar-foreground font-medium">{ev.name}</p>
-                      <p className="text-sidebar-foreground/40 text-xs mt-0.5">{ev.location || "No location"}</p>
+                    <div className="flex items-center gap-4">
+                      {/* Big date block */}
+                      <div className="flex flex-col items-center justify-center w-14 shrink-0">
+                        {eventDate ? (
+                          <>
+                            <span className="text-xs font-semibold tracking-wider text-orange-400 uppercase leading-none">{monthStr}</span>
+                            <span className="text-2xl font-bold text-sidebar-foreground leading-tight">{dayStr}</span>
+                          </>
+                        ) : (
+                          <span className="text-sidebar-foreground/30 text-xs">TBD</span>
+                        )}
+                      </div>
+                      {/* Event thumbnail + info */}
+                      <div className="flex items-center gap-3 min-w-0">
+                        {ev.cover_image ? (
+                          <img src={ev.cover_image} alt={ev.name} className="w-12 h-12 rounded-lg object-cover shrink-0" />
+                        ) : (
+                          <div className="w-12 h-12 rounded-lg bg-sidebar-accent flex items-center justify-center shrink-0">
+                            <span className="text-sidebar-foreground/30 text-lg font-serif">{ev.name.charAt(0)}</span>
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <p className="text-sidebar-foreground font-medium truncate">{ev.name}</p>
+                          <p className="text-sidebar-foreground/40 text-xs mt-0.5 truncate">{ev.location || "No location"}</p>
+                          {eventDate && (
+                            <p className="text-sidebar-foreground/30 text-xs mt-0.5">
+                              {eventDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
+                              {ev.time ? ` at ${(() => { const [h,m] = ev.time.split(":").map(Number); const hr = h === 0 ? 12 : h > 12 ? h - 12 : h; return `${hr}:${m.toString().padStart(2,"0")} ${h < 12 ? "AM" : "PM"}`; })()}` : ""}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </td>
                   <td className="px-5 py-4 text-sidebar-foreground/60">
-                    {ev.date ? new Date(ev.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}
+                    <div className="flex flex-col gap-1">
+                      <span>{counts ? `${counts.confirmed}/${counts.total}` : "0"} / {ev.max_guests}</span>
+                      {counts && ev.max_guests && (
+                        <div className="w-16 h-1 rounded-full bg-sidebar-accent overflow-hidden">
+                          <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${Math.min((counts.confirmed / ev.max_guests) * 100, 100)}%` }} />
+                        </div>
+                      )}
+                    </div>
                   </td>
-                  <td className="px-5 py-4 text-sidebar-foreground/60">
-                    {counts ? `${counts.confirmed}/${counts.total}` : "0"} / {ev.max_guests}
+                  <td className="px-5 py-4 text-sidebar-foreground font-medium">
+                    ${gross.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                   <td className="px-5 py-4">{statusBadge(ev.status)}</td>
                   <td className="px-5 py-4">
