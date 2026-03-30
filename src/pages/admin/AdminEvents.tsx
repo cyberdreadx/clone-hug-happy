@@ -3,13 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
-  Search, Plus, Download, Pencil, Trash2, ChevronDown, ChevronRight,
-  Send, Loader2, ListOrdered,
+  Search, Plus, Download, Pencil, Trash2,
+  Send, Loader2,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
-import AgendaEditor from "@/components/admin/AgendaEditor";
 
 const AdminEvents = () => {
   const queryClient = useQueryClient();
@@ -17,7 +16,6 @@ const AdminEvents = () => {
   const [timeFilter, setTimeFilter] = useState<"upcoming" | "past" | "cancelled">("upcoming");
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
-  const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
   const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
 
   const runFollowUp = async (eventId: string, eventName: string) => {
