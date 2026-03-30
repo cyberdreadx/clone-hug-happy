@@ -123,6 +123,9 @@ const UpcomingEvent = () => {
         <div className="flex flex-col gap-4 sm:hidden">
           {events.map((event) => {
             const sponsor = sponsorByEvent[event.id];
+            const spotsLeft = Math.max((event.max_guests || 100) - 0, 0);
+            const isSoldOut = spotsLeft <= 0;
+            const isAlmostFull = !isSoldOut && spotsLeft <= 10;
             return (
               <Link key={event.id} to={`/event/${event.id}`} className="group">
                 <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow flex flex-col" style={{ backgroundColor: '#ddedd7' }}>
