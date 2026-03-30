@@ -8,6 +8,7 @@ import LocationAutocomplete from "@/components/LocationAutocomplete";
 import AgendaEditor from "./AgendaEditor";
 import SponsorsManager from "./SponsorsManager";
 import PricingManager from "./PricingManager";
+import WaiverManager from "./WaiverManager";
 
 interface EventFormProps {
   open: boolean;
@@ -285,6 +286,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         {event && (
           <div className="border-t border-[#022701]/20 pt-4">
             <PricingManager eventId={event.id} />
+          </div>
+        )}
+
+        {/* Waiver — only for existing events */}
+        {event && (
+          <div className="border-t border-[#022701]/20 pt-4">
+            <WaiverManager eventId={event.id} />
           </div>
         )}
 
