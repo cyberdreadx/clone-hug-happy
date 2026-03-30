@@ -57,6 +57,34 @@ const EventDetail = () => {
     enabled: !!id,
   });
 
+  const { data: sponsorsEnabled = true } = useQuery({
+    queryKey: ["public-sponsors-enabled", id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("event_settings")
+        .select("setting_value")
+        .eq("event_id", id!)
+        .eq("setting_key", "sponsors_enabled")
+        .maybeSingle();
+      return (data?.setting_value as boolean) !== false;
+    },
+    enabled: !!id,
+  });
+
+  const { data: sponsors = [] } = useQuery({
+    queryKey: ["public-sponsors", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("event_sponsors")
+        .select("*")
+        .eq("event_id", id!)
+        .order("display_order", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id && sponsorsEnabled,
+  });
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-section-light flex items-center justify-center">
