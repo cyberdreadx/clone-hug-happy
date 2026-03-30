@@ -138,7 +138,7 @@ const UpcomingEvent = () => {
                 className="group flex-shrink-0 w-72 sm:w-80 snap-start"
               >
                 {/* Card container */}
-                <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow h-full flex flex-col">
+                <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow h-full flex flex-col" style={{ backgroundColor: '#c6d2c1' }}>
                   {/* Image area */}
                   <div className="relative h-48 bg-muted">
                     {event.cover_image ? (
