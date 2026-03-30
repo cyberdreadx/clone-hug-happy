@@ -451,7 +451,7 @@ const AdminDeliverables = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-sidebar-foreground/60 text-xs capitalize">{d.asset_type.replace("_", " ")}</td>
+                    <td className="px-5 py-4 text-sidebar-foreground/60 text-xs capitalize">{(d.asset_type || "").replace("_", " ")}</td>
                     <td className="px-5 py-4 text-sidebar-foreground/60">{d.partners?.company_name || "—"}</td>
                     <td className="px-5 py-4 text-sidebar-foreground/60">
                       {d.due_date ? new Date(d.due_date).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "—"}
