@@ -2,9 +2,10 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CheckCircle, ArrowLeft, Download } from "lucide-react";
+import { CheckCircle, ArrowLeft, Download, CalendarPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
+import { downloadICS } from "@/lib/calendar";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -76,6 +77,25 @@ const RSVPPage = () => {
                 Screenshot this code — show it at the door for instant check-in
               </p>
             </div>
+          )}
+
+          {events?.[0]?.date && (
+            <button
+              onClick={() => {
+                const ev = events[0];
+                downloadICS({
+                  name: ev.name,
+                  date: ev.date!,
+                  time: (ev as any).time,
+                  endTime: (ev as any).end_time,
+                  location: ev.location,
+                  description: ev.description,
+                });
+              }}
+              className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-2.5 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors mb-4"
+            >
+              <CalendarPlus className="w-4 h-4" /> Add to Calendar
+            </button>
           )}
 
           <Link
