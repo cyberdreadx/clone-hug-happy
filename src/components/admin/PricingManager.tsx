@@ -188,6 +188,26 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
                   <label className="block text-xs text-[#022701]/60 mb-1">Description</label>
                   <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputClass} placeholder="What's included..." />
                 </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-[#022701]/60 mb-1">Sales End Date</label>
+                    <input type="date" value={form.sales_end_date} onChange={(e) => setForm({ ...form, sales_end_date: e.target.value })} className={inputClass} />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-[#022701]/60 mb-1">Sales End Time</label>
+                    <select value={form.sales_end_time} onChange={(e) => setForm({ ...form, sales_end_time: e.target.value })} className={inputClass}>
+                      <option value="">Select</option>
+                      {Array.from({ length: 48 }, (_, i) => {
+                        const h = Math.floor(i / 2);
+                        const m = i % 2 === 0 ? "00" : "30";
+                        const val = `${String(h).padStart(2, "0")}:${m}`;
+                        const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                        const ampm = h < 12 ? "AM" : "PM";
+                        return <option key={val} value={val}>{`${hour12}:${m} ${ampm}`}</option>;
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="flex gap-2 justify-end">
                   <button type="button" onClick={resetForm} className="px-3 py-1.5 text-xs text-[#022701]/50 hover:text-[#022701] transition-colors">Cancel</button>
                   <button type="button" onClick={handleSave} disabled={saving} className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#022701] text-white text-xs hover:opacity-90 disabled:opacity-50">
@@ -271,6 +291,26 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
           <div>
             <label className="block text-xs text-[#022701]/60 mb-1">Description</label>
             <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputClass} placeholder="What's included..." />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs text-[#022701]/60 mb-1">Sales End Date</label>
+              <input type="date" value={form.sales_end_date} onChange={(e) => setForm({ ...form, sales_end_date: e.target.value })} className={inputClass} />
+            </div>
+            <div>
+              <label className="block text-xs text-[#022701]/60 mb-1">Sales End Time</label>
+              <select value={form.sales_end_time} onChange={(e) => setForm({ ...form, sales_end_time: e.target.value })} className={inputClass}>
+                <option value="">Select</option>
+                {Array.from({ length: 48 }, (_, i) => {
+                  const h = Math.floor(i / 2);
+                  const m = i % 2 === 0 ? "00" : "30";
+                  const val = `${String(h).padStart(2, "0")}:${m}`;
+                  const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                  const ampm = h < 12 ? "AM" : "PM";
+                  return <option key={val} value={val}>{`${hour12}:${m} ${ampm}`}</option>;
+                })}
+              </select>
+            </div>
           </div>
           <div className="flex gap-2 justify-end">
             <button type="button" onClick={resetForm} className="px-3 py-1.5 text-xs text-[#022701]/50 hover:text-[#022701] transition-colors">Cancel</button>
