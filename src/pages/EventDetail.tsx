@@ -221,6 +221,92 @@ const EventDetail = () => {
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-12 space-y-12">
+        {/* Ticket Tiers */}
+        {ticketTiers.length > 0 && (
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Tag className="w-5 h-5 text-muted-foreground" />
+              <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Select Your Ticket</p>
+            </div>
+            <h2 className="font-serif text-2xl text-foreground mb-6">Tickets</h2>
+            <div className="space-y-3">
+              {ticketTiers.map((tier: any) => {
+                const isSoldOut = tier.status === "sold_out" || (tier.capacity && tier.sold_count >= tier.capacity);
+                const spotsRemaining = tier.capacity ? Math.max(tier.capacity - tier.sold_count, 0) : null;
+                const isLow = spotsRemaining !== null && spotsRemaining > 0 && spotsRemaining <= 10;
+
+                const formatSalesEnd = () => {
+                  if (!tier.sales_end_date) return null;
+                  const d = new Date(tier.sales_end_date + "T00:00:00");
+                  const dateStr = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                  if (tier.sales_end_time) {
+                    const [h, m] = tier.sales_end_time.split(":").map(Number);
+                    const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                    const ampm = h < 12 ? "AM" : "PM";
+                    return `Sales end ${dateStr} at ${hour12}:${String(m).padStart(2, "0")} ${ampm}`;
+                  }
+                  return `Sales end ${dateStr}`;
+                };
+
+                return (
+                  <div
+                    key={tier.id}
+                    className={`bg-card border rounded-xl px-5 py-4 transition-colors ${
+                      isSoldOut ? "border-border opacity-60" : "border-border hover:border-muted-foreground/30"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="text-foreground font-medium">{tier.name}</h3>
+                          {isSoldOut && (
+                            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-foreground/10 text-muted-foreground">
+                              Sold Out
+                            </span>
+                          )}
+                          {isLow && !isSoldOut && (
+                            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-red-500/10 text-red-500 border border-red-500/20">
+                              {spotsRemaining} left
+                            </span>
+                          )}
+                        </div>
+                        {tier.description && (
+                          <p className="text-muted-foreground text-sm">{tier.description}</p>
+                        )}
+                        <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                          {spotsRemaining !== null && !isSoldOut && (
+                            <span className="flex items-center gap-1">
+                              <Users className="w-3 h-3" /> {spotsRemaining} spots
+                            </span>
+                          )}
+                          {formatSalesEnd() && (
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" /> {formatSalesEnd()}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-lg font-semibold text-foreground">
+                          {tier.price > 0 ? `$${Number(tier.price).toFixed(2)}` : "Free"}
+                        </p>
+                        {!isSoldOut && (
+                          <Link
+                            to="/rsvp"
+                            className="inline-block mt-2 text-xs font-medium text-gold hover:underline"
+                          >
+                            Select →
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Good to Know */}
         {highlights.length > 0 && (
           <div>
