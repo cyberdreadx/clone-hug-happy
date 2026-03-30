@@ -64,6 +64,20 @@ const AdminEvents = () => {
     },
   });
 
+  const { data: orderTotals = {} } = useQuery({
+    queryKey: ["admin-event-gross"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("orders").select("event_id, total_amount, status");
+      if (error) throw error;
+      const totals: Record<string, number> = {};
+      data.forEach((o) => {
+        if (!o.event_id || o.status === "cancelled") return;
+        totals[o.event_id] = (totals[o.event_id] || 0) + (o.total_amount || 0);
+      });
+      return totals;
+    },
+  });
+
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
   const filtered = events
