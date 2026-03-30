@@ -7,6 +7,7 @@ import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
 import AgendaEditor from "./AgendaEditor";
 import SponsorsManager from "./SponsorsManager";
+import PricingManager from "./PricingManager";
 
 interface EventFormProps {
   open: boolean;
@@ -262,6 +263,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         {event && (
           <div className="border-t border-[#022701]/20 pt-4">
             <SponsorsManager eventId={event.id} />
+          </div>
+        )}
+
+        {/* Pricing & Capacity — only for existing events */}
+        {event && (
+          <div className="border-t border-[#022701]/20 pt-4">
+            <PricingManager eventId={event.id} />
           </div>
         )}
 
