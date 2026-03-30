@@ -98,6 +98,8 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
         price: parseFloat(form.price) || 0,
         capacity: form.capacity ? parseInt(form.capacity) : null,
         status: form.status,
+        sales_end_date: form.sales_end_date || null,
+        sales_end_time: form.sales_end_time || null,
       };
 
       if (editingId) {
