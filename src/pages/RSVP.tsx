@@ -2,9 +2,10 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CheckCircle, ArrowLeft, Download } from "lucide-react";
+import { CheckCircle, ArrowLeft, Download, CalendarPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
+import { downloadICS } from "@/lib/calendar";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
