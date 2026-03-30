@@ -14,7 +14,7 @@ const AdminModal = ({ open, onClose, title, children }: AdminModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-sidebar-background border border-sidebar-border rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="relative border border-sidebar-border rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto" style={{ backgroundColor: '#eee8e1' }}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-sidebar-border">
           <h3 className="font-serif text-lg text-sidebar-foreground">{title}</h3>
           <button onClick={onClose} className="text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors">
