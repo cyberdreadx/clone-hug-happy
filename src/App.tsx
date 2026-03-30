@@ -16,8 +16,10 @@ import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminDeliverables from "./pages/admin/AdminDeliverables.tsx";
 import AdminOrders from "./pages/admin/AdminOrders.tsx";
 import AdminAnalytics from "./pages/admin/AdminAnalytics.tsx";
+import AdminSurveys from "./pages/admin/AdminSurveys.tsx";
 import PartnerPortal from "./pages/PartnerPortal.tsx";
 import PartnerRecap from "./pages/PartnerRecap.tsx";
+import Survey from "./pages/Survey.tsx";
 
 const queryClient = new QueryClient();
 
@@ -40,8 +42,10 @@ const App = () => (
           <Route path="/admin/deliverables" element={<AdminDeliverables />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/analytics" element={<AdminAnalytics />} />
+          <Route path="/admin/surveys" element={<AdminSurveys />} />
           <Route path="/partner-portal" element={<PartnerPortal />} />
           <Route path="/recap/:recapId" element={<PartnerRecap />} />
+          <Route path="/survey/:eventId" element={<Survey />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
