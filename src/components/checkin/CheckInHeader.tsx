@@ -1,4 +1,4 @@
-import { Search, CheckCircle2, Users, UserCheck, ArrowLeft, QrCode } from "lucide-react";
+import { Search, CheckCircle2, Users, UserCheck, ArrowLeft, QrCode, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface CheckInHeaderProps {
@@ -7,9 +7,16 @@ interface CheckInHeaderProps {
   search: string;
   onSearchChange: (val: string) => void;
   onOpenScanner: () => void;
+  events?: { id: string; name: string; date: string | null }[];
+  selectedEventId?: string;
+  onEventChange?: (id: string) => void;
+  onAddWalkIn?: () => void;
 }
 
-const CheckInHeader = ({ eventName, stats, search, onSearchChange, onOpenScanner }: CheckInHeaderProps) => {
+const CheckInHeader = ({
+  eventName, stats, search, onSearchChange, onOpenScanner,
+  events = [], selectedEventId, onEventChange, onAddWalkIn,
+}: CheckInHeaderProps) => {
   const navigate = useNavigate();
   const progressPercent = stats.capacity > 0 ? Math.min((stats.checkedIn / stats.capacity) * 100, 100) : 0;
 
@@ -22,26 +29,60 @@ const CheckInHeader = ({ eventName, stats, search, onSearchChange, onOpenScanner
           </button>
           <div>
             <h1 className="font-serif text-lg text-[hsl(var(--sidebar-foreground))]">Check-In</h1>
-            <p className="text-[hsl(var(--sidebar-foreground))]/40 text-xs">{eventName}</p>
+            {/* 1. Event selector dropdown */}
+            {events.length > 1 && onEventChange ? (
+              <div className="relative">
+                <select
+                  value={selectedEventId || ""}
+                  onChange={(e) => onEventChange(e.target.value)}
+                  className="appearance-none bg-transparent text-[hsl(var(--sidebar-foreground))]/60 text-xs pr-5 cursor-pointer focus:outline-none hover:text-[hsl(var(--sidebar-foreground))]"
+                >
+                  {events.map((ev) => (
+                    <option key={ev.id} value={ev.id}>
+                      {ev.name} {ev.date ? `(${new Date(ev.date + "T12:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })})` : ""}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="w-3 h-3 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-[hsl(var(--sidebar-foreground))]/30" />
+              </div>
+            ) : (
+              <p className="text-[hsl(var(--sidebar-foreground))]/40 text-xs">{eventName}</p>
+            )}
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-2xl font-serif text-[hsl(var(--sidebar-foreground))]">
-            {stats.checkedIn}<span className="text-[hsl(var(--sidebar-foreground))]/30">/{stats.capacity}</span>
-          </p>
-          <p className="text-[hsl(var(--sidebar-foreground))]/40 text-[10px] uppercase tracking-wider">Checked In</p>
+        <div className="flex items-center gap-3">
+          {/* 2. Walk-in button */}
+          {onAddWalkIn && (
+            <button
+              onClick={onAddWalkIn}
+              className="text-xs px-3 py-1.5 rounded-lg bg-[hsl(var(--sidebar-ring))] text-white hover:opacity-90 transition-opacity font-medium"
+            >
+              + Walk-in
+            </button>
+          )}
+          <div className="text-right">
+            <p className="text-2xl font-serif text-[hsl(var(--sidebar-foreground))]">
+              {stats.checkedIn}<span className="text-[hsl(var(--sidebar-foreground))]/30">/{stats.capacity}</span>
+            </p>
+            <p className="text-[hsl(var(--sidebar-foreground))]/40 text-[10px] uppercase tracking-wider">Checked In</p>
+          </div>
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="w-full h-2 rounded-full bg-[hsl(var(--sidebar-accent))] overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all duration-500 ease-out"
-          style={{
-            width: `${progressPercent}%`,
-            backgroundColor: progressPercent > 90 ? "hsl(0, 72%, 51%)" : progressPercent > 70 ? "hsl(45, 93%, 47%)" : "hsl(142, 71%, 45%)",
-          }}
-        />
+      {/* 3. Real-time progress bar with percentage label */}
+      <div className="relative">
+        <div className="w-full h-3 rounded-full bg-[hsl(var(--sidebar-accent))] overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${progressPercent}%`,
+              backgroundColor: progressPercent > 90 ? "hsl(0, 72%, 51%)" : progressPercent > 70 ? "hsl(45, 93%, 47%)" : "hsl(142, 71%, 45%)",
+            }}
+          />
+        </div>
+        <span className="absolute right-0 -top-4 text-[10px] text-[hsl(var(--sidebar-foreground))]/40">
+          {Math.round(progressPercent)}%
+        </span>
       </div>
 
       {/* Stats row */}
