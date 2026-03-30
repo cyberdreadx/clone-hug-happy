@@ -26,7 +26,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [form, setForm] = useState({
-    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
+    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
   });
 
   useEffect(() => {
