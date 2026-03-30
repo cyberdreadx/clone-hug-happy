@@ -173,7 +173,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-[#022701] mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm text-[#022701] mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
