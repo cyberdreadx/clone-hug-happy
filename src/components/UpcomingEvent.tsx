@@ -100,7 +100,7 @@ const UpcomingEvent = () => {
             </h2>
           </div>
           {events.length > 2 && (
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={() => scroll("left")}
                 disabled={!canScrollLeft}
