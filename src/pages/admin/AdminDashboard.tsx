@@ -152,7 +152,7 @@ const AdminDashboard = () => {
             <button
               key={link.path}
               onClick={() => navigate(link.path)}
-              className="flex items-center justify-between p-4 rounded-xl border border-sidebar-border hover:bg-sidebar-accent/30 transition-colors text-left group"
+              className="flex items-center justify-between p-4 rounded-xl border border-[#022701]/30 hover:bg-sidebar-accent/30 transition-colors text-left group"
             >
               <div>
                 <p className="text-sidebar-foreground font-medium text-sm">{link.label}</p>
