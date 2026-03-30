@@ -216,8 +216,8 @@ const AdminGuests = () => {
         </div>
       )}
 
-      {/* Table */}
-      <div className="rounded-lg border border-border overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden lg:block rounded-lg border border-border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -301,6 +301,53 @@ const AdminGuests = () => {
             )}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="lg:hidden space-y-3">
+        {filtered.length === 0 ? (
+          <p className="text-center py-12 text-muted-foreground">No guests found</p>
+        ) : (
+          filtered.map((g) => (
+            <div key={g.id} className={`rounded-xl border p-4 ${g.status === "pending" ? "border-yellow-500/30 bg-yellow-500/5" : "border-border"}`}>
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="min-w-0">
+                  <p className="font-medium text-foreground text-sm">{g.first_name} {g.last_name}</p>
+                  <p className="text-muted-foreground text-xs truncate">{g.email}</p>
+                  {g.company && <p className="text-muted-foreground text-xs">{g.company}</p>}
+                </div>
+                <Badge variant={statusColor(g.status) as any} className="capitalize text-[10px] shrink-0">
+                  {g.status.replace("_", " ")}
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="text-muted-foreground text-xs">{(g as any).events?.name ?? "No event"}</p>
+                <div className="flex items-center gap-1">
+                  {g.status === "pending" && (
+                    <>
+                      <Button size="icon" variant="ghost" onClick={() => updateStatus(g.id, "confirmed")}
+                        className="h-7 w-7 text-green-600">
+                        <CheckCircle className="w-4 h-4" />
+                      </Button>
+                      <Button size="icon" variant="ghost" onClick={() => updateStatus(g.id, "declined")}
+                        className="h-7 w-7 text-destructive">
+                        <XCircle className="w-4 h-4" />
+                      </Button>
+                    </>
+                  )}
+                  <Button size="icon" variant="ghost" onClick={() => setGuestModal({ open: true, guest: g })}
+                    className="h-7 w-7">
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button size="icon" variant="ghost" onClick={() => setDeleteModal({ open: true, id: g.id })}
+                    className="h-7 w-7 text-destructive">
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       <GuestForm open={guestModal.open} onClose={() => setGuestModal({ open: false })} guest={guestModal.guest} events={events} />

@@ -255,8 +255,8 @@ const AdminOrders = () => {
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border border-border overflow-hidden">
-        <Table>
+      <div className="rounded-lg border border-border overflow-x-auto">
+        <Table className="min-w-[700px]">
           <TableHeader>
             <TableRow>
               <TableHead>Order #</TableHead>

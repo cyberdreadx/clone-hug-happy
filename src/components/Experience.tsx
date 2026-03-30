@@ -17,7 +17,7 @@ const Experience = () => {
           {experiences.map((e) => (
             <div
               key={e.num}
-              className="bg-card/60 backdrop-blur rounded-lg px-8 py-6 flex items-start gap-6 hover:bg-card transition-colors"
+              className="bg-card/60 backdrop-blur rounded-lg px-5 sm:px-8 py-5 sm:py-6 flex items-start gap-4 sm:gap-6 hover:bg-card transition-colors"
             >
               <span className="text-gold font-serif text-xl font-semibold mt-0.5">{e.num}</span>
               <div>

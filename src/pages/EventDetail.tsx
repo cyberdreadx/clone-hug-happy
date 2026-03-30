@@ -226,7 +226,7 @@ const EventDetail = () => {
             <p className="text-muted-foreground text-sm leading-relaxed mt-4 max-w-xl">{event.description}</p>
           )}
 
-          <div className="flex items-center gap-6 mt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-6">
             <Link
               to="/rsvp"
               className="inline-flex items-center gap-2 bg-gold text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
