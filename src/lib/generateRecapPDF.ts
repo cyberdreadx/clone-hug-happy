@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-import { supabase } from "@/integrations/supabase/client";
+import logoSrc from "@/assets/breathe-bloom-logo.png";
 
 interface RecapData {
   id: string;
@@ -13,6 +13,16 @@ interface RecapData {
   events: { name: string; date: string; location: string };
 }
 
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
 export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl: string) {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const w = doc.internal.pageSize.getWidth();
@@ -21,18 +31,36 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   const contentW = w - margin * 2;
   let y = 0;
 
+  // --- Page background ---
+  doc.setFillColor(245, 243, 237); // #f5f3ed
+  doc.rect(0, 0, w, h, "F");
+
   // --- Header band ---
-  doc.setFillColor(2, 39, 1); // #022701
-  doc.rect(0, 0, w, 55, "F");
+  doc.setFillColor(198, 210, 193); // #c6d2c1
+  doc.rect(0, 0, w, 60, "F");
 
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(10);
+  // Logo
+  try {
+    const logoImg = await loadImage(logoSrc);
+    const logoW = 40;
+    const logoH = (logoImg.height / logoImg.width) * logoW;
+    doc.addImage(logoImg, "PNG", (w - logoW) / 2, 8, logoW, logoH);
+  } catch {
+    // fallback text if logo fails
+    doc.setTextColor(2, 39, 1);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("BREATHE & BLOOM", w / 2, 16, { align: "center" });
+  }
+
+  doc.setTextColor(2, 39, 1); // #022701
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("POST-EVENT PARTNERSHIP RECAP", w / 2, 20, { align: "center" });
+  doc.text("POST-EVENT PARTNERSHIP RECAP", w / 2, 32, { align: "center" });
 
-  doc.setFontSize(22);
+  doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  doc.text(recap.events?.name || "Event", w / 2, 33, { align: "center" });
+  doc.text(recap.events?.name || "Event", w / 2, 43, { align: "center" });
 
   if (recap.events?.date) {
     doc.setFontSize(9);
@@ -40,16 +68,16 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     const date = new Date(recap.events.date + "T00:00:00").toLocaleDateString("en-US", {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
-    doc.text(date, w / 2, 42, { align: "center" });
+    doc.text(date, w / 2, 50, { align: "center" });
   }
 
   if (recap.events?.location) {
     doc.setFontSize(8);
-    doc.text(recap.events.location, w / 2, 49, { align: "center" });
+    doc.text(recap.events.location, w / 2, 56, { align: "center" });
   }
 
   // --- Prepared for ---
-  y = 70;
+  y = 75;
   doc.setTextColor(2, 39, 1);
   doc.setFontSize(8);
   doc.text("PREPARED FOR", w / 2, y, { align: "center" });
@@ -63,7 +91,7 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   }
 
   // --- Metrics ---
-  y = 105;
+  y = 110;
   const metrics = [
     { label: "PHOTOS DELIVERED", value: String(recap.photos_count || 0) },
     { label: "IMPRESSIONS", value: (recap.impressions || 0).toLocaleString() },
@@ -78,7 +106,7 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     const x = margin + i * (boxW + 4);
 
     // Box background
-    doc.setFillColor(198, 210, 193); // light green
+    doc.setFillColor(198, 210, 193); // #c6d2c1
     doc.roundedRect(x, y, boxW, boxH, 3, 3, "F");
 
     // Value
@@ -90,7 +118,6 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     // Label
     doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(2, 39, 1);
     doc.text(m.label, x + boxW / 2, y + 22, { align: "center" });
   });
 
@@ -115,9 +142,8 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     doc.text("FULL RECAP", margin, y);
     y += 6;
     doc.setFontSize(10);
-    doc.setTextColor(0, 102, 204);
-    doc.textWithLink(recap.recap_url, margin, y, { url: recap.recap_url });
     doc.setTextColor(2, 39, 1);
+    doc.textWithLink(recap.recap_url, margin, y, { url: recap.recap_url });
     y += 10;
   }
 
@@ -131,10 +157,13 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     assets.forEach((asset: any) => {
       if (y > h - 30) {
         doc.addPage();
+        // New page background
+        doc.setFillColor(245, 243, 237);
+        doc.rect(0, 0, w, h, "F");
         y = margin;
       }
       doc.setFontSize(9);
-      doc.setTextColor(0, 102, 204);
+      doc.setTextColor(2, 39, 1);
       doc.textWithLink(`📎 ${asset.file_name}`, margin + 2, y, { url: asset.file_url });
       y += 6;
     });
@@ -142,20 +171,24 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
 
   // --- Shareable web link ---
   y = Math.max(y + 10, h - 40);
-  if (y > h - 20) { doc.addPage(); y = margin; }
+  if (y > h - 20) {
+    doc.addPage();
+    doc.setFillColor(245, 243, 237);
+    doc.rect(0, 0, w, h, "F");
+    y = margin;
+  }
   doc.setFontSize(8);
   doc.setTextColor(2, 39, 1);
   doc.text("VIEW ONLINE", margin, y);
   y += 5;
   const webUrl = `${siteUrl}/recap/${recap.id}`;
   doc.setFontSize(9);
-  doc.setTextColor(0, 102, 204);
   doc.textWithLink(webUrl, margin, y, { url: webUrl });
 
   // --- Footer ---
-  doc.setFillColor(2, 39, 1);
+  doc.setFillColor(198, 210, 193); // #c6d2c1
   doc.rect(0, h - 12, w, 12, "F");
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(2, 39, 1);
   doc.setFontSize(7);
   doc.setFont("helvetica", "normal");
   doc.text("Breathe & Bloom · Post-Event Partnership Recap", w / 2, h - 5, { align: "center" });
