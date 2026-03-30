@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, Info, ExternalLink, Crown,
+  Tag, AlertCircle,
 } from "lucide-react";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
