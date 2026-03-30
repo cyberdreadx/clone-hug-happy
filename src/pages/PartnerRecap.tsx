@@ -65,7 +65,7 @@ const PartnerRecap = () => {
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#f5f3ed" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#f5f3ed", fontFamily: "'Noto Serif Ethiopic', serif", fontStretch: "condensed" }}>
       {/* Hero */}
       <div className="relative h-48 sm:h-64 overflow-hidden" style={{ backgroundColor: "#c6d2c1" }}>
         {event?.cover_image && (

@@ -1,5 +1,7 @@
 import jsPDF from "jspdf";
 import logoSrc from "@/assets/breathe-bloom-logo.png";
+import { NotoSerifEthiopicCondensedRegular } from "@/lib/fonts/notoSerifEthiopicCondensed-Regular";
+import { NotoSerifEthiopicCondensedBold } from "@/lib/fonts/notoSerifEthiopicCondensed-Bold";
 
 interface RecapData {
   id: string;
@@ -23,22 +25,31 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+function registerFonts(doc: jsPDF) {
+  doc.addFileToVFS("NotoSerifEthiopicCondensed-Regular.ttf", NotoSerifEthiopicCondensedRegular);
+  doc.addFont("NotoSerifEthiopicCondensed-Regular.ttf", "NotoSerifEC", "normal");
+  doc.addFileToVFS("NotoSerifEthiopicCondensed-Bold.ttf", NotoSerifEthiopicCondensedBold);
+  doc.addFont("NotoSerifEthiopicCondensed-Bold.ttf", "NotoSerifEC", "bold");
+}
+
 export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl: string) {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  registerFonts(doc);
+
   const w = doc.internal.pageSize.getWidth();
   const h = doc.internal.pageSize.getHeight();
   const margin = 20;
   const contentW = w - margin * 2;
   let y = 0;
-
   const headerH = 55;
+  const font = "NotoSerifEC";
 
   // --- Page background ---
-  doc.setFillColor(245, 243, 237); // #f5f3ed
+  doc.setFillColor(245, 243, 237);
   doc.rect(0, 0, w, h, "F");
 
   // --- Header band (logo only) ---
-  doc.setFillColor(198, 210, 193); // #c6d2c1
+  doc.setFillColor(198, 210, 193);
   doc.rect(0, 0, w, headerH, "F");
 
   try {
@@ -50,27 +61,27 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   } catch {
     doc.setTextColor(2, 39, 1);
     doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
+    doc.setFont(font, "bold");
     doc.text("BREATHE & BLOOM", w / 2, headerH / 2 + 3, { align: "center" });
   }
 
   // --- Below header: event info block ---
   y = headerH + 18;
-  doc.setTextColor(2, 39, 1); // #022701
+  doc.setTextColor(2, 39, 1);
 
   doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
+  doc.setFont(font, "normal");
   doc.text("POST-EVENT RECAP", w / 2, y, { align: "center" });
   y += 10;
 
   doc.setFontSize(20);
-  doc.setFont("helvetica", "bold");
+  doc.setFont(font, "bold");
   doc.text(recap.events?.name || "Event", w / 2, y, { align: "center" });
   y += 8;
 
   if (recap.events?.date) {
     doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
+    doc.setFont(font, "normal");
     const date = new Date(recap.events.date + "T00:00:00").toLocaleDateString("en-US", {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
@@ -87,16 +98,16 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   // --- Prepared for ---
   y += 8;
   doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
+  doc.setFont(font, "normal");
   doc.text("PREPARED FOR", w / 2, y, { align: "center" });
   y += 8;
   doc.setFontSize(18);
-  doc.setFont("helvetica", "bold");
+  doc.setFont(font, "bold");
   doc.text(recap.partners?.company_name || "Partner", w / 2, y, { align: "center" });
   if (recap.partners?.contact_name) {
     y += 7;
     doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
+    doc.setFont(font, "normal");
     doc.text(recap.partners.contact_name, w / 2, y, { align: "center" });
   }
 
@@ -119,11 +130,11 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
 
     doc.setTextColor(2, 39, 1);
     doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
+    doc.setFont(font, "bold");
     doc.text(m.value, x + boxW / 2, y + 14, { align: "center" });
 
     doc.setFontSize(6);
-    doc.setFont("helvetica", "normal");
+    doc.setFont(font, "normal");
     doc.text(m.label, x + boxW / 2, y + 22, { align: "center" });
   });
 
@@ -132,10 +143,10 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   if (recap.notes) {
     doc.setFontSize(8);
     doc.setTextColor(2, 39, 1);
+    doc.setFont(font, "normal");
     doc.text("NOTES", margin, y);
     y += 6;
     doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
     const lines = doc.splitTextToSize(recap.notes, contentW);
     doc.text(lines, margin, y);
     y += lines.length * 5 + 8;
@@ -145,6 +156,7 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   if (recap.recap_url) {
     doc.setFontSize(8);
     doc.setTextColor(2, 39, 1);
+    doc.setFont(font, "normal");
     doc.text("FULL RECAP", margin, y);
     y += 6;
     doc.setFontSize(10);
@@ -156,6 +168,7 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   if (assets.length > 0) {
     doc.setFontSize(8);
     doc.setTextColor(2, 39, 1);
+    doc.setFont(font, "normal");
     doc.text("MEDIA ASSETS", margin, y);
     y += 8;
 
@@ -168,7 +181,8 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
       }
       doc.setFontSize(9);
       doc.setTextColor(2, 39, 1);
-      doc.textWithLink(`📎 ${asset.file_name}`, margin + 2, y, { url: asset.file_url });
+      doc.setFont(font, "normal");
+      doc.textWithLink(`- ${asset.file_name}`, margin + 2, y, { url: asset.file_url });
       y += 6;
     });
   }
@@ -183,10 +197,11 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   }
   doc.setFontSize(8);
   doc.setTextColor(2, 39, 1);
+  doc.setFont(font, "normal");
   doc.text("VIEW ONLINE", margin, y);
   y += 5;
-  const webUrl = `${siteUrl}/recap/${recap.id}`;
   doc.setFontSize(9);
+  const webUrl = `${siteUrl}/recap/${recap.id}`;
   doc.textWithLink(webUrl, margin, y, { url: webUrl });
 
   // --- Footer ---
@@ -194,10 +209,9 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   doc.rect(0, h - 12, w, 12, "F");
   doc.setTextColor(2, 39, 1);
   doc.setFontSize(7);
-  doc.setFont("helvetica", "normal");
+  doc.setFont(font, "normal");
   doc.text("Breathe & Bloom · Post-Event Partnership Recap", w / 2, h - 5, { align: "center" });
 
-  // Save
   const fileName = `Recap-${recap.partners?.company_name?.replace(/\s/g, "_")}-${recap.events?.name?.replace(/\s/g, "_")}.pdf`;
   doc.save(fileName);
 }
