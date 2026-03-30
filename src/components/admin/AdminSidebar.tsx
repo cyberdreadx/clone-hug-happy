@@ -19,6 +19,7 @@ const manageItems = [
   { title: "Orders", url: "/admin/orders", icon: ShoppingCart },
   { title: "Deliverables", url: "/admin/deliverables", icon: FileText },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
+  { title: "Surveys", url: "/admin/surveys", icon: MessageSquare },
 ];
 
 const settingsItems = [
