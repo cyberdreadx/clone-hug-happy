@@ -5,11 +5,12 @@ import { toast } from "sonner";
 import {
   Search, Plus, Pencil, Trash2, FileText, Package, Image, Flag,
   BarChart3, Camera, Eye, Heart, MessageSquare, ChevronDown, ChevronRight,
-  Download, CheckCircle2, Clock, AlertCircle,
+  Download, CheckCircle2, Clock, AlertCircle, Share2, FileDown, Send, Copy,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import AdminModal from "@/components/admin/AdminModal";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
+import { generateRecapPDF } from "@/lib/generateRecapPDF";
 
 const ASSET_TYPES = [
   { value: "samples", label: "Product Samples", icon: Package },
@@ -326,7 +327,55 @@ const AdminDeliverables = () => {
                         <div className="space-y-3">
                           {partnerRecaps.map((r: any) => (
                             <div key={r.id} className="rounded-lg bg-sidebar-accent/30 p-3">
-                              <p className="text-sidebar-foreground text-xs font-medium mb-2">{r.events?.name || "Event"}</p>
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-sidebar-foreground text-xs font-medium">{r.events?.name || "Event"}</p>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    onClick={async (e) => {
+                                      e.stopPropagation();
+                                      const { data: partnerAssets } = await supabase
+                                        .from("partner_assets")
+                                        .select("*")
+                                        .eq("partner_id", r.partner_id);
+                                      generateRecapPDF(r, partnerAssets || [], window.location.origin);
+                                      toast.success("PDF downloaded!");
+                                    }}
+                                    className="p-1.5 rounded-md hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors"
+                                    title="Download PDF Report"
+                                  >
+                                    <FileDown className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const url = `${window.location.origin}/recap/${r.id}`;
+                                      navigator.clipboard.writeText(url);
+                                      toast.success("Share link copied!");
+                                    }}
+                                    className="p-1.5 rounded-md hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors"
+                                    title="Copy Share Link"
+                                  >
+                                    <Copy className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const partnerEmail = r.partners?.email || partner.email;
+                                      const partnerName = r.partners?.contact_name || partner.contact_name;
+                                      const url = `${window.location.origin}/recap/${r.id}`;
+                                      const subject = encodeURIComponent(`Your Post-Event Recap — ${r.events?.name || "Event"}`);
+                                      const body = encodeURIComponent(
+                                        `Hi ${partnerName},\n\nThank you for partnering with us! Here's your post-event recap:\n\n${url}\n\nBest,\nBreathe & Bloom Team`
+                                      );
+                                      window.open(`mailto:${partnerEmail}?subject=${subject}&body=${body}`, "_blank");
+                                    }}
+                                    className="p-1.5 rounded-md hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors"
+                                    title="Email Recap to Partner"
+                                  >
+                                    <Send className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </div>
                               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                 <div className="flex items-center gap-2">
                                   <Camera className="w-3.5 h-3.5 text-purple-400" />
