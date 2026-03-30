@@ -237,7 +237,7 @@ const AdminPartners = () => {
               <span className="text-xs px-2.5 py-1 rounded-full bg-sidebar-accent text-sidebar-foreground capitalize">
                 {(p.tier || "gift_bag").replace(/_/g, " ")}
               </span>
-              <Camera className="w-4 h-4 text-sidebar-foreground/20" />
+              <Camera className="w-4 h-4 text-sidebar-foreground/40" />
             </div>
           </div>
         ))}
