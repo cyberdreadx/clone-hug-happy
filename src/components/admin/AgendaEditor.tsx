@@ -105,10 +105,10 @@ const AgendaEditor = ({ eventId }: AgendaEditorProps) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h3 className="text-sidebar-foreground font-medium text-sm">Agenda</h3>
-          {saving && <Loader2 className="w-3.5 h-3.5 animate-spin text-sidebar-foreground/40" />}
+          <h3 className="text-[#022701] font-medium text-sm">Agenda</h3>
+          {saving && <Loader2 className="w-3.5 h-3.5 animate-spin text-[#022701]/40" />}
           {segments.length > 0 && (
-            <span className="text-sidebar-foreground/40 text-xs">
+            <span className="text-[#022701]/40 text-xs">
               <Clock className="w-3 h-3 inline mr-0.5" />
               {hours > 0 ? `${hours}h ` : ""}{mins}m
             </span>
@@ -117,7 +117,7 @@ const AgendaEditor = ({ eventId }: AgendaEditorProps) => {
         <button
           type="button"
           onClick={() => setFormModal({ open: true })}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#022701] text-[#eee8e1] text-xs font-medium hover:opacity-90 transition-opacity"
         >
           <Plus className="w-3.5 h-3.5" /> Add
         </button>
@@ -132,7 +132,7 @@ const AgendaEditor = ({ eventId }: AgendaEditorProps) => {
               key={preset.type}
               type="button"
               onClick={() => addPreset(preset)}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-md border border-sidebar-border text-[11px] text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-md border border-[#022701]/20 text-[11px] text-[#022701]/50 hover:text-[#022701] hover:bg-[#022701]/10/50 transition-colors"
             >
               <Icon className="w-3 h-3" />
               {preset.title}
@@ -144,11 +144,11 @@ const AgendaEditor = ({ eventId }: AgendaEditorProps) => {
       {/* Segments List */}
       {isLoading ? (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-5 h-5 animate-spin text-sidebar-foreground/30" />
+          <Loader2 className="w-5 h-5 animate-spin text-[#022701]/30" />
         </div>
       ) : segments.length === 0 ? (
-        <div className="text-center py-8 border border-dashed border-sidebar-border rounded-lg">
-          <p className="text-sidebar-foreground/30 text-xs">No segments yet — use quick-add or click Add</p>
+        <div className="text-center py-8 border border-dashed border-[#022701]/20 rounded-lg">
+          <p className="text-[#022701]/30 text-xs">No segments yet — use quick-add or click Add</p>
         </div>
       ) : (
         <div className="space-y-1.5">
@@ -165,31 +165,31 @@ const AgendaEditor = ({ eventId }: AgendaEditorProps) => {
                 onDragEnd={() => setDraggedIdx(null)}
                 className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all group cursor-grab active:cursor-grabbing ${
                   isDragged
-                    ? "border-sidebar-ring/50 bg-sidebar-accent/60 opacity-60"
-                    : "border-sidebar-border hover:bg-sidebar-accent/20"
+                    ? "border-sidebar-ring/50 bg-[#022701]/10/60 opacity-60"
+                    : "border-[#022701]/20 hover:bg-[#022701]/10/20"
                 }`}
               >
-                <GripVertical className="w-3.5 h-3.5 text-sidebar-foreground/20 group-hover:text-sidebar-foreground/40 shrink-0" />
-                <span className="text-[10px] text-sidebar-foreground/30 font-mono w-8 text-right shrink-0">{getStartTime(idx)}</span>
-                <div className="w-7 h-7 rounded-md bg-sidebar-accent flex items-center justify-center shrink-0">
-                  <Icon className="w-3.5 h-3.5 text-sidebar-foreground/60" />
+                <GripVertical className="w-3.5 h-3.5 text-[#022701]/20 group-hover:text-[#022701]/40 shrink-0" />
+                <span className="text-[10px] text-[#022701]/30 font-mono w-8 text-right shrink-0">{getStartTime(idx)}</span>
+                <div className="w-7 h-7 rounded-md bg-[#022701]/10 flex items-center justify-center shrink-0">
+                  <Icon className="w-3.5 h-3.5 text-[#022701]/60" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sidebar-foreground text-xs font-medium truncate">{seg.title}</p>
+                  <p className="text-[#022701] text-xs font-medium truncate">{seg.title}</p>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-sidebar-foreground/40 text-[10px]">{seg.duration_minutes}m</span>
+                    <span className="text-[#022701]/40 text-[10px]">{seg.duration_minutes}m</span>
                     {seg.facilitator && (
-                      <span className="text-sidebar-foreground/40 text-[10px] flex items-center gap-0.5">
+                      <span className="text-[#022701]/40 text-[10px] flex items-center gap-0.5">
                         <User className="w-2.5 h-2.5" /> {seg.facilitator}
                       </span>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                  <button type="button" onClick={() => setFormModal({ open: true, segment: seg })} className="p-1 rounded hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground">
+                  <button type="button" onClick={() => setFormModal({ open: true, segment: seg })} className="p-1 rounded hover:bg-[#022701]/10 text-[#022701]/40 hover:text-[#022701]">
                     <Pencil className="w-3 h-3" />
                   </button>
-                  <button type="button" onClick={() => handleDelete(seg.id)} className="p-1 rounded hover:bg-red-500/10 text-sidebar-foreground/40 hover:text-red-400">
+                  <button type="button" onClick={() => handleDelete(seg.id)} className="p-1 rounded hover:bg-red-500/10 text-[#022701]/40 hover:text-red-400">
                     <Trash2 className="w-3 h-3" />
                   </button>
                 </div>
@@ -259,18 +259,18 @@ function SegmentFormModal({
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-sidebar-accent border border-sidebar-border text-sidebar-foreground text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50";
+  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-[#022701]/10 border border-[#022701]/20 text-[#022701] text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50";
 
   return (
     <AdminModal open={open} onClose={onClose} title={segment ? "Edit Segment" : "Add Segment"}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Title *</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Title *</label>
           <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} placeholder="e.g. Guided Breathwork" />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Type</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Type</label>
             <select value={form.segment_type} onChange={(e) => setForm({ ...form, segment_type: e.target.value })} className={inputClass}>
               <option value="welcome">Welcome & Opening</option>
               <option value="breathwork">Breathwork</option>
@@ -283,28 +283,28 @@ function SegmentFormModal({
             </select>
           </div>
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Duration (min)</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Duration (min)</label>
             <input type="number" min={1} max={480} value={form.duration_minutes} onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 15 })} className={inputClass} />
           </div>
         </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Facilitator</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Facilitator</label>
           <input value={form.facilitator} onChange={(e) => setForm({ ...form, facilitator: e.target.value })} className={inputClass} placeholder="e.g. DJ Soleil" />
         </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Instagram Handle</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Instagram Handle</label>
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sidebar-foreground/30 text-sm">@</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#022701]/30 text-sm">@</span>
             <input value={form.facilitator_instagram} onChange={(e) => setForm({ ...form, facilitator_instagram: e.target.value.replace(/^@/, "") })} className={`${inputClass} pl-8`} placeholder="username" />
           </div>
         </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Notes</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Notes</label>
           <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className={`${inputClass} resize-none`} />
         </div>
         <div className="flex gap-3 pt-2">
-          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-full border border-sidebar-border text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors">Cancel</button>
-          <button type="submit" disabled={loading} className="flex-1 bg-sidebar-primary text-sidebar-primary-foreground py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50">
+          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-full border border-[#022701]/20 text-sm text-[#022701]/60 hover:text-[#022701] transition-colors">Cancel</button>
+          <button type="submit" disabled={loading} className="flex-1 bg-[#022701] text-[#eee8e1] py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50">
             {loading ? "Saving..." : segment ? "Update" : "Add Segment"}
           </button>
         </div>
