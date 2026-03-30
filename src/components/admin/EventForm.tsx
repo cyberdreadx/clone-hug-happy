@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { ImagePlus, X, Plus, Trash2 } from "lucide-react";
 import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
+import AgendaEditor from "./AgendaEditor";
 
 interface EventFormProps {
   open: boolean;
@@ -248,6 +249,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
             </button>
           </div>
         </div>
+
+        {/* Agenda — only for existing events */}
+        {event && (
+          <div className="border-t border-sidebar-border pt-4">
+            <AgendaEditor eventId={event.id} />
+          </div>
+        )}
 
         <div>
           <label className="block text-sm text-sidebar-foreground mb-1.5">Status</label>

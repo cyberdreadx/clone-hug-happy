@@ -3,13 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
-  Search, Plus, Download, Pencil, Trash2, ChevronDown, ChevronRight,
-  Send, Loader2, ListOrdered,
+  Search, Plus, Download, Pencil, Trash2,
+  Send, Loader2,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
-import AgendaEditor from "@/components/admin/AgendaEditor";
 
 const AdminEvents = () => {
   const queryClient = useQueryClient();
@@ -17,7 +16,6 @@ const AdminEvents = () => {
   const [timeFilter, setTimeFilter] = useState<"upcoming" | "past" | "cancelled">("upcoming");
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
-  const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
   const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
 
   const runFollowUp = async (eventId: string, eventName: string) => {
@@ -166,74 +164,48 @@ const AdminEvents = () => {
           <tbody>
             {filtered.map((ev) => {
               const counts = guestCounts[ev.id as keyof typeof guestCounts] as { total: number; confirmed: number } | undefined;
-              const isExpanded = expandedEvent === ev.id;
               return (
-                <React.Fragment key={ev.id}>
-                  <tr className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors">
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-2">
+                <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors">
+                  <td className="px-5 py-4">
+                    <div>
+                      <p className="text-sidebar-foreground font-medium">{ev.name}</p>
+                      <p className="text-sidebar-foreground/40 text-xs mt-0.5">{ev.location || "No location"}</p>
+                    </div>
+                  </td>
+                  <td className="px-5 py-4 text-sidebar-foreground/60">
+                    {ev.date ? new Date(ev.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}
+                  </td>
+                  <td className="px-5 py-4 text-sidebar-foreground/60">
+                    {counts ? `${counts.confirmed}/${counts.total}` : "0"} / {ev.max_guests}
+                  </td>
+                  <td className="px-5 py-4">{statusBadge(ev.status)}</td>
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-1">
+                      {ev.status === "active" && (
                         <button
-                          onClick={() => setExpandedEvent(isExpanded ? null : ev.id)}
-                          className="p-0.5 text-sidebar-foreground/30 hover:text-sidebar-foreground transition-colors"
-                          title="Toggle Agenda"
+                          onClick={() => runFollowUp(ev.id, ev.name)}
+                          disabled={followUpLoading === ev.id}
+                          title="Run Post-Event Follow-Up"
+                          className="p-1.5 rounded-lg hover:bg-emerald-500/10 transition-colors text-sidebar-foreground/40 hover:text-emerald-400 disabled:opacity-50"
                         >
-                          {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                          {followUpLoading === ev.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                         </button>
-                        <div>
-                          <p className="text-sidebar-foreground font-medium">{ev.name}</p>
-                          <p className="text-sidebar-foreground/40 text-xs mt-0.5">{ev.location || "No location"}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-5 py-4 text-sidebar-foreground/60">
-                      {ev.date ? new Date(ev.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}
-                    </td>
-                    <td className="px-5 py-4 text-sidebar-foreground/60">
-                      {counts ? `${counts.confirmed}/${counts.total}` : "0"} / {ev.max_guests}
-                    </td>
-                    <td className="px-5 py-4">{statusBadge(ev.status)}</td>
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => setExpandedEvent(isExpanded ? null : ev.id)}
-                          title="Manage Agenda"
-                          className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
-                        >
-                          <ListOrdered className="w-4 h-4" />
-                        </button>
-                        {ev.status === "active" && (
-                          <button
-                            onClick={() => runFollowUp(ev.id, ev.name)}
-                            disabled={followUpLoading === ev.id}
-                            title="Run Post-Event Follow-Up"
-                            className="p-1.5 rounded-lg hover:bg-emerald-500/10 transition-colors text-sidebar-foreground/40 hover:text-emerald-400 disabled:opacity-50"
-                          >
-                            {followUpLoading === ev.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                          </button>
-                        )}
-                        <button
-                          onClick={() => setEventModal({ open: true, event: ev })}
-                          className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => setDeleteModal({ open: true, id: ev.id })}
-                          className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  {isExpanded && (
-                    <tr className="border-b border-sidebar-border/50">
-                      <td colSpan={5} className="px-5 py-4 bg-sidebar-accent/10">
-                        <AgendaEditor eventId={ev.id} />
-                      </td>
-                    </tr>
-                  )}
-                </React.Fragment>
+                      )}
+                      <button
+                        onClick={() => setEventModal({ open: true, event: ev })}
+                        className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setDeleteModal({ open: true, id: ev.id })}
+                        className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
               );
             })}
             {filtered.length === 0 && (
