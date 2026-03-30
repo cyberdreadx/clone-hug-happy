@@ -142,7 +142,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-sidebar-accent border border-sidebar-border text-sidebar-foreground text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50";
+  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-white/60 border border-[#022701]/20 text-sm focus:outline-none focus:ring-2 focus:ring-[#022701]/30" + " text-[#022701] placeholder:text-[#022701]/40";
 
   return (
     <AdminModal open={open} onClose={onClose} title={event ? "Edit Event" : "Create Event"}>
