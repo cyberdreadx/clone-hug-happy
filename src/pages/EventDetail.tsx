@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
-  Heart, MessageCircle, Coffee, Mic, Loader2, Info,
+  Heart, MessageCircle, Coffee, Mic, Loader2, Info, ExternalLink, Crown,
 } from "lucide-react";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
@@ -55,6 +55,34 @@ const EventDetail = () => {
       return count || 0;
     },
     enabled: !!id,
+  });
+
+  const { data: sponsorsEnabled = true } = useQuery({
+    queryKey: ["public-sponsors-enabled", id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("event_settings")
+        .select("setting_value")
+        .eq("event_id", id!)
+        .eq("setting_key", "sponsors_enabled")
+        .maybeSingle();
+      return (data?.setting_value as boolean) !== false;
+    },
+    enabled: !!id,
+  });
+
+  const { data: sponsors = [] } = useQuery({
+    queryKey: ["public-sponsors", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("event_sponsors")
+        .select("*")
+        .eq("event_id", id!)
+        .order("display_order", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id && sponsorsEnabled,
   });
 
   if (isLoading) {
@@ -255,6 +283,94 @@ const EventDetail = () => {
             </div>
           </div>
         )}
+
+        {/* Sponsors */}
+        {sponsorsEnabled && sponsors.length > 0 && (() => {
+          const mainSponsors = sponsors.filter((s: any) => s.is_main);
+          const regularSponsors = sponsors.filter((s: any) => !s.is_main);
+          return (
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-1">Supported By</p>
+              <h2 className="font-serif text-2xl text-foreground mb-6">Our Sponsors</h2>
+
+              {/* Main Sponsors — prominent cards */}
+              {mainSponsors.length > 0 && (
+                <div className="space-y-4 mb-6">
+                  {mainSponsors.map((s: any) => (
+                    <div key={s.id} className="bg-card border border-border rounded-xl p-6 flex flex-col sm:flex-row items-start gap-5">
+                      {s.logo_url && (
+                        <div className="w-20 h-20 rounded-xl bg-section-light border border-border flex items-center justify-center overflow-hidden shrink-0">
+                          <img src={s.logo_url} alt={s.name} className="w-full h-full object-contain p-2" />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Crown className="w-4 h-4 text-gold" />
+                          <p className="text-xs tracking-widest uppercase text-muted-foreground">Featured Sponsor</p>
+                        </div>
+                        <h3 className="font-serif text-xl text-foreground">{s.name}</h3>
+                        {s.description && (
+                          <p className="text-muted-foreground text-sm leading-relaxed mt-2">{s.description}</p>
+                        )}
+                        <div className="flex items-center gap-3 mt-4">
+                          {s.cta_label && s.cta_link && (
+                            <a
+                              href={s.cta_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 bg-gold text-primary-foreground px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+                            >
+                              {s.cta_label} <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                          {s.website_url && (
+                            <a
+                              href={s.website_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground text-sm hover:text-foreground transition-colors"
+                            >
+                              Visit Website ↗
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Regular Sponsors — compact grid */}
+              {regularSponsors.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {regularSponsors.map((s: any) => (
+                    <a
+                      key={s.id}
+                      href={s.website_url || undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`bg-card border border-border rounded-xl p-4 flex flex-col items-center text-center gap-3 transition-colors ${s.website_url ? "hover:border-muted-foreground/30 cursor-pointer" : "cursor-default"}`}
+                    >
+                      {s.logo_url ? (
+                        <div className="w-14 h-14 rounded-lg bg-section-light border border-border flex items-center justify-center overflow-hidden">
+                          <img src={s.logo_url} alt={s.name} className="w-full h-full object-contain p-1.5" />
+                        </div>
+                      ) : (
+                        <div className="w-14 h-14 rounded-lg bg-section-light border border-border flex items-center justify-center">
+                          <span className="text-lg font-serif text-muted-foreground">{s.name.charAt(0)}</span>
+                        </div>
+                      )}
+                      <p className="text-foreground text-sm font-medium">{s.name}</p>
+                      {s.description && (
+                        <p className="text-muted-foreground text-xs line-clamp-2">{s.description}</p>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
