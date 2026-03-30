@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, Info, ExternalLink, Crown,
-  Tag, AlertCircle,
+  Tag, AlertCircle, ShieldCheck,
 } from "lucide-react";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
@@ -100,6 +100,27 @@ const EventDetail = () => {
     },
     enabled: !!id,
   });
+
+  const { data: waiverSettings } = useQuery({
+    queryKey: ["public-waiver", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("event_settings")
+        .select("setting_key, setting_value")
+        .eq("event_id", id!)
+        .in("setting_key", ["waiver_enabled", "waiver_type", "waiver_content", "waiver_required"]);
+      if (error) throw error;
+      const map: Record<string, any> = {};
+      data?.forEach((row) => { map[row.setting_key] = row.setting_value; });
+      return map;
+    },
+    enabled: !!id,
+  });
+
+  const waiverEnabled = waiverSettings?.waiver_enabled === true;
+  const waiverRequired = waiverSettings?.waiver_required === true;
+  const waiverType = waiverSettings?.waiver_type;
+  const waiverContent = typeof waiverSettings?.waiver_content === "string" ? waiverSettings.waiver_content : "";
 
   if (isLoading) {
     return (
@@ -473,6 +494,42 @@ const EventDetail = () => {
             </div>
           );
         })()}
+
+        {/* Waiver */}
+        {waiverEnabled && waiverContent && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <ShieldCheck className="w-5 h-5 text-muted-foreground" />
+              <h2 className="font-serif text-2xl text-foreground">Waiver</h2>
+              {waiverRequired && (
+                <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-red-500/10 text-red-500 border border-red-500/20">
+                  Required
+                </span>
+              )}
+            </div>
+            {waiverType === "link" ? (
+              <div className="bg-card border border-border rounded-xl px-5 py-4">
+                <p className="text-muted-foreground text-sm mb-3">
+                  {waiverRequired
+                    ? "You must review and accept the waiver before attending this event."
+                    : "Please review the waiver for this event."}
+                </p>
+                <a
+                  href={waiverContent}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-gold text-sm font-medium hover:underline"
+                >
+                  View Waiver <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            ) : (
+              <div className="bg-card border border-border rounded-xl px-5 py-4">
+                <p className="text-muted-foreground text-sm whitespace-pre-wrap">{waiverContent}</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
