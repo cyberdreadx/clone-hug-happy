@@ -108,7 +108,7 @@ const AdminDeliverables = () => {
     return (
       <span className={`text-xs px-2.5 py-1 rounded-full capitalize inline-flex items-center gap-1 ${cfg.color}`}>
         <Icon className="w-3 h-3" />
-        {status.replace("_", " ")}
+        {(status || "").replace("_", " ")}
       </span>
     );
   };
@@ -231,7 +231,7 @@ const AdminDeliverables = () => {
                     </div>
                     <div className="text-left">
                       <p className="text-sidebar-foreground font-medium">{partner.company_name}</p>
-                      <p className="text-sidebar-foreground/40 text-xs capitalize">{partner.tier.replace(/_/g, " ")}</p>
+                      <p className="text-sidebar-foreground/40 text-xs capitalize">{(partner.tier || "").replace(/_/g, " ")}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
@@ -451,7 +451,7 @@ const AdminDeliverables = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-sidebar-foreground/60 text-xs capitalize">{d.asset_type.replace("_", " ")}</td>
+                    <td className="px-5 py-4 text-sidebar-foreground/60 text-xs capitalize">{(d.asset_type || "").replace("_", " ")}</td>
                     <td className="px-5 py-4 text-sidebar-foreground/60">{d.partners?.company_name || "—"}</td>
                     <td className="px-5 py-4 text-sidebar-foreground/60">
                       {d.due_date ? new Date(d.due_date).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "—"}
