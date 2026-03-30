@@ -34,11 +34,12 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
       setForm({
         name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
+        ticket_price: event.ticket_price != null ? String(event.ticket_price) : "",
       });
       setImagePreview(event.cover_image || null);
       setHighlights(Array.isArray(event.highlights) ? event.highlights : []);
     } else {
-      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
+      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
       setImagePreview(null);
       setHighlights([]);
     }
