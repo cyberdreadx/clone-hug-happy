@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { CalendarDays, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarDays, MapPin, ChevronLeft, ChevronRight, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 
@@ -21,6 +21,29 @@ const UpcomingEvent = () => {
       return data ?? [];
     },
   });
+
+  // Fetch main sponsors for all active events
+  const eventIds = events.map((e) => e.id);
+  const { data: mainSponsors = [] } = useQuery({
+    queryKey: ["main-sponsors-carousel", eventIds],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("event_sponsors")
+        .select("*")
+        .in("event_id", eventIds)
+        .eq("is_main", true)
+        .order("display_order", { ascending: true });
+      if (error) throw error;
+      return data ?? [];
+    },
+    enabled: eventIds.length > 0,
+  });
+
+  // Map: event_id -> first main sponsor
+  const sponsorByEvent = mainSponsors.reduce<Record<string, any>>((acc, s) => {
+    if (!acc[s.event_id]) acc[s.event_id] = s;
+    return acc;
+  }, {});
 
   const updateScrollButtons = () => {
     const el = scrollRef.current;
