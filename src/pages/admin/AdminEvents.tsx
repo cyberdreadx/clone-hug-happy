@@ -17,6 +17,13 @@ const AdminEvents = () => {
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
   const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
+  const [sortCol, setSortCol] = useState<"date" | "rsvps" | "gross" | null>("date");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const toggleSort = (col: "date" | "rsvps" | "gross") => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir("desc"); }
+  };
 
   const runFollowUp = async (eventId: string, eventName: string) => {
     if (!confirm(`Run post-event follow-up for "${eventName}"?\n\nThis will:\n• Mark confirmed/checked-in guests as "attended"\n• Mark pending guests as "no-show"\n• Set event status to "completed"`)) return;
