@@ -14,6 +14,8 @@ interface Tier {
   sold_count: number;
   status: string;
   display_order: number;
+  sales_end_date: string | null;
+  sales_end_time: string | null;
 }
 
 interface PricingManagerProps {
@@ -38,7 +40,7 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [addingNew, setAddingNew] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", price: "", capacity: "", status: "active" });
+  const [form, setForm] = useState({ name: "", description: "", price: "", capacity: "", status: "active", sales_end_date: "", sales_end_time: "" });
   const [saving, setSaving] = useState(false);
 
   const { data: tiers = [], isLoading } = useQuery({
