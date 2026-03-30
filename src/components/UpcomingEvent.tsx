@@ -137,6 +137,16 @@ const UpcomingEvent = () => {
                         <span className="font-serif text-2xl text-muted-foreground/40">{event.name.charAt(0)}</span>
                       </div>
                     )}
+                    {isAlmostFull && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-red-500/90 text-white backdrop-blur-sm">
+                        Almost Full
+                      </span>
+                    )}
+                    {isSoldOut && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-foreground/80 text-background backdrop-blur-sm">
+                        Sold Out
+                      </span>
+                    )}
                   </div>
                   <div className="p-5 space-y-2.5 flex-1 flex flex-col">
                     <h3 className="font-serif text-lg text-foreground leading-snug line-clamp-2">{event.name}</h3>
