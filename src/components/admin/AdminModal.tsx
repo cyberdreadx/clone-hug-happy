@@ -13,7 +13,7 @@ const AdminModal = ({ open, onClose, title, children }: AdminModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={(e) => { e.stopPropagation(); onClose(); }} />
       <div className="relative border border-sidebar-border rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto" style={{ backgroundColor: '#eee8e1' }}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#022701]/15">
           <h3 className="font-serif text-lg text-[#022701]">{title}</h3>
