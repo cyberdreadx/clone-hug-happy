@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Plus, Download, Pencil, Trash2, ChevronRight, ArrowLeft } from "lucide-react";
+import { Search, Plus, Download, Pencil, Trash2, Camera, ArrowLeft } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import PartnerForm from "@/components/admin/PartnerForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
@@ -209,7 +209,7 @@ const AdminPartners = () => {
                       className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400">
                       <Trash2 className="w-4 h-4" />
                     </button>
-                    <ChevronRight className="w-4 h-4 text-sidebar-foreground/20" />
+                    <Camera className="w-4 h-4 text-sidebar-foreground/20" />
                   </div>
                 </td>
               </tr>
@@ -237,7 +237,7 @@ const AdminPartners = () => {
               <span className="text-xs px-2.5 py-1 rounded-full bg-sidebar-accent text-sidebar-foreground capitalize">
                 {(p.tier || "gift_bag").replace(/_/g, " ")}
               </span>
-              <ChevronRight className="w-4 h-4 text-sidebar-foreground/20" />
+              <Camera className="w-4 h-4 text-sidebar-foreground/20" />
             </div>
           </div>
         ))}
