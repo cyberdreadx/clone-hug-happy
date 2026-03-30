@@ -85,12 +85,12 @@ const AdminDashboard = () => {
     <AdminLayout title="Dashboard">
       {/* Next Event Banner */}
       {nextEvent && (
-        <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-sidebar-accent to-sidebar-accent/50 border border-sidebar-border">
-          <div className="flex items-center justify-between">
+        <div className="mb-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-sidebar-accent to-sidebar-accent/50 border border-sidebar-border">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <p className="text-sidebar-foreground/40 text-xs uppercase tracking-wider mb-1">Next Event</p>
               <h2 className="text-sidebar-foreground font-serif text-xl">{nextEvent.name}</h2>
-              <div className="flex items-center gap-4 mt-2 text-sm text-sidebar-foreground/60">
+              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-sidebar-foreground/60">
                 {nextEvent.date && (
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" />
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
                 )}
               </div>
             </div>
-            <div className="text-right">
+            <div className="sm:text-right">
               <p className="text-3xl font-serif text-sidebar-foreground">
                 {nextEventConfirmed}<span className="text-sidebar-foreground/30">/{nextEventCapacity}</span>
               </p>

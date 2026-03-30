@@ -65,13 +65,13 @@ const AdminPartners = () => {
         </button>
       }
     >
-      <div className="flex flex-col sm:flex-row gap-4 mb-6 items-start sm:items-center justify-between">
-        <div className="relative">
+      <div className="flex flex-col gap-3 mb-6">
+        <div className="relative w-full sm:w-64">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-sidebar-foreground/40" />
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search partners..."
-            className="pl-9 pr-4 py-2 rounded-lg bg-sidebar-accent border border-sidebar-border text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50 w-64" />
+            className="w-full pl-9 pr-4 py-2 rounded-lg bg-sidebar-accent border border-sidebar-border text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50" />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex rounded-lg overflow-hidden border border-sidebar-border flex-wrap">
             {tiers.map((t) => (
               <button key={t} onClick={() => setTierFilter(t)}
@@ -89,7 +89,8 @@ const AdminPartners = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-sidebar-border overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden md:block rounded-xl border border-sidebar-border overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-sidebar-border">
@@ -133,6 +134,39 @@ const AdminPartners = () => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {filtered.map((p) => (
+          <div key={p.id} className="rounded-xl border border-sidebar-border p-4 bg-sidebar-accent/20">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="min-w-0">
+                <p className="text-sidebar-foreground font-medium text-sm">{p.company_name}</p>
+                <p className="text-sidebar-foreground/40 text-xs truncate">{p.contact_name} · {p.email}</p>
+              </div>
+              {statusBadge(p.status)}
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs px-2.5 py-1 rounded-full bg-sidebar-accent text-sidebar-foreground capitalize">
+                {p.tier.replace(/_/g, " ")}
+              </span>
+              <div className="flex items-center gap-1">
+                <button onClick={() => setPartnerModal({ open: true, partner: p })}
+                  className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground">
+                  <Pencil className="w-4 h-4" />
+                </button>
+                <button onClick={() => setDeleteModal({ open: true, id: p.id })}
+                  className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+        {filtered.length === 0 && (
+          <p className="text-center text-sidebar-foreground/30 py-12">No partners found</p>
+        )}
       </div>
 
       <PartnerForm open={partnerModal.open} onClose={() => setPartnerModal({ open: false })} partner={partnerModal.partner} />
