@@ -289,6 +289,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           </div>
         )}
 
+        {/* Waiver — only for existing events */}
+        {event && (
+          <div className="border-t border-[#022701]/20 pt-4">
+            <WaiverManager eventId={event.id} />
+          </div>
+        )}
+
         <div>
           <label className="block text-sm text-[#022701] mb-1.5">Status</label>
           <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className={inputClass}>
