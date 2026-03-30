@@ -142,14 +142,14 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-sidebar-accent border border-sidebar-border text-sidebar-foreground text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring/50";
+  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-white/60 border border-[#022701]/20 text-sm focus:outline-none focus:ring-2 focus:ring-[#022701]/30" + " text-[#022701] placeholder:text-[#022701]/40";
 
   return (
     <AdminModal open={open} onClose={onClose} title={event ? "Edit Event" : "Create Event"}>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Cover Image */}
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Cover Image</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Cover Image</label>
           {imagePreview ? (
             <div className="relative rounded-lg overflow-hidden h-40">
               <img src={imagePreview} alt="Cover" className="w-full h-full object-cover" />
@@ -158,25 +158,25 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
               </button>
             </div>
           ) : (
-            <label className="flex flex-col items-center justify-center h-32 rounded-lg border-2 border-dashed border-sidebar-border hover:border-sidebar-foreground/30 cursor-pointer transition-colors">
-              <ImagePlus className="w-8 h-8 text-sidebar-foreground/30 mb-2" />
-              <span className="text-xs text-sidebar-foreground/40">Click to upload</span>
+            <label className="flex flex-col items-center justify-center h-32 rounded-lg border-2 border-dashed border-[#022701]/20 hover:border-sidebar-foreground/30 cursor-pointer transition-colors">
+              <ImagePlus className="w-8 h-8 text-[#022701]/30 mb-2" />
+              <span className="text-xs text-[#022701]/40">Click to upload</span>
               <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
             </label>
           )}
         </div>
 
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Event Name *</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Date</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Time</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Time</label>
             <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass}>
               <option value="">Select time</option>
               {Array.from({ length: 48 }, (_, i) => {
@@ -190,26 +190,26 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Max Guests</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Max Guests</label>
             <input type="number" value={form.max_guests} onChange={(e) => setForm({ ...form, max_guests: parseInt(e.target.value) || 100 })} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm text-sidebar-foreground mb-1.5">Ticket Price ($)</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Ticket Price ($)</label>
             <input type="number" step="0.01" min="0" placeholder="Free" value={form.ticket_price} onChange={(e) => setForm({ ...form, ticket_price: e.target.value })} className={inputClass} />
           </div>
         </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Location</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Location</label>
           <LocationAutocomplete value={form.location} onChange={(val) => setForm({ ...form, location: val })} className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Description</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Description</label>
           <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className={`${inputClass} resize-none`} />
         </div>
 
         {/* Good to Know / Highlights */}
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-2">Good to Know</label>
+          <label className="block text-sm text-[#022701] mb-2">Good to Know</label>
           {highlights.map((h, idx) => (
             <div key={idx} className="flex items-center gap-2 mb-2">
               <input
@@ -224,7 +224,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
                 placeholder="Details..."
                 className={`${inputClass} flex-1`}
               />
-              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-sidebar-foreground/30 hover:text-red-400 transition-colors">
+              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-[#022701]/30 hover:text-red-400 transition-colors">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
@@ -235,7 +235,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
                 key={preset}
                 type="button"
                 onClick={() => addHighlight(preset)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-sidebar-border text-xs text-sidebar-foreground/50 hover:text-sidebar-foreground hover:border-sidebar-foreground/30 transition-colors"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-[#022701]/20 text-xs text-[#022701]/50 hover:text-[#022701] hover:border-sidebar-foreground/30 transition-colors"
               >
                 <Plus className="w-3 h-3" /> {preset}
               </button>
@@ -243,7 +243,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
             <button
               type="button"
               onClick={() => addHighlight()}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dashed border-sidebar-border text-xs text-sidebar-foreground/30 hover:text-sidebar-foreground/50 transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dashed border-[#022701]/20 text-xs text-[#022701]/30 hover:text-[#022701]/50 transition-colors"
             >
               <Plus className="w-3 h-3" /> Custom
             </button>
@@ -252,13 +252,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
 
         {/* Agenda — only for existing events */}
         {event && (
-          <div className="border-t border-sidebar-border pt-4">
+          <div className="border-t border-[#022701]/20 pt-4">
             <AgendaEditor eventId={event.id} />
           </div>
         )}
 
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Status</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Status</label>
           <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className={inputClass}>
             <option value="draft">Draft</option>
             <option value="active">Active</option>
@@ -267,7 +267,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           </select>
         </div>
         <div className="flex gap-3 pt-2">
-          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-full border border-sidebar-border text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors">Cancel</button>
+          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-full border border-[#022701]/20 text-sm text-[#022701]/60 hover:text-[#022701] transition-colors">Cancel</button>
           <button type="submit" disabled={loading} className="flex-1 bg-sidebar-primary text-sidebar-primary-foreground py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50">
             {loading ? "Saving..." : event ? "Update" : "Create"}
           </button>
