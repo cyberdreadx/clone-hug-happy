@@ -123,6 +123,9 @@ const UpcomingEvent = () => {
         <div className="flex flex-col gap-4 sm:hidden">
           {events.map((event) => {
             const sponsor = sponsorByEvent[event.id];
+            const spotsLeft = Math.max((event.max_guests || 100) - 0, 0);
+            const isSoldOut = spotsLeft <= 0;
+            const isAlmostFull = !isSoldOut && spotsLeft <= 10;
             return (
               <Link key={event.id} to={`/event/${event.id}`} className="group">
                 <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow flex flex-col" style={{ backgroundColor: '#ddedd7' }}>
@@ -133,6 +136,16 @@ const UpcomingEvent = () => {
                       <div className="w-full h-full flex items-center justify-center bg-accent/30">
                         <span className="font-serif text-2xl text-muted-foreground/40">{event.name.charAt(0)}</span>
                       </div>
+                    )}
+                    {isAlmostFull && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-red-500/90 text-white backdrop-blur-sm">
+                        Almost Full
+                      </span>
+                    )}
+                    {isSoldOut && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-foreground/80 text-background backdrop-blur-sm">
+                        Sold Out
+                      </span>
                     )}
                   </div>
                   <div className="p-5 space-y-2.5 flex-1 flex flex-col">
