@@ -108,7 +108,7 @@ const AdminDeliverables = () => {
     return (
       <span className={`text-xs px-2.5 py-1 rounded-full capitalize inline-flex items-center gap-1 ${cfg.color}`}>
         <Icon className="w-3 h-3" />
-        {status.replace("_", " ")}
+        {(status || "").replace("_", " ")}
       </span>
     );
   };
