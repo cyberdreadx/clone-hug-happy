@@ -31,36 +31,42 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   const contentW = w - margin * 2;
   let y = 0;
 
+  const headerH = 55;
+
   // --- Page background ---
   doc.setFillColor(245, 243, 237); // #f5f3ed
   doc.rect(0, 0, w, h, "F");
 
-  // --- Header band ---
+  // --- Header band (logo only) ---
   doc.setFillColor(198, 210, 193); // #c6d2c1
-  doc.rect(0, 0, w, 60, "F");
+  doc.rect(0, 0, w, headerH, "F");
 
-  // Logo
   try {
     const logoImg = await loadImage(logoSrc);
-    const logoW = 40;
+    const logoW = 70;
     const logoH = (logoImg.height / logoImg.width) * logoW;
-    doc.addImage(logoImg, "PNG", (w - logoW) / 2, 8, logoW, logoH);
+    const logoY = (headerH - logoH) / 2;
+    doc.addImage(logoImg, "PNG", (w - logoW) / 2, logoY, logoW, logoH);
   } catch {
-    // fallback text if logo fails
     doc.setTextColor(2, 39, 1);
-    doc.setFontSize(12);
+    doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("BREATHE & BLOOM", w / 2, 16, { align: "center" });
+    doc.text("BREATHE & BLOOM", w / 2, headerH / 2 + 3, { align: "center" });
   }
 
+  // --- Below header: event info block ---
+  y = headerH + 18;
   doc.setTextColor(2, 39, 1); // #022701
+
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("POST-EVENT PARTNERSHIP RECAP", w / 2, 32, { align: "center" });
+  doc.text("POST-EVENT RECAP", w / 2, y, { align: "center" });
+  y += 10;
 
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  doc.text(recap.events?.name || "Event", w / 2, 43, { align: "center" });
+  doc.text(recap.events?.name || "Event", w / 2, y, { align: "center" });
+  y += 8;
 
   if (recap.events?.date) {
     doc.setFontSize(9);
@@ -68,30 +74,34 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     const date = new Date(recap.events.date + "T00:00:00").toLocaleDateString("en-US", {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
-    doc.text(date, w / 2, 50, { align: "center" });
+    doc.text(date, w / 2, y, { align: "center" });
+    y += 5;
   }
 
   if (recap.events?.location) {
     doc.setFontSize(8);
-    doc.text(recap.events.location, w / 2, 56, { align: "center" });
+    doc.text(recap.events.location, w / 2, y, { align: "center" });
+    y += 5;
   }
 
   // --- Prepared for ---
-  y = 75;
-  doc.setTextColor(2, 39, 1);
+  y += 8;
   doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
   doc.text("PREPARED FOR", w / 2, y, { align: "center" });
+  y += 8;
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
-  doc.text(recap.partners?.company_name || "Partner", w / 2, y + 10, { align: "center" });
+  doc.text(recap.partners?.company_name || "Partner", w / 2, y, { align: "center" });
   if (recap.partners?.contact_name) {
+    y += 7;
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text(recap.partners.contact_name, w / 2, y + 18, { align: "center" });
+    doc.text(recap.partners.contact_name, w / 2, y, { align: "center" });
   }
 
   // --- Metrics ---
-  y = 110;
+  y += 18;
   const metrics = [
     { label: "PHOTOS DELIVERED", value: String(recap.photos_count || 0) },
     { label: "IMPRESSIONS", value: (recap.impressions || 0).toLocaleString() },
@@ -104,18 +114,14 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
 
   metrics.forEach((m, i) => {
     const x = margin + i * (boxW + 4);
-
-    // Box background
-    doc.setFillColor(198, 210, 193); // #c6d2c1
+    doc.setFillColor(198, 210, 193);
     doc.roundedRect(x, y, boxW, boxH, 3, 3, "F");
 
-    // Value
     doc.setTextColor(2, 39, 1);
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.text(m.value, x + boxW / 2, y + 14, { align: "center" });
 
-    // Label
     doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
     doc.text(m.label, x + boxW / 2, y + 22, { align: "center" });
@@ -142,7 +148,6 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     doc.text("FULL RECAP", margin, y);
     y += 6;
     doc.setFontSize(10);
-    doc.setTextColor(2, 39, 1);
     doc.textWithLink(recap.recap_url, margin, y, { url: recap.recap_url });
     y += 10;
   }
@@ -157,7 +162,6 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
     assets.forEach((asset: any) => {
       if (y > h - 30) {
         doc.addPage();
-        // New page background
         doc.setFillColor(245, 243, 237);
         doc.rect(0, 0, w, h, "F");
         y = margin;
@@ -186,7 +190,7 @@ export async function generateRecapPDF(recap: RecapData, assets: any[], siteUrl:
   doc.textWithLink(webUrl, margin, y, { url: webUrl });
 
   // --- Footer ---
-  doc.setFillColor(198, 210, 193); // #c6d2c1
+  doc.setFillColor(198, 210, 193);
   doc.rect(0, h - 12, w, 12, "F");
   doc.setTextColor(2, 39, 1);
   doc.setFontSize(7);
