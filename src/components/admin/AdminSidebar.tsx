@@ -1,6 +1,6 @@
 import {
   CalendarDays, Users, Handshake, FileText, Settings, LogOut,
-  LayoutDashboard, Globe, ShoppingCart,
+  LayoutDashboard, Globe, ShoppingCart, BarChart3,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
@@ -18,6 +18,7 @@ const manageItems = [
   { title: "Partners", url: "/admin/partners", icon: Handshake },
   { title: "Orders", url: "/admin/orders", icon: ShoppingCart },
   { title: "Deliverables", url: "/admin/deliverables", icon: FileText },
+  { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
 ];
 
 const settingsItems = [
