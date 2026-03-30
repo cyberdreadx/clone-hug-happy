@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Search, Plus, Download, Pencil, Trash2, ChevronRight, ArrowLeft } from "lucide-react";
+import { Search, Plus, Download, Pencil, Trash2, Camera, ArrowLeft } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import PartnerForm from "@/components/admin/PartnerForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
