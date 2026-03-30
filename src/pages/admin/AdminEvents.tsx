@@ -193,9 +193,21 @@ const AdminEvents = () => {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-sidebar-border">
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Event</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">RSVPs</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Gross</th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("date")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  Event {sortCol === "date" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("rsvps")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  RSVPs {sortCol === "rsvps" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("gross")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  Gross {sortCol === "gross" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Status</th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Action</th>
             </tr>
