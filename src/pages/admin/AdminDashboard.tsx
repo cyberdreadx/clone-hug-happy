@@ -76,7 +76,7 @@ const AdminDashboard = () => {
   const quickLinks = [
     { label: "Approve Guests", desc: `${pendingGuests} pending`, path: "/admin/guests", show: pendingGuests > 0 },
     { label: "Manage Events", desc: `${events.length} total`, path: "/admin/events", show: true },
-    { label: "Event Flow", desc: "Build run-of-show", path: "/admin/event-flow", show: true },
+    
     { label: "Partner Deliverables", desc: `${pendingDeliverables} pending`, path: "/admin/deliverables", show: true },
     { label: "Check-In", desc: "Open check-in view", path: "/checkin", show: !!nextEvent },
   ];
