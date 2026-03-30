@@ -101,6 +101,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         name: form.name,
         date: form.date || null,
         time: form.time || null,
+        end_time: form.end_time || null,
         location: form.location || null,
         description: form.description || null,
         status: form.status,
@@ -178,9 +179,23 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm text-[#022701] mb-1.5">Time</label>
+            <label className="block text-sm text-[#022701] mb-1.5">Start Time</label>
             <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={inputClass}>
-              <option value="">Select time</option>
+              <option value="">Select</option>
+              {Array.from({ length: 48 }, (_, i) => {
+                const h = Math.floor(i / 2);
+                const m = i % 2 === 0 ? "00" : "30";
+                const val = `${String(h).padStart(2, "0")}:${m}`;
+                const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+                const ampm = h < 12 ? "AM" : "PM";
+                return <option key={val} value={val}>{`${hour12}:${m} ${ampm}`}</option>;
+              })}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm text-[#022701] mb-1.5">End Time</label>
+            <select value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} className={inputClass}>
+              <option value="">Select</option>
               {Array.from({ length: 48 }, (_, i) => {
                 const h = Math.floor(i / 2);
                 const m = i % 2 === 0 ? "00" : "30";
