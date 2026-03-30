@@ -126,7 +126,7 @@ const UpcomingEvent = () => {
             return (
               <Link key={event.id} to={`/event/${event.id}`} className="group">
                 <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow flex flex-col" style={{ backgroundColor: '#ddedd7' }}>
-                  <div className="relative h-48 bg-muted">
+                  <div className="relative h-36 bg-muted">
                     {event.cover_image ? (
                       <img src={event.cover_image} alt={event.name} className="w-full h-full object-cover" />
                     ) : (
