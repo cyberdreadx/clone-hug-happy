@@ -6,6 +6,7 @@ import { ImagePlus, X, Plus, Trash2 } from "lucide-react";
 import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
 import AgendaEditor from "./AgendaEditor";
+import SponsorsManager from "./SponsorsManager";
 
 interface EventFormProps {
   open: boolean;
