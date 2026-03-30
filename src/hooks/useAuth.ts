@@ -8,25 +8,45 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isPartner, setIsPartner] = useState(false);
-  const initialized = useRef(false);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
+
     const fetchRoles = async (userId: string) => {
       try {
         const { data: roles } = await supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", userId);
+        if (!mountedRef.current) return;
         setIsAdmin(roles?.some((r) => r.role === "admin") ?? false);
         setIsPartner(roles?.some((r) => r.role === "partner") ?? false);
       } catch {
+        if (!mountedRef.current) return;
         setIsAdmin(false);
         setIsPartner(false);
       }
     };
 
+    // Get initial session first
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!mountedRef.current) return;
+      const u = session?.user ?? null;
+      setUser(u);
+      if (u) {
+        await fetchRoles(u.id);
+      }
+      if (mountedRef.current) setLoading(false);
+    });
+
+    // Then listen for changes (sign in, sign out, token refresh)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
+        if (!mountedRef.current) return;
+        // Skip INITIAL_SESSION since getSession handles it
+        if (event === "INITIAL_SESSION") return;
+
         const u = session?.user ?? null;
         setUser(u);
         if (u) {
@@ -35,18 +55,13 @@ export const useAuth = () => {
           setIsAdmin(false);
           setIsPartner(false);
         }
-        setLoading(false);
-        initialized.current = true;
+        if (mountedRef.current) setLoading(false);
       }
     );
 
-    const timeout = setTimeout(() => {
-      if (!initialized.current) setLoading(false);
-    }, 2000);
-
     return () => {
+      mountedRef.current = false;
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
   }, []);
 
