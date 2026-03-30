@@ -487,6 +487,8 @@ export type Database = {
           id: string
           name: string
           price: number
+          sales_end_date: string | null
+          sales_end_time: string | null
           sold_count: number
           status: string
           updated_at: string
@@ -500,6 +502,8 @@ export type Database = {
           id?: string
           name: string
           price?: number
+          sales_end_date?: string | null
+          sales_end_time?: string | null
           sold_count?: number
           status?: string
           updated_at?: string
@@ -513,6 +517,8 @@ export type Database = {
           id?: string
           name?: string
           price?: number
+          sales_end_date?: string | null
+          sales_end_time?: string | null
           sold_count?: number
           status?: string
           updated_at?: string
