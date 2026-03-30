@@ -15,6 +15,7 @@ import AdminGuests from "./pages/admin/AdminGuests.tsx";
 import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminDeliverables from "./pages/admin/AdminDeliverables.tsx";
 import AdminOrders from "./pages/admin/AdminOrders.tsx";
+import AdminAnalytics from "./pages/admin/AdminAnalytics.tsx";
 import PartnerPortal from "./pages/PartnerPortal.tsx";
 import PartnerRecap from "./pages/PartnerRecap.tsx";
 
