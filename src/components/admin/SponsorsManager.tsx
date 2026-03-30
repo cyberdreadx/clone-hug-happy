@@ -139,6 +139,7 @@ const SponsorsManager = ({ eventId }: SponsorsManagerProps) => {
       <div className="flex items-center justify-between">
         <h3 className="text-sidebar-foreground font-serif text-base">Sponsors</h3>
         <button
+          type="button"
           onClick={toggleEnabled}
           className={`relative w-11 h-6 rounded-full transition-colors ${sponsorsEnabled ? "bg-green-500" : "bg-sidebar-foreground/20"}`}
         >
@@ -170,6 +171,7 @@ const SponsorsManager = ({ eventId }: SponsorsManagerProps) => {
 
           {/* Add sponsor button */}
           <button
+            type="button"
             onClick={() => setEditModal({ open: true, sponsor: null })}
             className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-dashed border-sidebar-border text-sm text-sidebar-foreground/50 hover:text-sidebar-foreground hover:border-sidebar-foreground/30 transition-colors w-full justify-center"
           >
@@ -179,6 +181,7 @@ const SponsorsManager = ({ eventId }: SponsorsManagerProps) => {
           {/* Remove section */}
           {sponsors.length > 0 && (
             <button
+              type="button"
               onClick={removeSection}
               className="flex items-center gap-2 text-xs text-red-400/60 hover:text-red-400 transition-colors mt-2"
             >
