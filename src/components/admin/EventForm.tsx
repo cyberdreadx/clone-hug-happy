@@ -8,6 +8,7 @@ import LocationAutocomplete from "@/components/LocationAutocomplete";
 import AgendaEditor from "./AgendaEditor";
 import SponsorsManager from "./SponsorsManager";
 import PricingManager from "./PricingManager";
+import WaiverManager from "./WaiverManager";
 
 interface EventFormProps {
   open: boolean;
