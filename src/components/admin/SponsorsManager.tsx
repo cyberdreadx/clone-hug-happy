@@ -139,6 +139,7 @@ const SponsorsManager = ({ eventId }: SponsorsManagerProps) => {
       <div className="flex items-center justify-between">
         <h3 className="text-sidebar-foreground font-serif text-base">Sponsors</h3>
         <button
+          type="button"
           onClick={toggleEnabled}
           className={`relative w-11 h-6 rounded-full transition-colors ${sponsorsEnabled ? "bg-green-500" : "bg-sidebar-foreground/20"}`}
         >
