@@ -1,6 +1,6 @@
 import {
   CalendarDays, Users, Handshake, FileText, Settings, LogOut,
-  LayoutDashboard, Globe, ShoppingCart,
+  LayoutDashboard, Globe, ShoppingCart, BarChart3,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
