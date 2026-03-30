@@ -6,6 +6,7 @@ import { ImagePlus, X, Plus, Trash2 } from "lucide-react";
 import AdminModal from "./AdminModal";
 import LocationAutocomplete from "@/components/LocationAutocomplete";
 import AgendaEditor from "./AgendaEditor";
+import SponsorsManager from "./SponsorsManager";
 
 interface EventFormProps {
   open: boolean;
@@ -254,6 +255,13 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         {event && (
           <div className="border-t border-[#022701]/20 pt-4">
             <AgendaEditor eventId={event.id} />
+          </div>
+        )}
+
+        {/* Sponsors — only for existing events */}
+        {event && (
+          <div className="border-t border-[#022701]/20 pt-4">
+            <SponsorsManager eventId={event.id} />
           </div>
         )}
 
