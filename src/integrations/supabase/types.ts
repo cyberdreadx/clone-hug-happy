@@ -530,6 +530,60 @@ export type Database = {
         }
         Relationships: []
       }
+      survey_responses: {
+        Row: {
+          created_at: string
+          event_id: string
+          favorite_moment: string | null
+          guest_id: string | null
+          id: string
+          overall_rating: number
+          respondent_email: string | null
+          respondent_name: string | null
+          suggestions: string | null
+          would_attend_again: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          favorite_moment?: string | null
+          guest_id?: string | null
+          id?: string
+          overall_rating: number
+          respondent_email?: string | null
+          respondent_name?: string | null
+          suggestions?: string | null
+          would_attend_again?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          favorite_moment?: string | null
+          guest_id?: string | null
+          id?: string
+          overall_rating?: number
+          respondent_email?: string | null
+          respondent_name?: string | null
+          suggestions?: string | null
+          would_attend_again?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "survey_responses_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ticket_tiers: {
         Row: {
           capacity: number | null
