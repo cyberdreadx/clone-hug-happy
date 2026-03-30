@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Camera, Eye, Heart, MessageSquare, ExternalLink, Loader2 } from "lucide-react";
+import logoSrc from "@/assets/breathe-bloom-logo.png";
 
 const PartnerRecap = () => {
   const { recapId } = useParams<{ recapId: string }>();
