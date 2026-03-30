@@ -209,7 +209,7 @@ const AdminPartners = () => {
                       className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400">
                       <Trash2 className="w-4 h-4" />
                     </button>
-                    <ChevronRight className="w-4 h-4 text-sidebar-foreground/20" />
+                    <Camera className="w-4 h-4 text-sidebar-foreground/20" />
                   </div>
                 </td>
               </tr>
