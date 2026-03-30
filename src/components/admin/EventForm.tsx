@@ -103,6 +103,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         status: form.status,
         max_guests: form.max_guests,
         highlights: validHighlights,
+        ticket_price: form.ticket_price ? parseFloat(form.ticket_price) : null,
       };
 
       if (event) {
