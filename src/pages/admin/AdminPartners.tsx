@@ -111,7 +111,7 @@ const AdminPartners = () => {
                 <td className="px-5 py-4 text-sidebar-foreground/60">{p.contact_name}</td>
                 <td className="px-5 py-4">
                   <span className="text-xs px-2.5 py-1 rounded-full bg-sidebar-accent text-sidebar-foreground capitalize">
-                    {p.tier.replace(/_/g, " ")}
+                    {(p.tier || "gift_bag").replace(/_/g, " ")}
                   </span>
                 </td>
                 <td className="px-5 py-4">{statusBadge(p.status)}</td>
