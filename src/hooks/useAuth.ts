@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import type { User } from "@supabase/supabase-js";
@@ -10,22 +10,21 @@ export const useAuth = () => {
   const [isPartner, setIsPartner] = useState(false);
   const initialized = useRef(false);
 
-  const fetchRoles = useCallback(async (userId: string) => {
-    try {
-      const { data: roles } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userId);
-      setIsAdmin(roles?.some((r) => r.role === "admin") ?? false);
-      setIsPartner(roles?.some((r) => r.role === "partner") ?? false);
-    } catch {
-      setIsAdmin(false);
-      setIsPartner(false);
-    }
-  }, []);
-
   useEffect(() => {
-    // Set up listener first
+    const fetchRoles = async (userId: string) => {
+      try {
+        const { data: roles } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userId);
+        setIsAdmin(roles?.some((r) => r.role === "admin") ?? false);
+        setIsPartner(roles?.some((r) => r.role === "partner") ?? false);
+      } catch {
+        setIsAdmin(false);
+        setIsPartner(false);
+      }
+    };
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         const u = session?.user ?? null;
@@ -41,18 +40,15 @@ export const useAuth = () => {
       }
     );
 
-    // Fallback: if onAuthStateChange hasn't fired within 2s, resolve loading
     const timeout = setTimeout(() => {
-      if (!initialized.current) {
-        setLoading(false);
-      }
+      if (!initialized.current) setLoading(false);
     }, 2000);
 
     return () => {
       subscription.unsubscribe();
       clearTimeout(timeout);
     };
-  }, [fetchRoles]);
+  }, []);
 
   const signOut = async () => {
     await supabase.auth.signOut();
