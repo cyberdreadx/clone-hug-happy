@@ -61,7 +61,7 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
   const totalSold = tiers.reduce((sum, t) => sum + t.sold_count, 0);
 
   const resetForm = () => {
-    setForm({ name: "", description: "", price: "", capacity: "", status: "active" });
+    setForm({ name: "", description: "", price: "", capacity: "", status: "active", sales_end_date: "", sales_end_time: "" });
     setEditingId(null);
     setAddingNew(false);
   };
@@ -73,6 +73,8 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
       price: String(tier.price),
       capacity: tier.capacity != null ? String(tier.capacity) : "",
       status: tier.status,
+      sales_end_date: tier.sales_end_date || "",
+      sales_end_time: tier.sales_end_time || "",
     });
     setEditingId(tier.id);
     setAddingNew(false);
