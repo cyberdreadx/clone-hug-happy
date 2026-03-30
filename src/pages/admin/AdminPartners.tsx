@@ -149,7 +149,7 @@ const AdminPartners = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-xs px-2.5 py-1 rounded-full bg-sidebar-accent text-sidebar-foreground capitalize">
-                {p.tier.replace(/_/g, " ")}
+                {(p.tier || "gift_bag").replace(/_/g, " ")}
               </span>
               <div className="flex items-center gap-1">
                 <button onClick={() => setPartnerModal({ open: true, partner: p })}
