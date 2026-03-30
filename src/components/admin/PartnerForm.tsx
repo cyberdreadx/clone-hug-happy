@@ -16,6 +16,7 @@ const PartnerForm = ({ open, onClose, partner }: PartnerFormProps) => {
   const [form, setForm] = useState({
     company_name: "", contact_name: "", email: "", phone: "",
     tier: "gift_bag", status: "prospect", notes: "",
+    affiliate_link: "", instagram: "", quantity: 0, monetary_value: 0,
   });
 
   useEffect(() => {
@@ -24,9 +25,11 @@ const PartnerForm = ({ open, onClose, partner }: PartnerFormProps) => {
         company_name: partner.company_name || "", contact_name: partner.contact_name || "",
         email: partner.email || "", phone: partner.phone || "",
         tier: partner.tier || "gift_bag", status: partner.status || "prospect", notes: partner.notes || "",
+        affiliate_link: partner.affiliate_link || "", instagram: partner.instagram || "",
+        quantity: partner.quantity || 0, monetary_value: partner.monetary_value || 0,
       });
     } else {
-      setForm({ company_name: "", contact_name: "", email: "", phone: "", tier: "gift_bag", status: "prospect", notes: "" });
+      setForm({ company_name: "", contact_name: "", email: "", phone: "", tier: "gift_bag", status: "prospect", notes: "", affiliate_link: "", instagram: "", quantity: 0, monetary_value: 0 });
     }
   }, [partner, open]);
 
@@ -68,9 +71,32 @@ const PartnerForm = ({ open, onClose, partner }: PartnerFormProps) => {
             <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass} />
           </div>
         </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Phone</label>
+            <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Instagram</label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sidebar-foreground/30 text-sm">@</span>
+              <input value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value.replace(/^@/, "") })} className={`${inputClass} pl-8`} placeholder="handle" />
+            </div>
+          </div>
+        </div>
         <div>
-          <label className="block text-sm text-sidebar-foreground mb-1.5">Phone</label>
-          <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputClass} />
+          <label className="block text-sm text-sidebar-foreground mb-1.5">Affiliate Link</label>
+          <input value={form.affiliate_link} onChange={(e) => setForm({ ...form, affiliate_link: e.target.value })} className={inputClass} placeholder="https://..." />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Quantity</label>
+            <input type="number" min={0} value={form.quantity} onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) || 0 })} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Monetary Value ($)</label>
+            <input type="number" min={0} step="0.01" value={form.monetary_value} onChange={(e) => setForm({ ...form, monetary_value: parseFloat(e.target.value) || 0 })} className={inputClass} />
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
