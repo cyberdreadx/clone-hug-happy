@@ -231,7 +231,7 @@ const AdminDeliverables = () => {
                     </div>
                     <div className="text-left">
                       <p className="text-sidebar-foreground font-medium">{partner.company_name}</p>
-                      <p className="text-sidebar-foreground/40 text-xs capitalize">{partner.tier.replace(/_/g, " ")}</p>
+                      <p className="text-sidebar-foreground/40 text-xs capitalize">{(partner.tier || "").replace(/_/g, " ")}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
