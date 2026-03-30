@@ -94,7 +94,25 @@ const AdminEvents = () => {
       if (timeFilter === "cancelled") return ev.status === "cancelled";
       return true;
     })
-    .filter((ev) => `${ev.name} ${ev.location}`.toLowerCase().includes(search.toLowerCase()));
+    .filter((ev) => `${ev.name} ${ev.location}`.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      if (!sortCol) return 0;
+      const dir = sortDir === "asc" ? 1 : -1;
+      if (sortCol === "date") {
+        return ((a.date || "") > (b.date || "") ? 1 : -1) * dir;
+      }
+      if (sortCol === "rsvps") {
+        const ac = (guestCounts[a.id as keyof typeof guestCounts] as any)?.confirmed || 0;
+        const bc = (guestCounts[b.id as keyof typeof guestCounts] as any)?.confirmed || 0;
+        return (ac - bc) * dir;
+      }
+      if (sortCol === "gross") {
+        const ag = (orderTotals as Record<string, number>)[a.id] || 0;
+        const bg = (orderTotals as Record<string, number>)[b.id] || 0;
+        return (ag - bg) * dir;
+      }
+      return 0;
+    });
 
   const statusBadge = (status: string) => {
     const colors: Record<string, string> = {
