@@ -79,6 +79,25 @@ const RSVPPage = () => {
             </div>
           )}
 
+          {events?.[0]?.date && (
+            <button
+              onClick={() => {
+                const ev = events[0];
+                downloadICS({
+                  name: ev.name,
+                  date: ev.date!,
+                  time: (ev as any).time,
+                  endTime: (ev as any).end_time,
+                  location: ev.location,
+                  description: ev.description,
+                });
+              }}
+              className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-2.5 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors mb-4"
+            >
+              <CalendarPlus className="w-4 h-4" /> Add to Calendar
+            </button>
+          )}
+
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-gold text-sm hover:opacity-80 transition-opacity"

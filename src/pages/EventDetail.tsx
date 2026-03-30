@@ -234,6 +234,21 @@ const EventDetail = () => {
             >
               Request Invitation
             </Link>
+            {event.date && (
+              <button
+                onClick={() => downloadICS({
+                  name: event.name,
+                  date: event.date!,
+                  time: (event as any).time,
+                  endTime: (event as any).end_time,
+                  location: event.location,
+                  description: event.description,
+                })}
+                className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-3 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors"
+              >
+                <CalendarPlus className="w-4 h-4" /> Add to Calendar
+              </button>
+            )}
             <span className="text-sm text-muted-foreground">
               <Users className="w-4 h-4 inline mr-1" />
               {spotsLeft > 0 ? `${spotsLeft} spots remaining` : "Waitlist only"}
