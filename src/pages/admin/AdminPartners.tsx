@@ -205,11 +205,14 @@ const AdminPartners = () => {
                       className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground">
                       <Pencil className="w-4 h-4" />
                     </button>
+                    <button onClick={(e) => { e.stopPropagation(); setSelectedPartner(p); }}
+                      className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground">
+                      <Camera className="w-4 h-4" />
+                    </button>
                     <button onClick={(e) => { e.stopPropagation(); setDeleteModal({ open: true, id: p.id }); }}
                       className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors text-sidebar-foreground/40 hover:text-red-400">
                       <Trash2 className="w-4 h-4" />
                     </button>
-                    <Camera className="w-4 h-4 text-sidebar-foreground/40 hover:text-sidebar-foreground" />
                   </div>
                 </td>
               </tr>
