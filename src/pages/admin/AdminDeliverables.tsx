@@ -5,11 +5,12 @@ import { toast } from "sonner";
 import {
   Search, Plus, Pencil, Trash2, FileText, Package, Image, Flag,
   BarChart3, Camera, Eye, Heart, MessageSquare, ChevronDown, ChevronRight,
-  Download, CheckCircle2, Clock, AlertCircle,
+  Download, CheckCircle2, Clock, AlertCircle, Share2, FileDown, Send, Copy,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import AdminModal from "@/components/admin/AdminModal";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
+import { generateRecapPDF } from "@/lib/generateRecapPDF";
 
 const ASSET_TYPES = [
   { value: "samples", label: "Product Samples", icon: Package },
