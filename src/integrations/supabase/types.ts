@@ -437,39 +437,51 @@ export type Database = {
       }
       partners: {
         Row: {
+          affiliate_link: string | null
           company_name: string
           contact_name: string
           created_at: string
           email: string
           id: string
+          instagram: string | null
+          monetary_value: number | null
           notes: string | null
           phone: string | null
+          quantity: number | null
           status: string
           tier: string
           updated_at: string
           user_id: string | null
         }
         Insert: {
+          affiliate_link?: string | null
           company_name: string
           contact_name: string
           created_at?: string
           email: string
           id?: string
+          instagram?: string | null
+          monetary_value?: number | null
           notes?: string | null
           phone?: string | null
+          quantity?: number | null
           status?: string
           tier?: string
           updated_at?: string
           user_id?: string | null
         }
         Update: {
+          affiliate_link?: string | null
           company_name?: string
           contact_name?: string
           created_at?: string
           email?: string
           id?: string
+          instagram?: string | null
+          monetary_value?: number | null
           notes?: string | null
           phone?: string | null
+          quantity?: number | null
           status?: string
           tier?: string
           updated_at?: string
