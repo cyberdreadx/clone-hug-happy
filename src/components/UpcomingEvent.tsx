@@ -125,60 +125,108 @@ const UpcomingEvent = () => {
           className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {events.map((event) => (
-            <Link
-              key={event.id}
-              to={`/event/${event.id}`}
-              className="group flex-shrink-0 w-72 sm:w-80 snap-start"
-            >
-              {/* Card container */}
-              <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow">
-                {/* Image area */}
-                <div className="relative h-48 bg-muted">
-                  {event.cover_image ? (
-                    <img
-                      src={event.cover_image}
-                      alt={event.name}
-                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-accent/30">
-                      <span className="font-serif text-2xl text-muted-foreground/40">
-                        {event.name.charAt(0)}
+          {events.map((event) => {
+            const sponsor = sponsorByEvent[event.id];
+            const spotsLeft = Math.max((event.max_guests || 100) - 0, 0); // approximate
+            const isSoldOut = spotsLeft <= 0;
+            const isAlmostFull = !isSoldOut && spotsLeft <= 10;
+
+            return (
+              <Link
+                key={event.id}
+                to={`/event/${event.id}`}
+                className="group flex-shrink-0 w-72 sm:w-80 snap-start"
+              >
+                {/* Card container */}
+                <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow h-full flex flex-col">
+                  {/* Image area */}
+                  <div className="relative h-48 bg-muted">
+                    {event.cover_image ? (
+                      <img
+                        src={event.cover_image}
+                        alt={event.name}
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-accent/30">
+                        <span className="font-serif text-2xl text-muted-foreground/40">
+                          {event.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Urgency badge */}
+                    {isAlmostFull && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-red-500/90 text-white backdrop-blur-sm">
+                        Almost Full
                       </span>
-                    </div>
-                  )}
+                    )}
+                    {isSoldOut && (
+                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-foreground/80 text-background backdrop-blur-sm">
+                        Sold Out
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Card body */}
+                  <div className="p-5 space-y-2.5 flex-1 flex flex-col">
+                    <h3 className="font-serif text-lg text-foreground leading-snug line-clamp-2">
+                      {event.name}
+                    </h3>
+
+                    {event.description && (
+                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                        {event.description}
+                      </p>
+                    )}
+
+                    {event.date && (
+                      <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <CalendarDays className="w-3.5 h-3.5 text-gold shrink-0" />
+                        {formatDate(event.date, event.time)}
+                      </p>
+                    )}
+
+                    {event.location && (
+                      <p className="flex items-center gap-1.5 text-sm text-gold">
+                        <MapPin className="w-3.5 h-3.5 shrink-0" />
+                        {shortLocation(event.location)}
+                      </p>
+                    )}
+
+                    {/* Spacer to push bottom content down */}
+                    <div className="flex-1" />
+
+                    {/* Price */}
+                    {(event as any).ticket_price != null && (
+                      <p className="text-sm font-semibold text-foreground pt-1">
+                        From ${Number((event as any).ticket_price).toFixed(2)}
+                      </p>
+                    )}
+
+                    {/* Featured Sponsor */}
+                    {sponsor && (
+                      <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+                        {sponsor.logo_url ? (
+                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center overflow-hidden shrink-0">
+                            <img src={sponsor.logo_url} alt={sponsor.name} className="w-full h-full object-contain p-0.5" />
+                          </div>
+                        ) : (
+                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center shrink-0">
+                            <Crown className="w-3 h-3 text-gold" />
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Presented by</p>
+                          <p className="text-xs font-medium text-foreground truncate">{sponsor.name}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-
-                {/* Card body */}
-                <div className="p-5 space-y-2.5">
-                  <h3 className="font-serif text-lg text-foreground leading-snug line-clamp-2">
-                    {event.name}
-                  </h3>
-
-                  {event.date && (
-                    <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                      <CalendarDays className="w-3.5 h-3.5 text-gold shrink-0" />
-                      {formatDate(event.date, event.time)}
-                    </p>
-                  )}
-
-                  {event.location && (
-                    <p className="flex items-center gap-1.5 text-sm text-gold">
-                      <MapPin className="w-3.5 h-3.5 shrink-0" />
-                      {shortLocation(event.location)}
-                    </p>
-                  )}
-
-                  {(event as any).ticket_price != null && (
-                    <p className="text-sm font-semibold text-foreground pt-1">
-                      From ${Number((event as any).ticket_price).toFixed(2)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
