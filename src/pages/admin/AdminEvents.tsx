@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   Search, Plus, Download, Pencil, Trash2,
-  Send, Loader2,
+  Send, Loader2, ArrowUpDown, ArrowUp, ArrowDown,
 } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import EventForm from "@/components/admin/EventForm";
@@ -17,6 +17,13 @@ const AdminEvents = () => {
   const [eventModal, setEventModal] = useState<{ open: boolean; event?: any }>({ open: false });
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; id: string }>({ open: false, id: "" });
   const [followUpLoading, setFollowUpLoading] = useState<string | null>(null);
+  const [sortCol, setSortCol] = useState<"date" | "rsvps" | "gross" | null>("date");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const toggleSort = (col: "date" | "rsvps" | "gross") => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir("desc"); }
+  };
 
   const runFollowUp = async (eventId: string, eventName: string) => {
     if (!confirm(`Run post-event follow-up for "${eventName}"?\n\nThis will:\n• Mark confirmed/checked-in guests as "attended"\n• Mark pending guests as "no-show"\n• Set event status to "completed"`)) return;
@@ -87,7 +94,25 @@ const AdminEvents = () => {
       if (timeFilter === "cancelled") return ev.status === "cancelled";
       return true;
     })
-    .filter((ev) => `${ev.name} ${ev.location}`.toLowerCase().includes(search.toLowerCase()));
+    .filter((ev) => `${ev.name} ${ev.location}`.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      if (!sortCol) return 0;
+      const dir = sortDir === "asc" ? 1 : -1;
+      if (sortCol === "date") {
+        return ((a.date || "") > (b.date || "") ? 1 : -1) * dir;
+      }
+      if (sortCol === "rsvps") {
+        const ac = (guestCounts[a.id as keyof typeof guestCounts] as any)?.confirmed || 0;
+        const bc = (guestCounts[b.id as keyof typeof guestCounts] as any)?.confirmed || 0;
+        return (ac - bc) * dir;
+      }
+      if (sortCol === "gross") {
+        const ag = (orderTotals as Record<string, number>)[a.id] || 0;
+        const bg = (orderTotals as Record<string, number>)[b.id] || 0;
+        return (ag - bg) * dir;
+      }
+      return 0;
+    });
 
   const statusBadge = (status: string) => {
     const colors: Record<string, string> = {
@@ -168,9 +193,21 @@ const AdminEvents = () => {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-sidebar-border">
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Event</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">RSVPs</th>
-              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Gross</th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("date")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  Event {sortCol === "date" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("rsvps")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  RSVPs {sortCol === "rsvps" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
+              <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
+                <button onClick={() => toggleSort("gross")} className="flex items-center gap-1 hover:text-sidebar-foreground transition-colors">
+                  Gross {sortCol === "gross" ? (sortDir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />) : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+                </button>
+              </th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Status</th>
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">Action</th>
             </tr>
