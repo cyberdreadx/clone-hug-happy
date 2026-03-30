@@ -65,18 +65,17 @@ const PartnerRecap = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: "#f5f3ed" }}>
       {/* Hero */}
-      <div className="relative h-48 sm:h-64 bg-[#022701] overflow-hidden">
+      <div className="relative h-48 sm:h-64 overflow-hidden" style={{ backgroundColor: "#c6d2c1" }}>
         {event?.cover_image && (
-          <img src={event.cover_image} alt="" className="w-full h-full object-cover opacity-30" />
+          <img src={event.cover_image} alt="" className="w-full h-full object-cover opacity-20" />
         )}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center px-4">
-            <p className="text-white/50 text-xs uppercase tracking-widest mb-2">Post-Event Recap</p>
-            <h1 className="text-white font-serif text-3xl sm:text-4xl">{event?.name || "Event"}</h1>
-            {eventDate && <p className="text-white/60 text-sm mt-2">{eventDate}</p>}
-          </div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <img src={logoSrc} alt="Breathe & Bloom" className="h-10 sm:h-14 mb-3 object-contain" />
+          <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#022701", opacity: 0.5 }}>Post-Event Recap</p>
+          <h1 className="font-serif text-3xl sm:text-4xl" style={{ color: "#022701" }}>{event?.name || "Event"}</h1>
+          {eventDate && <p className="text-sm mt-2" style={{ color: "#022701", opacity: 0.6 }}>{eventDate}</p>}
         </div>
       </div>
 
