@@ -123,6 +123,7 @@ export type Database = {
           max_guests: number | null
           name: string
           status: string
+          ticket_price: number | null
           time: string | null
           updated_at: string
         }
@@ -137,6 +138,7 @@ export type Database = {
           max_guests?: number | null
           name: string
           status?: string
+          ticket_price?: number | null
           time?: string | null
           updated_at?: string
         }
@@ -151,6 +153,7 @@ export type Database = {
           max_guests?: number | null
           name?: string
           status?: string
+          ticket_price?: number | null
           time?: string | null
           updated_at?: string
         }

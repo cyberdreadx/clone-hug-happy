@@ -26,7 +26,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [form, setForm] = useState({
-    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100,
+    name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
   });
 
   useEffect(() => {
@@ -34,11 +34,12 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
       setForm({
         name: event.name || "", date: event.date || "", time: event.time || "", location: event.location || "",
         description: event.description || "", status: event.status || "draft", max_guests: event.max_guests || 100,
+        ticket_price: event.ticket_price != null ? String(event.ticket_price) : "",
       });
       setImagePreview(event.cover_image || null);
       setHighlights(Array.isArray(event.highlights) ? event.highlights : []);
     } else {
-      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100 });
+      setForm({ name: "", date: "", time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
       setImagePreview(null);
       setHighlights([]);
     }
@@ -102,6 +103,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         status: form.status,
         max_guests: form.max_guests,
         highlights: validHighlights,
+        ticket_price: form.ticket_price ? parseFloat(form.ticket_price) : null,
       };
 
       if (event) {
@@ -167,7 +169,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <label className="block text-sm text-sidebar-foreground mb-1.5">Event Name *</label>
           <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputClass} />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Date</label>
             <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputClass} />
@@ -189,6 +191,10 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           <div>
             <label className="block text-sm text-sidebar-foreground mb-1.5">Max Guests</label>
             <input type="number" value={form.max_guests} onChange={(e) => setForm({ ...form, max_guests: parseInt(e.target.value) || 100 })} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm text-sidebar-foreground mb-1.5">Ticket Price ($)</label>
+            <input type="number" step="0.01" min="0" placeholder="Free" value={form.ticket_price} onChange={(e) => setForm({ ...form, ticket_price: e.target.value })} className={inputClass} />
           </div>
         </div>
         <div>
