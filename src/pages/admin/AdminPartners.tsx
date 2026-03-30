@@ -7,6 +7,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import PartnerForm from "@/components/admin/PartnerForm";
 import DeleteConfirm from "@/components/admin/DeleteConfirm";
 
+// Partners management page
 const AdminPartners = () => {
   const [search, setSearch] = useState("");
   const [tierFilter, setTierFilter] = useState("all");
