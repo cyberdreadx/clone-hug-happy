@@ -18,6 +18,7 @@ const manageItems = [
   { title: "Partners", url: "/admin/partners", icon: Handshake },
   { title: "Orders", url: "/admin/orders", icon: ShoppingCart },
   { title: "Deliverables", url: "/admin/deliverables", icon: FileText },
+  { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
 ];
 
 const settingsItems = [
