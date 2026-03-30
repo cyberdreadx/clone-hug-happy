@@ -14,6 +14,8 @@ interface Tier {
   sold_count: number;
   status: string;
   display_order: number;
+  sales_end_date: string | null;
+  sales_end_time: string | null;
 }
 
 interface PricingManagerProps {
@@ -38,7 +40,7 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [addingNew, setAddingNew] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", price: "", capacity: "", status: "active" });
+  const [form, setForm] = useState({ name: "", description: "", price: "", capacity: "", status: "active", sales_end_date: "", sales_end_time: "" });
   const [saving, setSaving] = useState(false);
 
   const { data: tiers = [], isLoading } = useQuery({
@@ -59,7 +61,7 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
   const totalSold = tiers.reduce((sum, t) => sum + t.sold_count, 0);
 
   const resetForm = () => {
-    setForm({ name: "", description: "", price: "", capacity: "", status: "active" });
+    setForm({ name: "", description: "", price: "", capacity: "", status: "active", sales_end_date: "", sales_end_time: "" });
     setEditingId(null);
     setAddingNew(false);
   };
@@ -71,6 +73,8 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
       price: String(tier.price),
       capacity: tier.capacity != null ? String(tier.capacity) : "",
       status: tier.status,
+      sales_end_date: tier.sales_end_date || "",
+      sales_end_time: tier.sales_end_time || "",
     });
     setEditingId(tier.id);
     setAddingNew(false);
@@ -94,6 +98,8 @@ const PricingManager = ({ eventId }: PricingManagerProps) => {
         price: parseFloat(form.price) || 0,
         capacity: form.capacity ? parseInt(form.capacity) : null,
         status: form.status,
+        sales_end_date: form.sales_end_date || null,
+        sales_end_time: form.sales_end_time || null,
       };
 
       if (editingId) {
