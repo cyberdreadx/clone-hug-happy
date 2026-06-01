@@ -309,7 +309,7 @@ const EventDetail = () => {
       </section>
 
       {/* ============ INTRO / ELEVATED ESCAPE ============ */}
-      <section id="experience" className="px-6 sm:px-10 lg:px-20 py-16 lg:py-14">
+      <section id="experience" className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <div className="flex items-center gap-2 mb-5">
@@ -494,7 +494,7 @@ const EventDetail = () => {
 
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
-        <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-14">
+        <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-16">
               <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>The Flow</p>
@@ -551,7 +551,7 @@ const EventDetail = () => {
 
 
       {/* ============ PRICING + DETAILS ============ */}
-      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-16 lg:py-14">
+      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-10">
           {/* Pricing cards */}
           <div className="lg:col-span-3 space-y-4">
@@ -759,7 +759,7 @@ const EventDetail = () => {
 
 
       {/* ============ FINAL CTA ============ */}
-      <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-14">
+      <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
         <div className="max-w-4xl mx-auto relative overflow-hidden rounded-[2rem] px-8 sm:px-16 py-20 text-center"
           style={{ background: `linear-gradient(135deg, ${C.blush} 0%, ${C.champagne} 50%, ${C.butter}80 100%)` }}>
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style={{ backgroundColor: C.rose, opacity: 0.15 }} />
