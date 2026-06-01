@@ -16,7 +16,6 @@ const RSVPPage = () => {
     last_name: "",
     email: "",
     phone: "",
-    company: "",
     dietary_requirements: "",
     notes: "",
   });
