@@ -684,6 +684,36 @@ const EventDetail = () => {
         </section>
       )}
 
+      {/* ============ FAQS ============ */}
+      {highlights.length > 0 && (
+        <section className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.blush + "55" }}>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Bloom className="w-4 h-4" />
+                <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: C.taupe }}>Good to Know</p>
+              </div>
+              <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
+                Frequently <em className="italic" style={{ color: C.rose }}>asked.</em>
+              </h2>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
+              {highlights.map((h, i) => (
+                <div
+                  key={i}
+                  className="px-6 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+                  style={{ borderTop: i === 0 ? "none" : `1px solid ${C.hairline}` }}
+                >
+                  <h3 className="font-serif text-lg sm:w-48 shrink-0" style={{ color: C.ink }}>{h.label}</h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: C.inkSoft }}>{h.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ============ FINAL CTA ============ */}
       <section className="px-6 sm:px-10 lg:px-20 py-24 lg:py-32">
         <div className="max-w-4xl mx-auto relative overflow-hidden rounded-[2rem] px-8 sm:px-16 py-20 text-center"
