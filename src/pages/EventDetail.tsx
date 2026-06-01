@@ -534,164 +534,208 @@ const EventDetail = () => {
               const activeTime = getSegmentTime(activeSegment);
 
               const cx = 200, cy = 200;
-              // Refined almond petal path: tip at top, base at center, soft curves
-              const petalPath =
-                "M 0 0 C 14 -28, 20 -78, 14 -120 C 10 -138, 4 -148, 0 -152 C -4 -148, -10 -138, -14 -120 C -20 -78, -14 -28, 0 0 Z";
-              const petalPathInner =
-                "M 0 0 C 9 -22, 13 -64, 9 -100 C 6 -116, 2 -124, 0 -128 C -2 -124, -6 -116, -9 -100 C -13 -64, -9 -22, 0 0 Z";
+              // Wide, rounded, cupped petal — base at (0,0), tip up at (0,-144)
+              const petalD =
+                "M 0 0 C 34 -10, 48 -56, 28 -116 C 18 -134, 8 -144, 0 -144 C -8 -144, -18 -134, -28 -116 C -48 -56, -34 -10, 0 0 Z";
+              const petalSm =
+                "M 0 0 C 22 -6, 30 -36, 18 -72 C 12 -82, 6 -88, 0 -88 C -6 -88, -12 -82, -18 -72 C -30 -36, -22 -6, 0 0 Z";
 
               return (
                 <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-20 items-center">
-                  {/* LOTUS */}
-                  <div className="relative mx-auto w-full max-w-[520px] aspect-square">
+                  {/* LOTUS BLOOM */}
+                  <div className="relative mx-auto w-full max-w-[540px] aspect-square">
                     <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible" aria-hidden>
                       <defs>
-                        <radialGradient id="petalActive" cx="50%" cy="20%" r="85%">
-                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.42" />
-                          <stop offset="60%" stopColor={C.rose} stopOpacity="0.14" />
-                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.02" />
-                        </radialGradient>
-                        <radialGradient id="lotusCenterGlow" cx="50%" cy="50%" r="50%">
-                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.22" />
-                          <stop offset="100%" stopColor={C.rose} stopOpacity="0" />
+                        <linearGradient id="petalBack" x1="50%" y1="0%" x2="50%" y2="100%">
+                          <stop offset="0%" stopColor="#fdf0ec" stopOpacity="0.95" />
+                          <stop offset="60%" stopColor="#f5d4cb" stopOpacity="0.8" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.4" />
+                        </linearGradient>
+                        <linearGradient id="petalFront" x1="50%" y1="0%" x2="50%" y2="100%">
+                          <stop offset="0%" stopColor="#fde2dc" stopOpacity="1" />
+                          <stop offset="55%" stopColor="#f3bdb0" stopOpacity="0.95" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.7" />
+                        </linearGradient>
+                        <linearGradient id="petalActive" x1="50%" y1="0%" x2="50%" y2="100%">
+                          <stop offset="0%" stopColor="#fbcfc6" stopOpacity="1" />
+                          <stop offset="50%" stopColor="#e8a094" stopOpacity="1" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.95" />
+                        </linearGradient>
+                        <radialGradient id="lotusCore" cx="50%" cy="45%" r="55%">
+                          <stop offset="0%" stopColor="#fdebb0" />
+                          <stop offset="70%" stopColor="#e8c074" stopOpacity="0.95" />
+                          <stop offset="100%" stopColor="#c89a52" stopOpacity="0.85" />
                         </radialGradient>
                       </defs>
 
-                      {/* Slow breath rotation on entire lotus */}
                       <g
                         style={{
                           transformOrigin: `${cx}px ${cy}px`,
-                          animation: "lotus-breath 18s ease-in-out infinite",
+                          animation: "lotus-breath 22s ease-in-out infinite",
                         }}
                       >
-                        {/* Outer ornamental ring */}
+                        {/* Whisper-thin outer ornamental ring */}
                         <circle
                           cx={cx}
                           cy={cy}
-                          r="178"
+                          r="180"
                           fill="none"
                           stroke={C.taupe}
-                          strokeOpacity="0.18"
+                          strokeOpacity="0.16"
                           strokeWidth="0.5"
-                          strokeDasharray="1 4"
+                          strokeDasharray="1 5"
                         />
 
-                        {/* Back petal ring — offset by half angle, smaller */}
+                        {/* BACK PETAL RING — splayed wider, offset by half-angle */}
                         {segments.map((_, i) => {
-                          const angle = (360 / N) * i + (360 / N) / 2;
+                          const angle = (360 / N) * i + 180 / N;
                           const isActive = i === activeSegment;
                           return (
                             <path
-                              key={`back-${i}`}
-                              d={petalPathInner}
-                              fill={isActive ? "url(#petalActive)" : "none"}
+                              key={`b${i}`}
+                              d={petalD}
+                              fill="url(#petalBack)"
                               stroke={C.rose}
-                              strokeOpacity={isActive ? 0.4 : 0.14}
+                              strokeOpacity={isActive ? 0.45 : 0.28}
                               strokeWidth="0.5"
-                              transform={`translate(${cx} ${cy}) rotate(${angle})`}
-                              style={{
-                                transition: "all 700ms cubic-bezier(.2,.7,.2,1)",
-                                transformBox: "fill-box",
-                              }}
+                              transform={`translate(${cx} ${cy}) rotate(${angle}) scale(1.05)`}
+                              style={{ transition: "all 700ms ease" }}
                             />
                           );
                         })}
 
-                        {/* Front petal ring — hairline botanical illustration */}
+                        {/* FRONT PETAL RING — clickable, full color */}
                         {segments.map((_, i) => {
                           const angle = (360 / N) * i;
                           const isActive = i === activeSegment;
-                          const rad = ((angle - 90) * Math.PI) / 180;
-                          const labelR = 178;
-                          const lx = cx + Math.cos(rad) * labelR;
-                          const ly = cy + Math.sin(rad) * labelR;
                           return (
                             <g
-                              key={`front-${i}`}
+                              key={`f${i}`}
                               style={{ cursor: "pointer" }}
                               onMouseEnter={() => setActiveSegment(i)}
                               onClick={() => setActiveSegment(i)}
                             >
-                              {/* invisible larger hit target */}
                               <path
-                                d={petalPath}
-                                fill="transparent"
-                                transform={`translate(${cx} ${cy}) rotate(${angle})`}
-                              />
-                              <path
-                                d={petalPath}
-                                fill={isActive ? "url(#petalActive)" : "transparent"}
-                                stroke={isActive ? C.rose : C.ink}
-                                strokeOpacity={isActive ? 0.85 : 0.32}
+                                d={petalD}
+                                fill={isActive ? "url(#petalActive)" : "url(#petalFront)"}
+                                stroke={C.rose}
+                                strokeOpacity={isActive ? 0.9 : 0.5}
                                 strokeWidth={isActive ? 0.9 : 0.55}
-                                transform={`translate(${cx} ${cy}) rotate(${angle}) ${isActive ? "scale(1.04)" : ""}`}
+                                transform={`translate(${cx} ${cy}) rotate(${angle}) ${isActive ? "scale(1.05)" : ""}`}
                                 style={{
                                   transition: "all 700ms cubic-bezier(.2,.7,.2,1)",
-                                  transformBox: "fill-box",
-                                  filter: isActive ? `drop-shadow(0 2px 6px ${C.rose}33)` : "none",
+                                  filter: isActive
+                                    ? `drop-shadow(0 4px 12px ${C.rose}55)`
+                                    : "none",
                                 }}
                               />
-                              {/* Subtle inner vein on active */}
                               {isActive && (
-                                <line
-                                  x1={cx}
-                                  y1={cy}
-                                  x2={cx}
-                                  y2={cy - 145}
-                                  stroke={C.rose}
-                                  strokeOpacity="0.35"
-                                  strokeWidth="0.4"
-                                  transform={`rotate(${angle} ${cx} ${cy})`}
+                                <path
+                                  d="M 0 -8 C 3 -50, 3 -100, 0 -138"
+                                  fill="none"
+                                  stroke="#ffffff"
+                                  strokeOpacity="0.55"
+                                  strokeWidth="0.5"
+                                  transform={`translate(${cx} ${cy}) rotate(${angle})`}
                                 />
                               )}
-                              {/* Numeral ornamentation */}
-                              <text
-                                x={lx}
-                                y={ly}
-                                textAnchor="middle"
-                                dominantBaseline="middle"
-                                fontSize={isActive ? "9" : "8"}
-                                fontFamily="serif"
-                                letterSpacing="2"
-                                fill={isActive ? C.rose : C.taupe}
-                                opacity={isActive ? 1 : 0.55}
-                                style={{ transition: "all 500ms ease" }}
-                              >
-                                {String(i + 1).padStart(2, "0")}
-                              </text>
                             </g>
                           );
                         })}
 
-                        {/* Center seed pod — concentric refinement */}
-                        <circle cx={cx} cy={cy} r="56" fill="url(#lotusCenterGlow)" />
-                        <circle cx={cx} cy={cy} r="28" fill="none" stroke={C.rose} strokeOpacity="0.25" strokeWidth="0.5" />
-                        <circle cx={cx} cy={cy} r="20" fill={C.cream} stroke={C.rose} strokeOpacity="0.5" strokeWidth="0.7" />
-                        {/* Tiny seed dots */}
-                        {[0, 60, 120, 180, 240, 300].map((a) => {
-                          const r = (a * Math.PI) / 180;
+                        {/* INNER CUP — small petals around seed pod */}
+                        {[0, 60, 120, 180, 240, 300].map((a) => (
+                          <path
+                            key={`i${a}`}
+                            d={petalSm}
+                            fill="url(#petalFront)"
+                            stroke={C.rose}
+                            strokeOpacity="0.5"
+                            strokeWidth="0.5"
+                            transform={`translate(${cx} ${cy}) rotate(${a})`}
+                          />
+                        ))}
+
+                        {/* SEED POD */}
+                        <circle
+                          cx={cx}
+                          cy={cy}
+                          r="22"
+                          fill="url(#lotusCore)"
+                          stroke="#c89a52"
+                          strokeOpacity="0.5"
+                          strokeWidth="0.6"
+                        />
+                        {/* Stamen filaments */}
+                        {Array.from({ length: 16 }).map((_, i) => {
+                          const a = ((i * (360 / 16)) * Math.PI) / 180;
+                          const r1 = 14, r2 = 21;
                           return (
-                            <circle
-                              key={a}
-                              cx={cx + Math.cos(r) * 9}
-                              cy={cy + Math.sin(r) * 9}
-                              r="1.1"
-                              fill={C.rose}
-                              opacity="0.55"
+                            <line
+                              key={`st${i}`}
+                              x1={cx + Math.cos(a) * r1}
+                              y1={cy + Math.sin(a) * r1}
+                              x2={cx + Math.cos(a) * r2}
+                              y2={cy + Math.sin(a) * r2}
+                              stroke="#c89a52"
+                              strokeOpacity="0.55"
+                              strokeWidth="0.5"
                             />
                           );
                         })}
-                        <circle cx={cx} cy={cy} r="2.2" fill={C.rose} />
+                        {[0, 72, 144, 216, 288].map((a) => {
+                          const r = (a * Math.PI) / 180;
+                          return (
+                            <circle
+                              key={`s${a}`}
+                              cx={cx + Math.cos(r) * 7}
+                              cy={cy + Math.sin(r) * 7}
+                              r="1.4"
+                              fill="#8a6a3a"
+                              opacity="0.7"
+                            />
+                          );
+                        })}
+                        <circle cx={cx} cy={cy} r="2" fill="#8a6a3a" opacity="0.8" />
                       </g>
+
+                      {/* Numerals — quiet, outside the bloom */}
+                      {segments.map((_, i) => {
+                        const angle = (360 / N) * i - 90;
+                        const rad = (angle * Math.PI) / 180;
+                        const r = 180;
+                        const lx = cx + Math.cos(rad) * r;
+                        const ly = cy + Math.sin(rad) * r;
+                        const isActive = i === activeSegment;
+                        return (
+                          <text
+                            key={`n${i}`}
+                            x={lx}
+                            y={ly}
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            fontSize={isActive ? "11" : "9"}
+                            fontFamily="serif"
+                            fontStyle="italic"
+                            letterSpacing="1.5"
+                            fill={isActive ? C.rose : C.taupe}
+                            opacity={isActive ? 1 : 0.5}
+                            style={{ transition: "all 400ms ease", pointerEvents: "none" }}
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </text>
+                        );
+                      })}
                     </svg>
 
                     <style>{`
                       @keyframes lotus-breath {
                         0%, 100% { transform: rotate(0deg) scale(1); }
-                        50% { transform: rotate(2deg) scale(1.012); }
+                        50% { transform: rotate(1.5deg) scale(1.015); }
                       }
                     `}</style>
                   </div>
+
 
                   {/* ACTIVE DETAIL — editorial side panel */}
                   <div className="relative lg:pl-10">
