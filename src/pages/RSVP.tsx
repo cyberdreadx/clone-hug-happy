@@ -17,8 +17,8 @@ const bgStyle: React.CSSProperties = {
 };
 
 const inputClass =
-  "w-full px-4 py-3 rounded-lg bg-white/5 border border-white/15 text-white text-sm placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
-const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/60 mb-2";
+  "w-full px-4 py-3 rounded-lg bg-black/30 border border-white/25 text-white text-sm placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
+const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/85 mb-2 font-medium";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -148,11 +148,11 @@ const RSVPPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
+            className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6 h-full"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -228,21 +228,21 @@ const RSVPPage = () => {
               {loading ? "Submitting..." : "Submit My Reservation"}
             </button>
 
-            <p className="text-white/50 text-xs text-center leading-relaxed">
+            <p className="text-white/75 text-xs text-center leading-relaxed">
               After submitting, complete your payment using the code to the right.
               A waiver will be provided upon arrival.
             </p>
           </form>
 
           {/* PayPal panel */}
-          <div className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
+          <div className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col justify-center">
             <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
               Step 2 · Payment
             </p>
             <h2 className="font-serif text-2xl text-white mb-3">
               Scan to Pay
             </h2>
-            <p className="text-white/65 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
+            <p className="text-white/80 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
               Use your phone camera or the PayPal app to scan and secure your reservation.
             </p>
 
@@ -255,14 +255,14 @@ const RSVPPage = () => {
             </div>
 
             <p className="font-serif text-2xl text-white">
-              $150 <span className="text-white/50 text-xl">· per guest</span>
+              $150 <span className="text-white/70 text-xl">· per guest</span>
             </p>
-            <p className="text-white/40 text-[11px] tracking-[0.2em] uppercase mt-1">
+            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mt-1">
               Powered by PayPal
             </p>
 
-            <div className="mt-7 pt-6 border-t border-white/10">
-              <p className="text-white/50 text-xs leading-relaxed">
+            <div className="mt-7 pt-6 border-t border-white/15">
+              <p className="text-white/75 text-xs leading-relaxed">
                 Your spot is confirmed once payment is received. Seats are extremely limited.
               </p>
             </div>
