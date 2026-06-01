@@ -18,7 +18,7 @@ const Hero = () => {
           <img
             src={logo.url}
             alt="Breathe & Bloom"
-            className="w-56 md:w-64 h-auto mb-8 object-contain"
+            className="w-[28rem] md:w-[40rem] lg:w-[52rem] max-w-full h-auto mb-10 object-contain"
           />
 
           <h2 className="uppercase tracking-[0.4em] text-[10px] text-gold font-semibold mb-6 italic">
