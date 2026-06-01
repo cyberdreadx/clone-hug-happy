@@ -571,9 +571,7 @@ const EventDetail = () => {
                       const active = i === activeSegment;
                       return (
                         <g key={i}>
-                          {active && (
-                            <circle cx={p.x} cy={p.y} r="2.4" fill={C.rose} opacity="0.18" vectorEffect="non-scaling-stroke" />
-                          )}
+
                           <circle
                             cx={p.x}
                             cy={p.y}
