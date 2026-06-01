@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -221,7 +222,7 @@ const AdminEvents = () => {
               const dayStr = eventDate ? eventDate.getDate().toString().padStart(2, "0") : "";
 
               return (
-                <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors">
+                <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors cursor-pointer" onClick={() => window.open(`/event/${ev.id}`, "_blank")}>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col items-center justify-center w-14 shrink-0">
@@ -269,7 +270,7 @@ const AdminEvents = () => {
                     ${gross.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                   <td className="px-5 py-4">{statusBadge(ev.status)}</td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center gap-1">
                       {ev.status === "active" && (
                         <button
@@ -319,7 +320,7 @@ const AdminEvents = () => {
           const dayStr = eventDate ? eventDate.getDate().toString().padStart(2, "0") : "";
 
           return (
-            <div key={ev.id} className="rounded-xl border border-sidebar-border p-4 bg-sidebar-accent/20">
+            <div key={ev.id} onClick={() => window.open(`/event/${ev.id}`, "_blank")} className="rounded-xl border border-sidebar-border p-4 bg-sidebar-accent/20 cursor-pointer hover:bg-sidebar-accent/40 transition-colors">
               <div className="flex items-start gap-3 mb-3">
                 <div className="flex flex-col items-center justify-center w-12 shrink-0">
                   {eventDate ? (
@@ -349,7 +350,7 @@ const AdminEvents = () => {
                   <span>RSVPs: {counts ? `${counts.confirmed}/${counts.total}` : "0"}/{ev.max_guests}</span>
                   <span className="text-sidebar-foreground font-medium">${gross.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setEventModal({ open: true, event: ev })}
                     className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
