@@ -901,16 +901,20 @@ const EventDetail = () => {
                         Included With Care
                       </p>
                       <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-6" style={{ color: C.ink }}>
-                        Thoughtful details for a <em className="italic" style={{ color: C.rose }}>seamless arrival.</em>
+                        Everything prepared for your <em className="italic" style={{ color: C.rose }}>deep reset.</em>
                       </h4>
                       <ul className="space-y-3.5">
                         {[
-                          "Welcome drinks upon arrival",
-                          "Adaptogenic tonics and herbal teas",
-                          "Silk eye pillows and warm blankets",
-                          "Curated playlist & professional sound",
-                          "Light, nourishing closing bites",
-                          "A small parting gift to take home",
+                          "4.5-hour guided wellness session",
+                          "Functional welcome drinks",
+                          "Red light therapy (private + group)",
+                          "Sauna, cold plunge & contrast therapy",
+                          "Cacao Body Scrub",
+                          "Live Sound Bath Session",
+                          "Sponsored Reset Gift Kit",
+                          "Post-Retreat SILA Access",
+                          "15% off Devia Juice Bar",
+                          "Bio-hacking amenities at 20% off",
                         ].map((item, i) => (
                           <li key={i} className="flex items-start gap-3 text-[15px] leading-snug" style={{ color: C.inkSoft }}>
                             <span className="mt-2 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
