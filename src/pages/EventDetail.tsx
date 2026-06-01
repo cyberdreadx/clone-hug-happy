@@ -8,7 +8,8 @@ import {
   ShieldCheck, CalendarPlus, Plus, Minus,
 } from "lucide-react";
 import { downloadICS } from "@/lib/calendar";
-import heroFloral from "@/assets/hero-floral-luxury.jpg";
+import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
+const heroFloral = heroFloralAsset.url;
 import teaDetail from "@/assets/luxury-tea-detail.jpg";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
