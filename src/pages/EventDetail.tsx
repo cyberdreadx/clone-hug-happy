@@ -333,29 +333,30 @@ const EventDetail = () => {
             </p>
 
             {/* stat row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 pt-8 gap-y-6" style={{ borderTop: `1px solid ${C.hairline}` }}>
               {[
-                { value: "4.5h", label: "Of Experience" },
-                { value: "10", label: "Intimate Group" },
-                { value: "♀", label: "Women Only" },
+                { value: "4.5", suffix: "hrs", label: "Experience" },
+                { value: "10", label: "Guests" },
+                { value: "Women", label: "Only" },
                 { value: "$150", label: "Investment" },
 
               ].map((s, i) => (
                 <div
                   key={i}
-                  className="px-4 py-2 text-center"
+                  className="px-5 py-2 text-center min-w-0"
                   style={{
-                    borderLeft: i === 0 ? "none" : `1px solid ${C.hairline}`,
+                    borderLeft: i % 2 === 0 ? "none" : `1px solid ${C.hairline}`,
                   }}
                 >
                   <p
-                    className="font-serif font-light mb-2 leading-none"
-                    style={{ color: C.rose, fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
+                    className="font-serif font-light mb-2 leading-none flex items-baseline justify-center gap-1 whitespace-nowrap"
+                    style={{ color: C.rose, fontSize: "clamp(1.55rem, 2.2vw, 1.9rem)" }}
                   >
-                    {s.value}
+                    <span>{s.value}</span>
+                    {s.suffix && <span className="font-sans text-[0.42em] uppercase tracking-[0.16em]" style={{ color: C.taupe }}>{s.suffix}</span>}
                   </p>
                   <p
-                    className="text-[10px] tracking-[0.25em] uppercase leading-relaxed"
+                    className="text-[10px] tracking-[0.16em] uppercase leading-relaxed whitespace-nowrap"
                     style={{ color: C.taupe }}
                   >
                     {s.label}
