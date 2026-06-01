@@ -15,6 +15,8 @@ import cacaoShoulderAsset from "@/assets/cacao-scrub-shoulder.png.asset.json";
 import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
 import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
+import finalCtaBloomAsset from "@/assets/final-cta-bloom.jpg.asset.json";
+import breatheBloomLogoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
