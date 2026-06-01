@@ -1105,10 +1105,20 @@ const EventDetail = () => {
           }}
         />
 
-        <div className="relative px-6 sm:px-10 lg:px-20 py-12 sm:py-16 text-center">
-          <p className="text-[10px] tracking-[0.4em] uppercase mb-6" style={{ color: C.card }}>
+        <div className="relative px-6 sm:px-10 lg:px-20 py-0 text-center">
+          <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.card }}>
             A Final Invitation
           </p>
+
+          {/* Logo */}
+          <div className="mb-2 flex justify-center">
+            <img
+              src={breatheBloomLogoAsset.url}
+              alt="Breathe & Bloom"
+              className="h-56 sm:h-72 w-auto opacity-90"
+            />
+          </div>
+
           <h2 className="font-serif text-4xl sm:text-6xl leading-[0.95] mb-8" style={{ color: C.card }}>
             Come as you are. <br />
             <em className="italic" style={{ color: C.blush }}>Leave restored.</em>
@@ -1143,16 +1153,7 @@ const EventDetail = () => {
             )}
           </div>
 
-          {/* Logo */}
-          <div className="mt-8 flex justify-center">
-            <img
-              src={breatheBloomLogoAsset.url}
-              alt="Breathe & Bloom"
-              className="h-64 sm:h-80 w-auto opacity-90"
-            />
-          </div>
-
-          <p className="mt-4 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
+          <p className="mt-10 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
             Curated Wellness · Held with Intention
           </p>
           <Link
