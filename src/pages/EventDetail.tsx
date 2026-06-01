@@ -218,7 +218,10 @@ const EventDetail = () => {
         <div className="absolute inset-0" style={{ background: `radial-gradient(circle at 80% 20%, ${C.butter}30, transparent 50%)` }} />
 
         {/* Nav */}
-        <nav className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-6">
+        <nav
+          className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4 backdrop-blur-md border-b"
+          style={{ backgroundColor: `${C.cream}d9`, borderColor: `${C.ink}10` }}
+        >
           <Link to="/" className="font-serif text-lg tracking-wide" style={{ color: C.ink }}>
             Breathe & Bloom
           </Link>
@@ -238,6 +241,7 @@ const EventDetail = () => {
             Reserve
           </Link>
         </nav>
+        <div className="h-20" />
 
         {/* Hero content */}
         <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-20 pb-20">
