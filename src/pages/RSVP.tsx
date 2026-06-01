@@ -68,24 +68,24 @@ const RSVPPage = () => {
   if (submitted) {
     const qrValue = guestId ? `bb-checkin:${guestId}` : "";
     return (
-      <div className="min-h-screen bg-section-light flex items-center justify-center px-6">
-        <div className="bg-card rounded-2xl p-12 max-w-md text-center shadow-lg">
+      <div className="min-h-screen flex items-center justify-center px-6" style={bgStyle}>
+        <div className="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl p-12 max-w-md text-center shadow-2xl">
           <CheckCircle className="w-16 h-16 text-gold mx-auto mb-6" />
-          <h2 className="font-serif text-2xl text-foreground mb-3">You're On The List</h2>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+          <h2 className="font-serif text-2xl text-white mb-3">You're On The List</h2>
+          <p className="text-white/70 text-sm leading-relaxed mb-6">
             Thank you for your interest in Breathe &amp; Bloom. We'll review your application
             and be in touch soon with next steps.
           </p>
 
           {guestId && (
             <div className="mb-6">
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+              <p className="text-xs tracking-[0.2em] uppercase text-white/60 mb-3">
                 Your Check-In QR Code
               </p>
               <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
                 <QRCodeSVG value={qrValue} size={180} level="M" />
               </div>
-              <p className="text-muted-foreground text-xs mt-3 leading-relaxed">
+              <p className="text-white/60 text-xs mt-3 leading-relaxed">
                 Screenshot this code — show it at the door for instant check-in
               </p>
             </div>
@@ -104,7 +104,7 @@ const RSVPPage = () => {
                   description: ev.description,
                 });
               }}
-              className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-2.5 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors mb-4"
+              className="inline-flex items-center gap-2 border border-white/30 text-white/80 px-5 py-2.5 rounded-full text-sm hover:text-white hover:border-white/60 transition-colors mb-4"
             >
               <CalendarPlus className="w-4 h-4" /> Add to Calendar
             </button>
