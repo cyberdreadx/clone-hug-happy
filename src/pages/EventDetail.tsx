@@ -671,9 +671,7 @@ const EventDetail = () => {
               );
             })()}
 
-                </div>
-              );
-            })()}
+
 
           </div>
         </section>
