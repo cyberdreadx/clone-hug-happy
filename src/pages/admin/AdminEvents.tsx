@@ -222,7 +222,7 @@ const AdminEvents = () => {
               const dayStr = eventDate ? eventDate.getDate().toString().padStart(2, "0") : "";
 
               return (
-                <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors">
+                <tr key={ev.id} className="border-b border-sidebar-border/50 hover:bg-sidebar-accent/30 transition-colors cursor-pointer" onClick={() => window.open(`/event/${ev.id}`, "_blank")}>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col items-center justify-center w-14 shrink-0">
