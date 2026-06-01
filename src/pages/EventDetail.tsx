@@ -1105,13 +1105,13 @@ const EventDetail = () => {
           }}
         />
 
-        <div className="relative px-6 sm:px-10 lg:px-20 py-0 text-center">
+        <div className="relative px-6 sm:px-10 lg:px-20 py-12 sm:py-16 text-center">
           <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.card }}>
             A Final Invitation
           </p>
 
           {/* Logo */}
-          <div className="mb-2 flex justify-center">
+          <div className="flex justify-center -my-16 sm:-my-20 overflow-hidden">
             <img
               src={breatheBloomLogoAsset.url}
               alt="Breathe & Bloom"
