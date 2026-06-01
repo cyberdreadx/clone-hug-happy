@@ -7,6 +7,18 @@ import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { downloadICS } from "@/lib/calendar";
 import paypalQr from "@/assets/paypal-qr.png.asset.json";
+import lilypadBg from "@/assets/rsvp-lilypads.jpg.asset.json";
+
+const bgStyle: React.CSSProperties = {
+  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.78) 0%, rgba(20,28,20,0.72) 50%, rgba(20,28,20,0.85) 100%), url(${lilypadBg.url})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundAttachment: "fixed",
+};
+
+const inputClass =
+  "w-full px-4 py-3 rounded-lg bg-white/5 border border-white/15 text-white text-sm placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
+const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/60 mb-2";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
