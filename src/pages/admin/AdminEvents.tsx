@@ -320,7 +320,7 @@ const AdminEvents = () => {
           const dayStr = eventDate ? eventDate.getDate().toString().padStart(2, "0") : "";
 
           return (
-            <div key={ev.id} className="rounded-xl border border-sidebar-border p-4 bg-sidebar-accent/20">
+            <div key={ev.id} onClick={() => window.open(`/event/${ev.id}`, "_blank")} className="rounded-xl border border-sidebar-border p-4 bg-sidebar-accent/20 cursor-pointer hover:bg-sidebar-accent/40 transition-colors">
               <div className="flex items-start gap-3 mb-3">
                 <div className="flex flex-col items-center justify-center w-12 shrink-0">
                   {eventDate ? (
