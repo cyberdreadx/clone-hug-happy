@@ -10,7 +10,7 @@ import {
 import { downloadICS } from "@/lib/calendar";
 import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
 const heroFloral = heroFloralAsset.url;
-import teaDetail from "@/assets/luxury-tea-detail.jpg";
+import cacaoScrubAsset from "@/assets/cacao-scrub.jpg.asset.json";
 import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
 import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 
@@ -371,7 +371,7 @@ const EventDetail = () => {
           <div className="relative">
             <div className="absolute -inset-6 rounded-[2rem]" style={{ background: `linear-gradient(135deg, ${C.blush} 0%, ${C.champagne} 100%)`, opacity: 0.5 }} />
             <img
-              src={teaDetail}
+              src={cacaoScrubAsset.url}
               alt="Curated wellness detail"
               loading="lazy"
               className="relative rounded-[1.5rem] w-full aspect-[4/5] object-cover shadow-2xl"
