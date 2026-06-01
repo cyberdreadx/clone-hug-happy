@@ -246,11 +246,11 @@ const RSVPPage = () => {
               Use your phone camera or the PayPal app to scan and secure your reservation.
             </p>
 
-            <div className="inline-block p-4 bg-white rounded-xl shadow-2xl mb-6">
+            <div className="inline-block rounded-xl overflow-hidden shadow-2xl mb-6">
               <img
                 src={paypalQr.url}
                 alt="PayPal QR code to reserve your seat"
-                className="w-56 h-56"
+                className="block w-72 h-72 object-cover"
               />
             </div>
 
