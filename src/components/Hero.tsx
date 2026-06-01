@@ -1,6 +1,7 @@
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
+import logo from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const Hero = () => {
 
@@ -14,12 +15,11 @@ const Hero = () => {
       <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
         <header className="flex flex-col items-center text-center mb-20">
-          <div className="w-28 h-28 rounded-full border border-foreground/15 bg-card flex items-center justify-center mb-8 shadow-sm">
-            <span className="font-serif text-foreground text-base leading-tight tracking-tight uppercase">
-              Breathe<br />
-              <span className="italic font-light">&amp;</span> Bloom
-            </span>
-          </div>
+          <img
+            src={logo.url}
+            alt="Breathe & Bloom"
+            className="w-56 md:w-64 h-auto mb-8 object-contain"
+          />
 
           <h2 className="uppercase tracking-[0.4em] text-[10px] text-gold font-semibold mb-6 italic">
             Wellness · Community · Impact
