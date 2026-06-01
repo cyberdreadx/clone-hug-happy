@@ -546,6 +546,68 @@ const EventDetail = () => {
             )}
           </div>
         )}
+
+        {/* Closing CTA */}
+        <div className="relative overflow-hidden rounded-2xl bg-card border border-border px-6 py-12 sm:px-10 sm:py-14 text-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-transparent pointer-events-none" />
+          <div className="relative">
+            <Sparkles className="w-6 h-6 text-gold mx-auto mb-4" />
+            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">Your Seat Awaits</p>
+            <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-3">
+              Ready to join us?
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-md mx-auto mb-6 leading-relaxed">
+              Spaces are intimate and held with care. Request your invitation to{" "}
+              <span className="text-foreground">{event.name}</span>
+              {event.date && (
+                <> on {new Date(event.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" })}</>
+              )}.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                to="/rsvp"
+                className="inline-flex items-center gap-2 bg-gold text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                Request Invitation
+              </Link>
+              {event.date && (
+                <button
+                  onClick={() => downloadICS({
+                    name: event.name,
+                    date: event.date!,
+                    time: (event as any).time,
+                    endTime: (event as any).end_time,
+                    location: event.location,
+                    description: event.description,
+                  })}
+                  className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-3 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  <CalendarPlus className="w-4 h-4" /> Add to Calendar
+                </button>
+              )}
+            </div>
+            {spotsLeft > 0 && spotsLeft <= 20 && (
+              <p className="text-xs text-muted-foreground mt-5 flex items-center justify-center gap-1.5">
+                <Users className="w-3.5 h-3.5" />
+                Only {spotsLeft} {spotsLeft === 1 ? "spot" : "spots"} remaining
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Footer signature */}
+        <div className="pt-6 pb-2 text-center border-t border-border/50">
+          <p className="font-serif text-base text-foreground/70 mb-1">Breathe & Bloom</p>
+          <p className="text-xs text-muted-foreground tracking-wider">
+            Curated wellness experiences · Held with intention
+          </p>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mt-4"
+          >
+            <ArrowLeft className="w-3 h-3" /> Back to all experiences
+          </Link>
+        </div>
       </div>
     </div>
   );
