@@ -18,22 +18,18 @@ const Hero = () => {
           <img
             src={logo.url}
             alt="Breathe & Bloom"
-            className="w-[28rem] md:w-[40rem] lg:w-[52rem] max-w-full h-auto mb-10 object-contain"
+            className="w-[28rem] md:w-[40rem] lg:w-[52rem] max-w-full h-auto my-0 object-contain"
           />
 
           <h2 className="uppercase tracking-[0.4em] text-[10px] text-gold font-semibold mb-6 italic">
             Wellness · Community · Impact
           </h2>
 
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl max-w-4xl leading-[1.05] mb-8 text-foreground">
-            A transformative retreat for the{" "}
-            <span className="italic font-light">modern seeker</span>.
-          </h1>
-
-          <p className="max-w-xl text-lg text-foreground/70 font-light leading-relaxed">
-            Blending elevated self-care, mindful connections, and purposeful
-            living in an intimate desert oasis.
-          </p>
+          <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground">
+            "A transformative retreat for the modern seeker — blending elevated
+            self-care, mindful connections, and purposeful living in an intimate
+            desert oasis."
+          </blockquote>
         </header>
 
         {/* Editorial second half — philosophy + image diptych */}
