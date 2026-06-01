@@ -227,8 +227,9 @@ const EventDetail = () => {
             </div>
 
             <h1 className="font-serif font-light leading-[0.95] tracking-tight mb-8" style={{ color: C.ink, fontSize: "clamp(3rem, 8vw, 6rem)" }}>
-              <span style={{ color: C.rose }}>{event.name.split(" ").slice(0, -1).join(" ")}</span>
-              {event.name.includes(" ") && <br />}
+              <span>{event.name.split(" ").slice(0, -2).join(" ")} </span>
+              <span style={{ color: C.rose }}>{event.name.split(" ").slice(-2, -1)[0]}</span>
+              <br />
               <em className="italic font-light" style={{ color: C.rose }}>
                 {event.name.split(" ").slice(-1)[0]}
               </em>
