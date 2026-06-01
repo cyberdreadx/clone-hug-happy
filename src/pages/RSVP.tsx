@@ -17,7 +17,7 @@ const bgStyle: React.CSSProperties = {
 };
 
 const inputClass =
-  "w-full px-4 py-3 rounded-lg bg-black/30 border border-white/25 text-white text-sm placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
+  "w-full px-4 py-3 rounded-lg bg-white/10 border border-white/25 text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
 const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/85 mb-2 font-medium";
 
 const RSVPPage = () => {
