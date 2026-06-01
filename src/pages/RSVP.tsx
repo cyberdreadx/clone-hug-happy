@@ -7,6 +7,18 @@ import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { downloadICS } from "@/lib/calendar";
 import paypalQr from "@/assets/paypal-qr.png.asset.json";
+import lilypadBg from "@/assets/rsvp-lilypads.jpg.asset.json";
+
+const bgStyle: React.CSSProperties = {
+  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.78) 0%, rgba(20,28,20,0.72) 50%, rgba(20,28,20,0.85) 100%), url(${lilypadBg.url})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundAttachment: "fixed",
+};
+
+const inputClass =
+  "w-full px-4 py-3 rounded-lg bg-white/5 border border-white/15 text-white text-sm placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
+const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/60 mb-2";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -56,24 +68,24 @@ const RSVPPage = () => {
   if (submitted) {
     const qrValue = guestId ? `bb-checkin:${guestId}` : "";
     return (
-      <div className="min-h-screen bg-section-light flex items-center justify-center px-6">
-        <div className="bg-card rounded-2xl p-12 max-w-md text-center shadow-lg">
+      <div className="min-h-screen flex items-center justify-center px-6" style={bgStyle}>
+        <div className="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl p-12 max-w-md text-center shadow-2xl">
           <CheckCircle className="w-16 h-16 text-gold mx-auto mb-6" />
-          <h2 className="font-serif text-2xl text-foreground mb-3">You're On The List</h2>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+          <h2 className="font-serif text-2xl text-white mb-3">You're On The List</h2>
+          <p className="text-white/70 text-sm leading-relaxed mb-6">
             Thank you for your interest in Breathe &amp; Bloom. We'll review your application
             and be in touch soon with next steps.
           </p>
 
           {guestId && (
             <div className="mb-6">
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
+              <p className="text-xs tracking-[0.2em] uppercase text-white/60 mb-3">
                 Your Check-In QR Code
               </p>
               <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
                 <QRCodeSVG value={qrValue} size={180} level="M" />
               </div>
-              <p className="text-muted-foreground text-xs mt-3 leading-relaxed">
+              <p className="text-white/60 text-xs mt-3 leading-relaxed">
                 Screenshot this code — show it at the door for instant check-in
               </p>
             </div>
@@ -92,7 +104,7 @@ const RSVPPage = () => {
                   description: ev.description,
                 });
               }}
-              className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-2.5 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors mb-4"
+              className="inline-flex items-center gap-2 border border-white/30 text-white/80 px-5 py-2.5 rounded-full text-sm hover:text-white hover:border-white/60 transition-colors mb-4"
             >
               <CalendarPlus className="w-4 h-4" /> Add to Calendar
             </button>
@@ -110,120 +122,150 @@ const RSVPPage = () => {
     );
   }
 
+
   return (
-    <div className="min-h-screen bg-section-light py-16 px-6">
-      <div className="max-w-xl mx-auto">
+    <div className="min-h-screen py-16 px-6" style={bgStyle}>
+      <div className="max-w-6xl mx-auto">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-muted-foreground text-sm mb-8 hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2 text-white/70 text-sm mb-10 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
 
-        <div className="text-center mb-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">
-            Apply to Attend
+        <div className="text-center mb-12">
+          <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-4">
+            Secure Your Reservation
           </p>
-          <h1 className="font-serif text-3xl md:text-4xl text-foreground mb-3">
-            Request Your Invitation
+          <div className="w-16 h-px bg-white/30 mx-auto mb-6" />
+          <h1 className="font-serif text-4xl md:text-5xl text-white mb-4">
+            Reserve Your Spot
           </h1>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Space is limited to 80–100 guests. Complete the form below and our team
-            will review your application.
+          <p className="text-white/70 text-sm max-w-lg mx-auto">
+            Fill in your details, then scan the code to complete your $150 payment
+            and lock in your spot.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-lg space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm text-foreground mb-1.5">First Name *</label>
-              <input
-                required
-                value={form.first_name}
-                onChange={(e) => setForm({ ...form, first_name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-foreground mb-1.5">Last Name *</label>
-              <input
-                required
-                value={form.last_name}
-                onChange={(e) => setForm({ ...form, last_name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm text-foreground mb-1.5">Email *</label>
-            <input
-              type="email"
-              required
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-foreground mb-1.5">Phone</label>
-            <input
-              type="tel"
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-            />
-          </div>
-
-
-          <div>
-            <label className="block text-sm text-foreground mb-1.5">Dietary Requirements</label>
-            <input
-              value={form.dietary_requirements}
-              onChange={(e) => setForm({ ...form, dietary_requirements: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-              placeholder="Vegan, gluten-free, allergies..."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-foreground mb-1.5">Why would you like to attend?</label>
-            <textarea
-              value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 resize-none"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gold text-primary-foreground py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 lg:gap-8 items-start">
+          {/* Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
           >
-            {loading ? "Submitting..." : "Submit Application"}
-          </button>
-        </form>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label className={labelClass}>First Name</label>
+                <input
+                  required
+                  placeholder="Your first name"
+                  value={form.first_name}
+                  onChange={(e) => setForm({ ...form, first_name: e.target.value })}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>Last Name</label>
+                <input
+                  required
+                  placeholder="Your last name"
+                  value={form.last_name}
+                  onChange={(e) => setForm({ ...form, last_name: e.target.value })}
+                  className={inputClass}
+                />
+              </div>
+            </div>
 
-        <div className="mt-10 bg-card rounded-2xl p-8 shadow-lg text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">
-            Reserve Your Seat
-          </p>
-          <h2 className="font-serif text-2xl text-foreground mb-3">
-            Secure Your Spot via PayPal
-          </h2>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto mb-6">
-            Scan the QR code below with your phone's camera to complete your contribution
-            and confirm your attendance.
-          </p>
-          <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
-            <img
-              src={paypalQr.url}
-              alt="PayPal QR code to reserve your seat"
-              className="w-56 h-56"
-            />
+            <div>
+              <label className={labelClass}>Email Address</label>
+              <input
+                type="email"
+                required
+                placeholder="your@email.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>Phone Number</label>
+              <input
+                type="tel"
+                placeholder="+1 (305) 000-0000"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>Dietary Requirements</label>
+              <input
+                value={form.dietary_requirements}
+                onChange={(e) => setForm({ ...form, dietary_requirements: e.target.value })}
+                className={inputClass}
+                placeholder="Vegan, gluten-free, allergies..."
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>Why would you like to attend?</label>
+              <textarea
+                value={form.notes}
+                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                rows={3}
+                className={`${inputClass} resize-none`}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-[#d4b483] via-[#d89b8a] to-[#c47e7e] text-white py-4 rounded-full text-sm tracking-[0.2em] uppercase font-medium hover:opacity-95 transition-opacity disabled:opacity-50 shadow-lg"
+            >
+              {loading ? "Submitting..." : "Submit My Reservation"}
+            </button>
+
+            <p className="text-white/50 text-xs text-center leading-relaxed">
+              After submitting, complete your payment using the code to the right.
+              A waiver will be provided upon arrival.
+            </p>
+          </form>
+
+          {/* PayPal panel */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
+            <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
+              Step 2 · Payment
+            </p>
+            <h2 className="font-serif text-2xl text-white mb-3">
+              Scan to Pay
+            </h2>
+            <p className="text-white/65 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
+              Use your phone camera or the PayPal app to scan and secure your reservation.
+            </p>
+
+            <div className="inline-block p-4 bg-white rounded-xl shadow-2xl mb-6">
+              <img
+                src={paypalQr.url}
+                alt="PayPal QR code to reserve your seat"
+                className="w-56 h-56"
+              />
+            </div>
+
+            <p className="font-serif text-2xl text-white">
+              $150 <span className="text-white/50 text-xl">· per guest</span>
+            </p>
+            <p className="text-white/40 text-[11px] tracking-[0.2em] uppercase mt-1">
+              Powered by PayPal
+            </p>
+
+            <div className="mt-7 pt-6 border-t border-white/10">
+              <p className="text-white/50 text-xs leading-relaxed">
+                Your spot is confirmed once payment is received. Seats are extremely limited.
+              </p>
+            </div>
           </div>
         </div>
       </div>
