@@ -226,10 +226,10 @@ const EventDetail = () => {
               </p>
             </div>
 
-            <h1 className="font-serif font-light leading-[0.95] tracking-tight mb-8" style={{ color: C.rose, fontSize: "clamp(3rem, 8vw, 6rem)" }}>
-              {event.name.split(" ").slice(0, -1).join(" ")}
+            <h1 className="font-serif font-light leading-[0.95] tracking-tight mb-8" style={{ color: C.ink, fontSize: "clamp(3rem, 8vw, 6rem)" }}>
+              <span style={{ color: C.rose }}>{event.name.split(" ").slice(0, -1).join(" ")}</span>
               {event.name.includes(" ") && <br />}
-              <em className="italic font-light">
+              <em className="italic font-light" style={{ color: C.rose }}>
                 {event.name.split(" ").slice(-1)[0]}
               </em>
             </h1>
