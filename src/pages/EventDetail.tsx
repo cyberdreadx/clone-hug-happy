@@ -388,6 +388,61 @@ const EventDetail = () => {
       </section>
 
 
+      {/* ============ HOSTS ============ */}
+      <section id="hosts" className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.champagne + "40" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Your Hosts</p>
+            <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] max-w-3xl mx-auto" style={{ color: C.ink }}>
+              Hosted by women who blend emotional depth with{" "}
+              <em className="italic" style={{ color: C.rose }}>elevated care.</em>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                name: "Alejandra Arias",
+                role: "Host & Breathwork Guide",
+                photo: alejandraAsset.url,
+                bio: "Alejandra leads breathwork and somatic sessions with a trauma-informed approach. Her focus is practical: using breath and movement to help women manage stress and feel more at ease in their bodies.",
+              },
+              {
+                name: "Carla Masquida",
+                role: "Host & Vinyasa Yoga Teacher",
+                photo: carlaAsset.url,
+                bio: "Carla teaches vinyasa yoga focused on strength, mobility, and breath. Her classes are approachable and grounded, helping women build physical resilience and move with confidence.",
+              },
+            ].map((h, i) => (
+              <div
+                key={i}
+                className="overflow-hidden rounded-2xl"
+                style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}
+              >
+                <div className="relative w-full aspect-[4/5] overflow-hidden">
+                  <img
+                    src={h.photo}
+                    alt={`Portrait of ${h.name}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                    style={{ filter: "grayscale(20%)" }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(180deg, transparent 55%, ${C.ink}66 100%)` }}
+                  />
+                </div>
+                <div className="p-7">
+                  <h3 className="font-serif text-2xl" style={{ color: C.ink }}>{h.name}</h3>
+                  <p className="text-[10px] tracking-[0.25em] uppercase mb-4 mt-1" style={{ color: C.rose }}>{h.role}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{h.bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
         <section className="px-6 sm:px-10 lg:px-20 py-24 lg:py-32">
@@ -445,60 +500,6 @@ const EventDetail = () => {
         </section>
       )}
 
-      {/* ============ HOSTS ============ */}
-      <section id="hosts" className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.champagne + "40" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Your Hosts</p>
-            <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] max-w-3xl mx-auto" style={{ color: C.ink }}>
-              Hosted by women who blend emotional depth with{" "}
-              <em className="italic" style={{ color: C.rose }}>elevated care.</em>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                name: "Alejandra Arias",
-                role: "Host & Breathwork Guide",
-                photo: alejandraAsset.url,
-                bio: "Alejandra leads breathwork and somatic sessions with a trauma-informed approach. Her focus is practical: using breath and movement to help women manage stress and feel more at ease in their bodies.",
-              },
-              {
-                name: "Carla Masquida",
-                role: "Host & Vinyasa Yoga Teacher",
-                photo: carlaAsset.url,
-                bio: "Carla teaches vinyasa yoga focused on strength, mobility, and breath. Her classes are approachable and grounded, helping women build physical resilience and move with confidence.",
-              },
-            ].map((h, i) => (
-              <div
-                key={i}
-                className="overflow-hidden rounded-2xl"
-                style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}
-              >
-                <div className="relative w-full aspect-[4/5] overflow-hidden">
-                  <img
-                    src={h.photo}
-                    alt={`Portrait of ${h.name}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                    style={{ filter: "grayscale(20%)" }}
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: `linear-gradient(180deg, transparent 55%, ${C.ink}66 100%)` }}
-                  />
-                </div>
-                <div className="p-7">
-                  <h3 className="font-serif text-2xl" style={{ color: C.ink }}>{h.name}</h3>
-                  <p className="text-[10px] tracking-[0.25em] uppercase mb-4 mt-1" style={{ color: C.rose }}>{h.role}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{h.bio}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ============ PRICING + DETAILS ============ */}
       <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-24 lg:py-32">
