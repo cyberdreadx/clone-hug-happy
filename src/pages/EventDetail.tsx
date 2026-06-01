@@ -164,7 +164,7 @@ const EventDetail = () => {
     { q: "What should I bring?", a: "Just yourself, comfortable clothing, and an open heart. We provide everything else — mats, blankets, eye pillows, refreshments, and all journey materials." },
     { q: "What is the cancellation policy?", a: "Full refund up to 14 days before the event. Within 14 days, your ticket can be transferred to a future experience. Spaces are intimate and limited." },
     { q: "Is this beginner friendly?", a: "Absolutely. Our experiences are held with care for all levels — first-timers and seasoned practitioners alike. Facilitators guide you gently throughout." },
-    { q: "Are food and drinks provided?", a: "Yes. Welcome drinks, light bites, and a closing ceremony tea are included. Please share any dietary preferences when you RSVP." },
+    { q: "Are food and drinks provided?", a: "Yes. Welcome drinks, light bites, and a closing tea are included. Please share any dietary preferences when you RSVP." },
     { q: "Can I come with a friend?", a: "Of course. Many guests come solo and leave with new connections, but you're welcome to invite someone special. Each guest needs their own ticket." },
   ];
 
@@ -319,7 +319,7 @@ const EventDetail = () => {
               <em className="italic" style={{ color: C.rose }}>boutique hotel</em> energy.
             </h2>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              Half restorative practice, half curated ritual. Every detail is considered — from the flowers on the table to the breath of the room — so you can arrive heavy and leave held.
+              Half restorative practice, half curated experience. Every detail is considered — from the flowers on the table to the breath of the room — so you can arrive heavy and leave held.
             </p>
             <p className="text-base leading-relaxed mb-10" style={{ color: C.inkSoft }}>
               Think soft linens, warm botanicals, and a quietly assembled circle of women who came to remember themselves.
@@ -391,7 +391,7 @@ const EventDetail = () => {
               {[
                 { t: "Breathwork", d: "A guided journey through somatic breath to release what no longer serves." },
                 { t: "Red Light Therapy", d: "Cellular renewal in a soft, immersive glow before integration." },
-                { t: "Sauna & Cold Plunge", d: "An ancient contrast ritual for clarity, vitality, and presence." },
+                { t: "Sauna & Cold Plunge", d: "A contrast practice for clarity, vitality, and presence." },
                 { t: "Guided Practices", d: "Held meditation, journaling prompts, and intention setting." },
                 { t: "Welcome Drinks", d: "Botanical tonics and adaptogenic elixirs on arrival." },
                 { t: "Silk Robes", d: "Slip into something soft. We've thought of everything." },
@@ -481,16 +481,16 @@ const EventDetail = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                name: "Alejandra",
-                role: "Breathwork & Somatic Guide",
+                name: "Alejandra Arias",
+                role: "Host & Breathwork Guide",
                 photo: alejandraAsset.url,
-                bio: "Alejandra leads the somatic breathwork journey — a guided practice in releasing tension, building resilience, and reclaiming calm under pressure. Her work blends nervous-system regulation with a soft, embodied presence.",
+                bio: "Alejandra leads breathwork and somatic sessions with a trauma-informed approach. Her focus is practical: using breath and movement to help women manage stress and feel more at ease in their bodies.",
               },
               {
                 name: "Carla Masquida",
-                role: "Yoga & Sound Ceremony",
+                role: "Host & Vinyasa Yoga Teacher",
                 photo: carlaAsset.url,
-                bio: "Carla opens the morning with an unhurried yoga practice and closes the circle with a cinematic sound bath. Her ceremonies are described as held, intentional, and quietly transformative.",
+                bio: "Carla teaches vinyasa yoga focused on strength, mobility, and breath. Her classes are approachable and grounded, helping women build physical resilience and move with confidence.",
               },
             ].map((h, i) => (
               <div
@@ -577,7 +577,7 @@ const EventDetail = () => {
                   {(event as any).ticket_price ? `$${Number((event as any).ticket_price).toFixed(0)}` : "By Invitation"}
                 </p>
                 <p className="text-sm leading-relaxed mb-6" style={{ color: C.inkSoft }}>
-                  Includes full programming, welcome ritual, refreshments, and all journey materials.
+                  Includes full programming, welcome drinks, refreshments, and all journey materials.
                 </p>
                 <Link
                   to="/rsvp"
@@ -599,7 +599,7 @@ const EventDetail = () => {
               </h3>
               <ul className="space-y-3">
                 {[
-                  "Welcome ritual upon arrival",
+                  "Welcome drinks upon arrival",
                   "Adaptogenic tonics and herbal teas",
                   "Silk eye pillows and warm blankets",
                   "Curated playlist & professional sound",
