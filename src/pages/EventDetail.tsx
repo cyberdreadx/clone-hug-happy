@@ -333,19 +333,36 @@ const EventDetail = () => {
             </p>
 
             {/* stat row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
               {[
                 { value: "4.5h", label: "Of Experience" },
-                { value: "10", label: "Person Intimate Group" },
+                { value: "10", label: "Intimate Group" },
                 { value: "Women", label: "Only" },
                 { value: "$150", label: "Investment" },
               ].map((s, i) => (
-                <div key={i}>
-                  <p className="font-serif text-3xl mb-1" style={{ color: C.rose }}>{s.value}</p>
-                  <p className="text-[10px] tracking-[0.2em] uppercase leading-relaxed" style={{ color: C.taupe }}>{s.label}</p>
+                <div
+                  key={i}
+                  className="px-4 py-2 text-center"
+                  style={{
+                    borderLeft: i === 0 ? "none" : `1px solid ${C.hairline}`,
+                  }}
+                >
+                  <p
+                    className="font-serif font-light mb-2 leading-none"
+                    style={{ color: C.rose, fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
+                  >
+                    {s.value}
+                  </p>
+                  <p
+                    className="text-[10px] tracking-[0.25em] uppercase leading-relaxed"
+                    style={{ color: C.taupe }}
+                  >
+                    {s.label}
+                  </p>
                 </div>
               ))}
             </div>
+
 
           </div>
 
