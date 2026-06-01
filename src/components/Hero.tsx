@@ -34,7 +34,7 @@ const Hero = () => {
       style={{ backgroundImage: `url(${heroBg.url})` }}
     >
       {/* Cream wash for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-hero-bg/90 via-hero-bg/80 to-hero-bg/95" />
+      <div className="absolute inset-0 bg-gradient-to-b from-hero/85 via-hero/75 to-hero/95" />
       <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
         <header className="flex flex-col items-center text-center mb-20">
