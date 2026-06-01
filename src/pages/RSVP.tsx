@@ -228,14 +228,14 @@ const RSVPPage = () => {
               {loading ? "Submitting..." : "Submit My Reservation"}
             </button>
 
-            <p className="text-white/50 text-xs text-center leading-relaxed">
+            <p className="text-white/75 text-xs text-center leading-relaxed">
               After submitting, complete your payment using the code to the right.
               A waiver will be provided upon arrival.
             </p>
           </form>
 
           {/* PayPal panel */}
-          <div className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
+          <div className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col justify-center">
             <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
               Step 2 · Payment
             </p>
