@@ -20,6 +20,7 @@ import AdminSurveys from "./pages/admin/AdminSurveys.tsx";
 import PartnerPortal from "./pages/PartnerPortal.tsx";
 import PartnerRecap from "./pages/PartnerRecap.tsx";
 import Survey from "./pages/Survey.tsx";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/rsvp" element={<RSVPPage />} />
