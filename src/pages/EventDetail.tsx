@@ -387,56 +387,6 @@ const EventDetail = () => {
         </div>
       </section>
 
-      {/* ============ FEATURE GRID — DESIGNED TO FEEL ============ */}
-      <section className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.blush + "55" }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <div className="flex items-center justify-center gap-2 mb-5">
-              <Bloom className="w-4 h-4" />
-              <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: C.taupe }}>The Experience</p>
-            </div>
-            <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
-              Designed to feel restorative, feminine, and{" "}
-              <em className="italic" style={{ color: C.rose }}>beautifully considered.</em>
-            </h2>
-          </div>
-
-          {highlights.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {highlights.map((h, i) => (
-                <div key={i} className="p-7 rounded-2xl transition-transform hover:-translate-y-1" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: C.blush }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: C.rose }} />
-                  </div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: C.rose }}>{String(i + 1).padStart(2, "0")}</p>
-                  <h3 className="font-serif text-xl mb-2" style={{ color: C.ink }}>{h.label}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{h.value}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {[
-                { t: "Breathwork", d: "A guided journey through somatic breath to release what no longer serves." },
-                { t: "Red Light Therapy", d: "Cellular renewal in a soft, immersive glow before integration." },
-                { t: "Sauna & Cold Plunge", d: "A contrast practice for clarity, vitality, and presence." },
-                { t: "Guided Practices", d: "Held meditation, journaling prompts, and intention setting." },
-                { t: "Welcome Drinks", d: "Botanical tonics and adaptogenic elixirs on arrival." },
-                { t: "Silk Robes", d: "Slip into something soft. We've thought of everything." },
-              ].map((s, i) => (
-                <div key={i} className="p-7 rounded-2xl transition-transform hover:-translate-y-1" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: C.blush }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: C.rose }} />
-                  </div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: C.rose }}>{String(i + 1).padStart(2, "0")}</p>
-                  <h3 className="font-serif text-xl mb-2" style={{ color: C.ink }}>{s.t}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{s.d}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
@@ -729,6 +679,36 @@ const EventDetail = () => {
               ) : (
                 <p className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: C.inkSoft }}>{waiverContent}</p>
               )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ============ FAQS ============ */}
+      {highlights.length > 0 && (
+        <section className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.blush + "55" }}>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Bloom className="w-4 h-4" />
+                <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: C.taupe }}>Good to Know</p>
+              </div>
+              <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
+                Frequently <em className="italic" style={{ color: C.rose }}>asked.</em>
+              </h2>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
+              {highlights.map((h, i) => (
+                <div
+                  key={i}
+                  className="px-6 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+                  style={{ borderTop: i === 0 ? "none" : `1px solid ${C.hairline}` }}
+                >
+                  <h3 className="font-serif text-lg sm:w-48 shrink-0" style={{ color: C.ink }}>{h.label}</h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: C.inkSoft }}>{h.value}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
