@@ -1148,7 +1148,7 @@ const EventDetail = () => {
             <img
               src={breatheBloomLogoAsset.url}
               alt="Breathe & Bloom"
-              className="h-16 sm:h-20 w-auto opacity-90"
+              className="h-32 sm:h-40 w-auto opacity-90"
             />
           </div>
 
