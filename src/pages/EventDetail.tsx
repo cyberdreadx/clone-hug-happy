@@ -1089,7 +1089,7 @@ const EventDetail = () => {
 
 
       {/* ============ FINAL CTA ============ */}
-      <section className="relative overflow-hidden" style={{ minHeight: 600 }}>
+      <section className="relative overflow-hidden" style={{ minHeight: 420 }}>
         {/* Background image — full bleed */}
         <img
           src={finalCtaBloomAsset.url}
@@ -1105,7 +1105,7 @@ const EventDetail = () => {
           }}
         />
 
-        <div className="relative px-6 sm:px-10 lg:px-20 py-24 sm:py-32 text-center">
+        <div className="relative px-6 sm:px-10 lg:px-20 py-12 sm:py-16 text-center">
           <p className="text-[10px] tracking-[0.4em] uppercase mb-6" style={{ color: C.card }}>
             A Final Invitation
           </p>
@@ -1144,15 +1144,15 @@ const EventDetail = () => {
           </div>
 
           {/* Logo */}
-          <div className="mt-16 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <img
               src={breatheBloomLogoAsset.url}
               alt="Breathe & Bloom"
-              className="h-32 sm:h-40 w-auto opacity-90"
+              className="h-64 sm:h-80 w-auto opacity-90"
             />
           </div>
 
-          <p className="mt-8 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
+          <p className="mt-4 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
             Curated Wellness · Held with Intention
           </p>
           <Link
