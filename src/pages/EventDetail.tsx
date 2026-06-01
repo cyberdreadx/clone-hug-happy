@@ -1168,16 +1168,20 @@ const EventDetail = () => {
               In Partnership With
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
-              <img
-                src={partnerSilaAsset.url}
-                alt="Sila"
-                className="h-36 sm:h-48 w-auto opacity-90 hover:opacity-100 transition-opacity"
-              />
-              <img
-                src={partner2Asset.url}
-                alt="Vibranto"
-                className="h-28 sm:h-36 w-auto opacity-90 hover:opacity-100 transition-opacity"
-              />
+              <div className="flex items-center justify-center h-36 sm:h-48">
+                <img
+                  src={partnerSilaAsset.url}
+                  alt="Sila"
+                  className="max-h-full w-auto opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </div>
+              <div className="flex items-center justify-center h-36 sm:h-48">
+                <img
+                  src={partner2Asset.url}
+                  alt="Vibranto"
+                  className="max-h-28 sm:max-h-36 w-auto opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </div>
             </div>
           </div>
 
