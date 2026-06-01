@@ -512,6 +512,139 @@ const EventDetail = () => {
         </div>
       </section>
 
+      {/* ============ PRICING + DETAILS ============ */}
+      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+              <p className="text-[10px] tracking-[0.5em] uppercase" style={{ color: C.taupe }}>Reserve Your Seat</p>
+              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+            </div>
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight" style={{ color: C.ink }}>
+              Choose your <em className="italic font-normal" style={{ color: C.rose }}>arrival.</em>
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            {/* UNIFIED CARD — price + included with care */}
+            <div
+              className="rounded-3xl p-8 sm:p-10 lg:p-12 flex flex-col"
+              style={{
+                background: `linear-gradient(165deg, ${C.blush}55, ${C.champagne}40)`,
+                border: `1px solid ${C.hairline}`,
+              }}
+            >
+              {(() => {
+                const tier = ticketTiers[0];
+                const price = tier ? tier.price : (event as any).ticket_price;
+                const tierName = tier?.name || "Admission";
+                const tierDesc = tier?.description;
+                const isSoldOut = tier && (tier.status === "sold_out" || (tier.capacity && tier.sold_count >= tier.capacity));
+                const spotsRemaining = tier?.capacity ? Math.max(tier.capacity - tier.sold_count, 0) : null;
+
+                return (
+                  <>
+                    <div className="pb-7 mb-7" style={{ borderBottom: `1px solid ${C.hairline}` }}>
+                      <p className="text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: C.rose }}>
+                        Investment
+                      </p>
+                      <div className="flex items-baseline justify-between gap-6 mb-3">
+                        <h3 className="font-serif text-2xl sm:text-3xl" style={{ color: C.ink }}>
+                          {tierName}
+                        </h3>
+                        <p className="font-serif text-4xl sm:text-5xl tracking-tight" style={{ color: C.rose }}>
+                          {price > 0 ? `$${Number(price).toFixed(0)}` : "Free"}
+                        </p>
+                      </div>
+                      {tierDesc && (
+                        <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>
+                          {tierDesc}
+                        </p>
+                      )}
+                      {spotsRemaining !== null && !isSoldOut && spotsRemaining <= 10 && (
+                        <p className="text-[10px] tracking-[0.3em] uppercase mt-3" style={{ color: C.rose }}>
+                          Only {spotsRemaining} remaining
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>
+                        Included With Care
+                      </p>
+                      <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-4" style={{ color: C.ink }}>
+                        Everything prepared for your <em className="italic" style={{ color: C.rose }}>deep reset.</em>
+                      </h4>
+                      <ul className="space-y-2">
+                        {[
+                          "4.5-hour guided wellness session",
+                          "Functional welcome drinks",
+                          "Red light therapy (private + group)",
+                          "Guided Contrast Therapy with Sauna & Cold Plunge",
+                          "Cacao Body Scrub",
+                          "Live Sound Bath Session",
+                          "Sponsored Reset Gift Kit",
+                          "Post-Retreat SILA Access",
+                          "15% off Devia Juice Bar",
+                          "Bio-hacking amenities at 20% off",
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3 text-[15px] leading-snug" style={{ color: C.inkSoft }}>
+                            <span className="mt-2 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-6 mt-6" style={{ borderTop: `1px solid ${C.hairline}` }}>
+
+                      {isSoldOut ? (
+                        <span className="inline-block w-full text-center py-4 rounded-full text-sm tracking-wide" style={{ backgroundColor: C.hairline, color: C.taupe }}>
+                          Sold Out
+                        </span>
+                      ) : (
+                        <Link
+                          to="/rsvp"
+                          className="inline-flex items-center justify-center w-full py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors"
+                          style={{ backgroundColor: C.rose }}
+                          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
+                          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
+                        >
+                          {price > 0 ? "Claim Your Seat" : "Request Invitation"}
+                        </Link>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+
+            {/* RIGHT — editorial photo */}
+            <div className="relative rounded-3xl overflow-hidden min-h-[480px] lg:min-h-0" style={{ border: `1px solid ${C.hairline}` }}>
+              <img
+                src={dearBodyAsset.url}
+                alt="Soft skin with water droplets — dear body, I love you"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: `linear-gradient(180deg, transparent 40%, ${C.ink}55 100%)` }}
+              />
+              <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10 lg:p-12">
+                <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
+                  dear body,
+                  <br />
+                  I love you.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
         <section className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
@@ -837,139 +970,6 @@ const EventDetail = () => {
           </div>
         </section>
       )}
-
-
-      {/* ============ PRICING + DETAILS ============ */}
-      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
-              <p className="text-[10px] tracking-[0.5em] uppercase" style={{ color: C.taupe }}>Reserve Your Seat</p>
-              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
-            </div>
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight" style={{ color: C.ink }}>
-              Choose your <em className="italic font-normal" style={{ color: C.rose }}>arrival.</em>
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-            {/* UNIFIED CARD — price + included with care */}
-            <div
-              className="rounded-3xl p-8 sm:p-10 lg:p-12 flex flex-col"
-              style={{
-                background: `linear-gradient(165deg, ${C.blush}55, ${C.champagne}40)`,
-                border: `1px solid ${C.hairline}`,
-              }}
-            >
-              {(() => {
-                const tier = ticketTiers[0];
-                const price = tier ? tier.price : (event as any).ticket_price;
-                const tierName = tier?.name || "Admission";
-                const tierDesc = tier?.description;
-                const isSoldOut = tier && (tier.status === "sold_out" || (tier.capacity && tier.sold_count >= tier.capacity));
-                const spotsRemaining = tier?.capacity ? Math.max(tier.capacity - tier.sold_count, 0) : null;
-
-                return (
-                  <>
-                    <div className="pb-7 mb-7" style={{ borderBottom: `1px solid ${C.hairline}` }}>
-                      <p className="text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: C.rose }}>
-                        Investment
-                      </p>
-                      <div className="flex items-baseline justify-between gap-6 mb-3">
-                        <h3 className="font-serif text-2xl sm:text-3xl" style={{ color: C.ink }}>
-                          {tierName}
-                        </h3>
-                        <p className="font-serif text-4xl sm:text-5xl tracking-tight" style={{ color: C.rose }}>
-                          {price > 0 ? `$${Number(price).toFixed(0)}` : "Free"}
-                        </p>
-                      </div>
-                      {tierDesc && (
-                        <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>
-                          {tierDesc}
-                        </p>
-                      )}
-                      {spotsRemaining !== null && !isSoldOut && spotsRemaining <= 10 && (
-                        <p className="text-[10px] tracking-[0.3em] uppercase mt-3" style={{ color: C.rose }}>
-                          Only {spotsRemaining} remaining
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="flex-1">
-                      <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>
-                        Included With Care
-                      </p>
-                      <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-4" style={{ color: C.ink }}>
-                        Everything prepared for your <em className="italic" style={{ color: C.rose }}>deep reset.</em>
-                      </h4>
-                      <ul className="space-y-2">
-                        {[
-                          "4.5-hour guided wellness session",
-                          "Functional welcome drinks",
-                          "Red light therapy (private + group)",
-                          "Guided Contrast Therapy with Sauna & Cold Plunge",
-                          "Cacao Body Scrub",
-                          "Live Sound Bath Session",
-                          "Sponsored Reset Gift Kit",
-                          "Post-Retreat SILA Access",
-                          "15% off Devia Juice Bar",
-                          "Bio-hacking amenities at 20% off",
-                        ].map((item, i) => (
-                          <li key={i} className="flex items-start gap-3 text-[15px] leading-snug" style={{ color: C.inkSoft }}>
-                            <span className="mt-2 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="pt-6 mt-6" style={{ borderTop: `1px solid ${C.hairline}` }}>
-
-                      {isSoldOut ? (
-                        <span className="inline-block w-full text-center py-4 rounded-full text-sm tracking-wide" style={{ backgroundColor: C.hairline, color: C.taupe }}>
-                          Sold Out
-                        </span>
-                      ) : (
-                        <Link
-                          to="/rsvp"
-                          className="inline-flex items-center justify-center w-full py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors"
-                          style={{ backgroundColor: C.rose }}
-                          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
-                          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
-                        >
-                          {price > 0 ? "Claim Your Seat" : "Request Invitation"}
-                        </Link>
-                      )}
-                    </div>
-                  </>
-                );
-              })()}
-            </div>
-
-            {/* RIGHT — editorial photo */}
-            <div className="relative rounded-3xl overflow-hidden min-h-[480px] lg:min-h-0" style={{ border: `1px solid ${C.hairline}` }}>
-              <img
-                src={dearBodyAsset.url}
-                alt="Soft skin with water droplets — dear body, I love you"
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: `linear-gradient(180deg, transparent 40%, ${C.ink}55 100%)` }}
-              />
-              <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10 lg:p-12">
-                <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
-                  dear body,
-                  <br />
-                  I love you.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* ============ FAQ + GOOD TO KNOW ============ */}
