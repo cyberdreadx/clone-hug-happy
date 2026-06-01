@@ -229,22 +229,25 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         <div>
           <label className="block text-sm text-[#022701] mb-2">Good to Know</label>
           {highlights.map((h, idx) => (
-            <div key={idx} className="flex items-center gap-2 mb-2">
-              <input
-                value={h.label}
-                onChange={(e) => updateHighlight(idx, "label", e.target.value)}
-                placeholder="Label (e.g. Parking)"
-                className={`${inputClass} basis-1/3 min-w-0`}
-              />
-              <input
+            <div key={idx} className="mb-3 rounded-lg border border-[#022701]/15 bg-white/30 p-3">
+              <div className="mb-2 flex items-center gap-2">
+                <input
+                  value={h.label}
+                  onChange={(e) => updateHighlight(idx, "label", e.target.value)}
+                  placeholder="Label (e.g. Parking)"
+                  className={inputClass}
+                />
+                <button type="button" onClick={() => removeHighlight(idx)} className="p-2 text-[#022701]/30 hover:text-red-400 transition-colors shrink-0">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+              <textarea
                 value={h.value}
                 onChange={(e) => updateHighlight(idx, "value", e.target.value)}
                 placeholder="Details (e.g. 16+, Street parking available)"
-                className={`${inputClass} basis-2/3 min-w-0 flex-1`}
+                rows={2}
+                className={`${inputClass} resize-none`}
               />
-              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-[#022701]/30 hover:text-red-400 transition-colors shrink-0">
-                <Trash2 className="w-4 h-4" />
-              </button>
             </div>
           ))}
           <div className="flex flex-wrap gap-2 mt-1">
