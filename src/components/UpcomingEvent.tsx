@@ -82,19 +82,11 @@ const UpcomingEvent = () => {
             to={`/event/${featured.id}`}
             className="lg:col-span-7 group block relative overflow-hidden"
           >
-            {featured.cover_image ? (
-              <img
-                src={featured.cover_image}
-                alt={featured.name}
-                className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-            ) : (
-              <div className="w-full aspect-[5/4] bg-hero flex items-center justify-center">
-                <span className="font-serif text-7xl text-foreground/20">
-                  {featured.name.charAt(0)}
-                </span>
-              </div>
-            )}
+            <img
+              src={featured.cover_image && featured.cover_image.trim() ? featured.cover_image : heroFloral.url}
+              alt={featured.name}
+              className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
             <span className="absolute top-6 left-6 bg-card/95 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-foreground">
               Next Gathering
             </span>
