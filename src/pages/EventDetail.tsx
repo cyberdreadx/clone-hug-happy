@@ -548,25 +548,51 @@ const EventDetail = () => {
         )}
 
         {/* Closing CTA */}
-        <div className="relative overflow-hidden rounded-2xl bg-card border border-border px-6 py-12 sm:px-10 sm:py-14 text-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-transparent pointer-events-none" />
-          <div className="relative">
-            <Sparkles className="w-6 h-6 text-gold mx-auto mb-4" />
-            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">Your Seat Awaits</p>
-            <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-3">
+        <div className="relative overflow-hidden rounded-3xl bg-[#f8f6f1] border border-[#e8e4dd] px-6 py-14 sm:px-12 sm:py-20 text-center">
+          {/* Decorative botanical circle */}
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-[#d4e4c4]/40 blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-[#e8d5b8]/40 blur-2xl pointer-events-none" />
+          
+          {/* Small decorative leaves */}
+          <svg className="absolute top-6 left-6 w-8 h-8 text-[#a8c090]/60 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C7 2 3 6 3 11c0 2.5 1 4.8 2.7 6.5L12 22l6.3-4.5C20 15.8 21 13.5 21 11c0-5-4-9-9-9zm0 16l-4.5-3.2C6.2 13.5 5.5 12.3 5.5 11c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5c0 1.3-.7 2.5-1.8 3.8L12 18z"/>
+          </svg>
+          <svg className="absolute bottom-8 right-8 w-6 h-6 text-[#c9a96e]/50 pointer-events-none rotate-45" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C7 2 3 6 3 11c0 2.5 1 4.8 2.7 6.5L12 22l6.3-4.5C20 15.8 21 13.5 21 11c0-5-4-9-9-9z"/>
+          </svg>
+
+          <div className="relative max-w-lg mx-auto">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#d4e4c4]/50 mb-6">
+              <Sparkles className="w-5 h-5 text-[#6b8f5e]" />
+            </div>
+            
+            <p className="text-[11px] tracking-[0.35em] uppercase text-[#8a9a7a] font-medium mb-4">
+              Your Seat Awaits
+            </p>
+            
+            <h2 className="font-serif text-3xl sm:text-4xl text-[#022701] mb-4 leading-tight">
               Ready to join us?
             </h2>
-            <p className="text-muted-foreground text-sm max-w-md mx-auto mb-6 leading-relaxed">
+            
+            <p className="text-[#5a6a4a] text-sm max-w-md mx-auto mb-8 leading-relaxed">
               Spaces are intimate and held with care. Request your invitation to{" "}
-              <span className="text-foreground">{event.name}</span>
+              <span className="text-[#022701] font-medium">{event.name}</span>
               {event.date && (
                 <> on {new Date(event.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" })}</>
               )}.
             </p>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 justify-center mb-8">
+              <div className="h-px w-12 bg-[#d4e4c4]" />
+              <Heart className="w-3.5 h-3.5 text-[#c9a96e]" />
+              <div className="h-px w-12 bg-[#d4e4c4]" />
+            </div>
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to="/rsvp"
-                className="inline-flex items-center gap-2 bg-gold text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 bg-[#022701] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#044501] transition-colors shadow-lg shadow-[#022701]/10"
               >
                 Request Invitation
               </Link>
@@ -580,17 +606,20 @@ const EventDetail = () => {
                     location: event.location,
                     description: event.description,
                   })}
-                  className="inline-flex items-center gap-2 border border-border text-foreground/60 px-5 py-3 rounded-full text-sm hover:text-foreground hover:border-foreground/30 transition-colors"
+                  className="inline-flex items-center gap-2 border border-[#d4e4c4] text-[#5a6a4a] px-6 py-3.5 rounded-full text-sm hover:text-[#022701] hover:border-[#a8c090] transition-colors bg-white/50"
                 >
                   <CalendarPlus className="w-4 h-4" /> Add to Calendar
                 </button>
               )}
             </div>
+
             {spotsLeft > 0 && spotsLeft <= 20 && (
-              <p className="text-xs text-muted-foreground mt-5 flex items-center justify-center gap-1.5">
-                <Users className="w-3.5 h-3.5" />
-                Only {spotsLeft} {spotsLeft === 1 ? "spot" : "spots"} remaining
-              </p>
+              <div className="mt-6 inline-flex items-center gap-2 bg-[#fff8e7] border border-[#f0e0b8] rounded-full px-4 py-2">
+                <Users className="w-3.5 h-3.5 text-[#c9a96e]" />
+                <p className="text-xs text-[#8a7a4a] font-medium">
+                  Only {spotsLeft} {spotsLeft === 1 ? "spot" : "spots"} remaining
+                </p>
+              </div>
             )}
           </div>
         </div>
