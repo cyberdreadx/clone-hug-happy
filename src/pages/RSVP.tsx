@@ -70,7 +70,7 @@ const RSVPPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={bgStyle}>
         <div className="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl p-12 max-w-md text-center shadow-2xl">
-          <CheckCircle className="w-16 h-16 text-gold mx-auto mb-6" />
+          <CheckCircle className="w-16 h-16 text-white mx-auto mb-6 drop-shadow-lg" />
           <h2 className="font-serif text-2xl text-white mb-3">You're On The List</h2>
           <p className="text-white/70 text-sm leading-relaxed mb-6">
             Thank you for your interest in Breathe &amp; Bloom. We'll review your application
@@ -91,32 +91,34 @@ const RSVPPage = () => {
             </div>
           )}
 
-          {events?.[0]?.date && (
-            <button
-              onClick={() => {
-                const ev = events[0];
-                downloadICS({
-                  name: ev.name,
-                  date: ev.date!,
-                  time: (ev as any).time,
-                  endTime: (ev as any).end_time,
-                  location: ev.location,
-                  description: ev.description,
-                });
-              }}
-              className="inline-flex items-center gap-2 border border-white/30 text-white/80 px-5 py-2.5 rounded-full text-sm hover:text-white hover:border-white/60 transition-colors mb-4"
-            >
-              <CalendarPlus className="w-4 h-4" /> Add to Calendar
-            </button>
-          )}
+          <div className="flex flex-col items-center gap-3">
+            {events?.[0]?.date && (
+              <button
+                onClick={() => {
+                  const ev = events[0];
+                  downloadICS({
+                    name: ev.name,
+                    date: ev.date!,
+                    time: (ev as any).time,
+                    endTime: (ev as any).end_time,
+                    location: ev.location,
+                    description: ev.description,
+                  });
+                }}
+                className="inline-flex items-center gap-2 border border-white/30 text-white/80 px-5 py-2.5 rounded-full text-sm hover:text-white hover:border-white/60 transition-colors"
+              >
+                <CalendarPlus className="w-4 h-4" /> Add to Calendar
+              </button>
+            )}
 
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-gold text-sm hover:opacity-80 transition-opacity"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
-          </Link>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-white text-sm font-medium hover:opacity-80 transition-opacity"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to home
+            </Link>
+          </div>
         </div>
       </div>
     );
