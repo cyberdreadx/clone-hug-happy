@@ -85,8 +85,8 @@ const RSVPPage = () => {
               <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
                 <QRCodeSVG value={qrValue} size={180} level="M" />
               </div>
-              <p className="text-white/60 text-xs mt-3 leading-relaxed">
-                Screenshot this code — show it at the door for instant check-in
+              <p className="text-white/60 text-xs mt-3 leading-relaxed whitespace-nowrap">
+                Screenshot this code — show at the door to check in
               </p>
             </div>
           )}
