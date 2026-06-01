@@ -11,6 +11,8 @@ import { downloadICS } from "@/lib/calendar";
 import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
 const heroFloral = heroFloralAsset.url;
 import teaDetail from "@/assets/luxury-tea-detail.jpg";
+import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
+import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
@@ -476,46 +478,46 @@ const EventDetail = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {(() => {
-              const hosts = segments
-                .filter((s: any) => s.facilitator)
-                .reduce((acc: any[], s: any) => {
-                  if (!acc.find((h) => h.name === s.facilitator)) acc.push({ name: s.facilitator, instagram: s.facilitator_instagram, role: s.title });
-                  return acc;
-                }, []);
-              const showHosts = hosts.length > 0 ? hosts.slice(0, 4) : [
-                { name: "Alejandra", role: "Breathwork & Somatic Guide", bio: "Trained in transformational breathwork with a soft, embodied approach. She holds space for women to release with grace." },
-                { name: "Carla", role: "Sound & Ceremony", bio: "A classically trained musician turned sound healer. Her crystal bowl journeys are described as cinematic." },
-              ];
-              return showHosts.map((h: any, i: number) => (
-                <div key={i} className="p-7 rounded-2xl flex gap-5" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                name: "Alejandra",
+                role: "Breathwork & Somatic Guide",
+                photo: alejandraAsset.url,
+                bio: "Alejandra leads the somatic breathwork journey — a guided practice in releasing tension, building resilience, and reclaiming calm under pressure. Her work blends nervous-system regulation with a soft, embodied presence.",
+              },
+              {
+                name: "Carla Masquida",
+                role: "Yoga & Sound Ceremony",
+                photo: carlaAsset.url,
+                bio: "Carla opens the morning with an unhurried yoga practice and closes the circle with a cinematic sound bath. Her ceremonies are described as held, intentional, and quietly transformative.",
+              },
+            ].map((h, i) => (
+              <div
+                key={i}
+                className="overflow-hidden rounded-2xl"
+                style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}
+              >
+                <div className="relative w-full aspect-[4/5] overflow-hidden">
+                  <img
+                    src={h.photo}
+                    alt={`Portrait of ${h.name}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                    style={{ filter: "grayscale(20%)" }}
+                  />
                   <div
-                    className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center font-serif text-2xl"
-                    style={{ background: `linear-gradient(135deg, ${C.blush}, ${C.champagne})`, color: C.rose }}
-                  >
-                    {h.name.charAt(0)}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-serif text-xl" style={{ color: C.ink }}>{h.name}</h3>
-                    <p className="text-[10px] tracking-[0.25em] uppercase mb-3" style={{ color: C.rose }}>{h.role}</p>
-                    <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>
-                      {h.bio || `Guiding ${h.role?.toLowerCase() || "your experience"} with the kind of intentionality that turns a moment into a memory.`}
-                    </p>
-                    {h.instagram && (
-                      <a
-                        href={`https://instagram.com/${h.instagram}`}
-                        target="_blank" rel="noopener noreferrer"
-                        className="text-xs mt-3 inline-block hover:underline"
-                        style={{ color: C.rose }}
-                      >
-                        @{h.instagram} →
-                      </a>
-                    )}
-                  </div>
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(180deg, transparent 55%, ${C.ink}66 100%)` }}
+                  />
                 </div>
-              ));
-            })()}
+                <div className="p-7">
+                  <h3 className="font-serif text-2xl" style={{ color: C.ink }}>{h.name}</h3>
+                  <p className="text-[10px] tracking-[0.25em] uppercase mb-4 mt-1" style={{ color: C.rose }}>{h.role}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{h.bio}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
