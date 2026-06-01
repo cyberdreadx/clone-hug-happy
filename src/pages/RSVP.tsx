@@ -122,16 +122,6 @@ const RSVPPage = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-section-light py-16 px-6">
-      <div className="max-w-xl mx-auto">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-muted-foreground text-sm mb-8 hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </Link>
 
   return (
     <div className="min-h-screen py-16 px-6" style={bgStyle}>
