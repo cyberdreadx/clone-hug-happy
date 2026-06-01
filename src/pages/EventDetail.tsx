@@ -908,7 +908,7 @@ const EventDetail = () => {
                           "4.5-hour guided wellness session",
                           "Functional welcome drinks",
                           "Red light therapy (private + group)",
-                          "Sauna, cold plunge & contrast therapy",
+                          "Guided Contrast Therapy with Sauna & Cold Plunge",
                           "Cacao Body Scrub",
                           "Live Sound Bath Session",
                           "Sponsored Reset Gift Kit",
