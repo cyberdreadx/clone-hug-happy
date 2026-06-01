@@ -1,32 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 
 const Hero = () => {
-  const { data: nextEvent } = useQuery({
-    queryKey: ["next-event-hero"],
-    queryFn: async () => {
-      const today = new Date().toISOString().split("T")[0];
-      const { data } = await supabase
-        .from("events")
-        .select("id, name, date, location")
-        .eq("status", "active")
-        .gte("date", today)
-        .order("date", { ascending: true })
-        .limit(1)
-        .single();
-      return data;
-    },
-  });
-
-  const dateLabel = nextEvent?.date
-    ? format(new Date(nextEvent.date + "T12:00:00"), "MMMM yyyy")
-    : "";
 
   return (
     <section
