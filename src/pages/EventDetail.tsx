@@ -14,6 +14,7 @@ import cacaoScrubAsset from "@/assets/red-light-therapy.jpg.asset.json";
 import cacaoShoulderAsset from "@/assets/cacao-scrub-shoulder.png.asset.json";
 import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
 import carlaAsset from "@/assets/host-carla.jpg.asset.json";
+import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
@@ -839,99 +840,132 @@ const EventDetail = () => {
 
 
       {/* ============ PRICING + DETAILS ============ */}
-      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-10">
-          {/* Pricing cards */}
-          <div className="lg:col-span-3 space-y-4">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Reserve Your Seat</p>
-            <h2 className="font-serif text-3xl sm:text-4xl mb-8 leading-tight" style={{ color: C.ink }}>
-              Choose your <em className="italic" style={{ color: C.rose }}>arrival</em>.
+      <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+              <p className="text-[10px] tracking-[0.5em] uppercase" style={{ color: C.taupe }}>Reserve Your Seat</p>
+              <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+            </div>
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight" style={{ color: C.ink }}>
+              Choose your <em className="italic font-normal" style={{ color: C.rose }}>arrival.</em>
             </h2>
-
-            {ticketTiers.length > 0 ? ticketTiers.map((tier: any) => {
-              const isSoldOut = tier.status === "sold_out" || (tier.capacity && tier.sold_count >= tier.capacity);
-              const spotsRemaining = tier.capacity ? Math.max(tier.capacity - tier.sold_count, 0) : null;
-              return (
-                <div key={tier.id} className="p-7 rounded-2xl" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
-                  <div className="flex items-start justify-between gap-6 mb-4">
-                    <div>
-                      <h3 className="font-serif text-2xl mb-1" style={{ color: C.ink }}>{tier.name}</h3>
-                      {tier.description && <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{tier.description}</p>}
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="font-serif text-3xl" style={{ color: C.rose }}>
-                        {tier.price > 0 ? `$${Number(tier.price).toFixed(0)}` : "Free"}
-                      </p>
-                    </div>
-                  </div>
-                  {spotsRemaining !== null && !isSoldOut && spotsRemaining <= 10 && (
-                    <p className="text-[10px] tracking-[0.25em] uppercase mb-4" style={{ color: C.rose }}>
-                      Only {spotsRemaining} remaining
-                    </p>
-                  )}
-                  {isSoldOut ? (
-                    <span className="inline-block w-full text-center py-3 rounded-full text-sm" style={{ backgroundColor: C.hairline, color: C.taupe }}>
-                      Sold Out
-                    </span>
-                  ) : (
-                    <Link
-                      to="/rsvp"
-                      className="inline-flex items-center justify-center w-full py-3.5 rounded-full text-white text-sm tracking-wide transition-colors"
-                      style={{ backgroundColor: C.rose }}
-                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
-                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
-                    >
-                      Claim Your Seat
-                    </Link>
-                  )}
-                </div>
-              );
-            }) : (
-              <div className="p-7 rounded-2xl" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
-                <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: C.rose }}>General Admission</p>
-                <p className="font-serif text-4xl mb-3" style={{ color: C.rose }}>
-                  {(event as any).ticket_price ? `$${Number((event as any).ticket_price).toFixed(0)}` : "By Invitation"}
-                </p>
-                <p className="text-sm leading-relaxed mb-6" style={{ color: C.inkSoft }}>
-                  Includes full programming, welcome drinks, refreshments, and all journey materials.
-                </p>
-                <Link
-                  to="/rsvp"
-                  className="inline-flex items-center justify-center w-full py-3.5 rounded-full text-white text-sm tracking-wide transition-colors"
-                  style={{ backgroundColor: C.rose }}
-                >
-                  Request Invitation
-                </Link>
-              </div>
-            )}
           </div>
 
-          {/* Thoughtful details */}
-          <div className="lg:col-span-2">
-            <div className="p-8 rounded-2xl h-full" style={{ background: `linear-gradient(160deg, ${C.blush}80, ${C.champagne}50)`, border: `1px solid ${C.hairline}` }}>
-              <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Included With Care</p>
-              <h3 className="font-serif text-2xl sm:text-3xl leading-tight mb-6" style={{ color: C.ink }}>
-                Thoughtful details for a <em className="italic" style={{ color: C.rose }}>seamless arrival.</em>
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  "Welcome drinks upon arrival",
-                  "Adaptogenic tonics and herbal teas",
-                  "Silk eye pillows and warm blankets",
-                  "Curated playlist & professional sound",
-                  "Light, nourishing closing bites",
-                  "A small parting gift to take home",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: C.inkSoft }}>
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            {/* UNIFIED CARD — price + included with care */}
+            <div
+              className="rounded-3xl p-8 sm:p-10 lg:p-12 flex flex-col"
+              style={{
+                background: `linear-gradient(165deg, ${C.blush}55, ${C.champagne}40)`,
+                border: `1px solid ${C.hairline}`,
+              }}
+            >
+              {(() => {
+                const tier = ticketTiers[0];
+                const price = tier ? tier.price : (event as any).ticket_price;
+                const tierName = tier?.name || "Admission";
+                const tierDesc = tier?.description;
+                const isSoldOut = tier && (tier.status === "sold_out" || (tier.capacity && tier.sold_count >= tier.capacity));
+                const spotsRemaining = tier?.capacity ? Math.max(tier.capacity - tier.sold_count, 0) : null;
+
+                return (
+                  <>
+                    <div className="pb-7 mb-7" style={{ borderBottom: `1px solid ${C.hairline}` }}>
+                      <p className="text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: C.rose }}>
+                        Investment
+                      </p>
+                      <div className="flex items-baseline justify-between gap-6 mb-3">
+                        <h3 className="font-serif text-2xl sm:text-3xl" style={{ color: C.ink }}>
+                          {tierName}
+                        </h3>
+                        <p className="font-serif text-4xl sm:text-5xl tracking-tight" style={{ color: C.rose }}>
+                          {price > 0 ? `$${Number(price).toFixed(0)}` : "Free"}
+                        </p>
+                      </div>
+                      {tierDesc && (
+                        <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>
+                          {tierDesc}
+                        </p>
+                      )}
+                      {spotsRemaining !== null && !isSoldOut && spotsRemaining <= 10 && (
+                        <p className="text-[10px] tracking-[0.3em] uppercase mt-3" style={{ color: C.rose }}>
+                          Only {spotsRemaining} remaining
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <p className="text-[10px] tracking-[0.4em] uppercase mb-5" style={{ color: C.taupe }}>
+                        Included With Care
+                      </p>
+                      <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-6" style={{ color: C.ink }}>
+                        Thoughtful details for a <em className="italic" style={{ color: C.rose }}>seamless arrival.</em>
+                      </h4>
+                      <ul className="space-y-3.5">
+                        {[
+                          "Welcome drinks upon arrival",
+                          "Adaptogenic tonics and herbal teas",
+                          "Silk eye pillows and warm blankets",
+                          "Curated playlist & professional sound",
+                          "Light, nourishing closing bites",
+                          "A small parting gift to take home",
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3 text-[15px] leading-snug" style={{ color: C.inkSoft }}>
+                            <span className="mt-2 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-8 mt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+                      {isSoldOut ? (
+                        <span className="inline-block w-full text-center py-4 rounded-full text-sm tracking-wide" style={{ backgroundColor: C.hairline, color: C.taupe }}>
+                          Sold Out
+                        </span>
+                      ) : (
+                        <Link
+                          to="/rsvp"
+                          className="inline-flex items-center justify-center w-full py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors"
+                          style={{ backgroundColor: C.rose }}
+                          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
+                          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
+                        >
+                          {price > 0 ? "Claim Your Seat" : "Request Invitation"}
+                        </Link>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+
+            {/* RIGHT — editorial photo */}
+            <div className="relative rounded-3xl overflow-hidden min-h-[480px] lg:min-h-0" style={{ border: `1px solid ${C.hairline}` }}>
+              <img
+                src={dearBodyAsset.url}
+                alt="Soft skin with water droplets — dear body, I love you"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: `linear-gradient(180deg, transparent 40%, ${C.ink}55 100%)` }}
+              />
+              <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10 lg:p-12">
+                <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
+                  dear body,
+                  <br />
+                  I love you.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* ============ FAQ + GOOD TO KNOW ============ */}
       <section id="faq" className="px-6 sm:px-10 lg:px-20 py-16" style={{ backgroundColor: C.blush + "30" }}>
