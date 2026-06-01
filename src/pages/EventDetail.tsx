@@ -17,6 +17,8 @@ import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
 import finalCtaBloomAsset from "@/assets/final-cta-bloom.jpg.asset.json";
 import breatheBloomLogoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
+import partnerSilaAsset from "@/assets/partner-sila.png.asset.json";
+import partner2Asset from "@/assets/partner-2.png.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
@@ -1091,6 +1093,29 @@ const EventDetail = () => {
       )}
 
 
+
+      {/* ============ PARTNERS ============ */}
+      <section className="py-14 sm:py-16 px-6 sm:px-10" style={{ backgroundColor: C.cream }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-[10px] tracking-[0.45em] uppercase mb-8" style={{ color: C.taupe }}>
+            Our Partners
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
+            <img
+              src={partnerSilaAsset.url}
+              alt="Sila"
+              className="h-14 sm:h-16 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              style={{ filter: "invert(20%) sepia(15%) saturate(400%) hue-rotate(330deg) brightness(90%)" }}
+            />
+            <img
+              src={partner2Asset.url}
+              alt="Partner"
+              className="h-14 sm:h-16 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              style={{ filter: "invert(20%) sepia(15%) saturate(400%) hue-rotate(330deg) brightness(90%)" }}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* ============ FINAL CTA ============ */}
       <section className="relative overflow-hidden" style={{ minHeight: 420 }}>
