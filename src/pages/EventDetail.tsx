@@ -897,13 +897,13 @@ const EventDetail = () => {
                     </div>
 
                     <div className="flex-1">
-                      <p className="text-[10px] tracking-[0.4em] uppercase mb-5" style={{ color: C.taupe }}>
+                      <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>
                         Included With Care
                       </p>
-                      <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-6" style={{ color: C.ink }}>
+                      <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-4" style={{ color: C.ink }}>
                         Everything prepared for your <em className="italic" style={{ color: C.rose }}>deep reset.</em>
                       </h4>
-                      <ul className="space-y-3.5">
+                      <ul className="space-y-2">
                         {[
                           "4.5-hour guided wellness session",
                           "Functional welcome drinks",
@@ -924,7 +924,8 @@ const EventDetail = () => {
                       </ul>
                     </div>
 
-                    <div className="pt-8 mt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+                    <div className="pt-6 mt-6" style={{ borderTop: `1px solid ${C.hairline}` }}>
+
                       {isSoldOut ? (
                         <span className="inline-block w-full text-center py-4 rounded-full text-sm tracking-wide" style={{ backgroundColor: C.hairline, color: C.taupe }}>
                           Sold Out
