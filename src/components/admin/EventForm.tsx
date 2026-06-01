@@ -234,15 +234,15 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
                 value={h.label}
                 onChange={(e) => updateHighlight(idx, "label", e.target.value)}
                 placeholder="Label (e.g. Parking)"
-                className={`${inputClass} w-1/3`}
+                className={`${inputClass} basis-1/3 min-w-0`}
               />
               <input
                 value={h.value}
                 onChange={(e) => updateHighlight(idx, "value", e.target.value)}
-                placeholder="Details..."
-                className={`${inputClass} flex-1`}
+                placeholder="Details (e.g. 16+, Street parking available)"
+                className={`${inputClass} basis-2/3 min-w-0 flex-1`}
               />
-              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-[#022701]/30 hover:text-red-400 transition-colors">
+              <button type="button" onClick={() => removeHighlight(idx)} className="p-1.5 text-[#022701]/30 hover:text-red-400 transition-colors shrink-0">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
