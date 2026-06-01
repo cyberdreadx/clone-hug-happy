@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
 
 const UpcomingEvent = () => {
   const { data: events = [], isLoading } = useQuery({
