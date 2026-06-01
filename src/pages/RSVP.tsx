@@ -10,7 +10,7 @@ import paypalQr from "@/assets/paypal-qr.png.asset.json";
 import lilypadBg from "@/assets/rsvp-orchids.jpg.asset.json";
 
 const bgStyle: React.CSSProperties = {
-  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.78) 0%, rgba(20,28,20,0.72) 50%, rgba(20,28,20,0.85) 100%), url(${lilypadBg.url})`,
+  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.35) 0%, rgba(20,28,20,0.30) 50%, rgba(20,28,20,0.45) 100%), url(${lilypadBg.url})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundAttachment: "fixed",
@@ -152,7 +152,7 @@ const RSVPPage = () => {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
+            className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -235,7 +235,7 @@ const RSVPPage = () => {
           </form>
 
           {/* PayPal panel */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
+          <div className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
             <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
               Step 2 · Payment
             </p>
