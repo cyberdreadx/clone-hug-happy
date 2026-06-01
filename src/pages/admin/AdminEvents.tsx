@@ -270,7 +270,7 @@ const AdminEvents = () => {
                     ${gross.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                   <td className="px-5 py-4">{statusBadge(ev.status)}</td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center gap-1">
                       {ev.status === "active" && (
                         <button
