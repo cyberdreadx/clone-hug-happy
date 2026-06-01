@@ -389,7 +389,55 @@ const EventDetail = () => {
       </section>
 
 
+      {/* ============ WHAT'S INCLUDED ============ */}
+      <section id="included" className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.cream }}>
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Image */}
+          <div className="lg:col-span-5 relative">
+            <div className="absolute -inset-5 rounded-[2rem]" style={{ background: `linear-gradient(135deg, ${C.champagne} 0%, ${C.blush} 100%)`, opacity: 0.55 }} />
+            <img
+              src={cacaoShoulderAsset.url}
+              alt="Cacao body scrub ritual"
+              loading="lazy"
+              className="relative rounded-[1.5rem] w-full aspect-[4/5] object-cover shadow-xl"
+            />
+          </div>
+
+          {/* Content */}
+          <div className="lg:col-span-7">
+            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>What's Included</p>
+            <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-4" style={{ color: C.ink }}>
+              Everything you need <em className="italic" style={{ color: C.rose }}>to bloom.</em>
+            </h2>
+            <div className="h-px w-16 mb-10" style={{ backgroundColor: C.rose, opacity: 0.4 }} />
+
+            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+              {[
+                { icon: Sparkles, title: "Reset Kit", body: "Sponsored gift bag with probiotic drinks, electrolyte packs, skin care, and more." },
+                { icon: Sparkles, title: "Red Light Therapy", body: "Private and group red light therapy sessions throughout the experience." },
+                { icon: Heart, title: "Sauna & Cold Plunge", body: "Full access to SILA Miami's contrast therapy suite to support recovery and circulation." },
+                { icon: Music, title: "Guided Practices", body: "Breathwork, journaling, yoga, a cacao body scrub, and a live sound session." },
+                { icon: Coffee, title: "Welcome Drinks", body: "Functional welcome drinks to hydrate and start the morning." },
+                { icon: Crown, title: "SILA Access", body: "SILA Miami remains available to you after the retreat, plus 15% off at Devia Juice Bar." },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={i} className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-4 h-4" style={{ color: C.rose }} strokeWidth={1.5} />
+                      <h3 className="font-serif text-xl" style={{ color: C.ink }}>{item.title}</h3>
+                    </div>
+                    <p className="text-sm leading-relaxed" style={{ color: C.inkSoft }}>{item.body}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ============ HOSTS ============ */}
+
       <section id="hosts" className="px-6 sm:px-10 lg:px-20 py-24" style={{ backgroundColor: C.champagne + "40" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
