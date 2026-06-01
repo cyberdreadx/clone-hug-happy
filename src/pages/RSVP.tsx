@@ -10,7 +10,7 @@ import paypalQr from "@/assets/paypal-qr.png.asset.json";
 import lilypadBg from "@/assets/rsvp-orchids.jpg.asset.json";
 
 const bgStyle: React.CSSProperties = {
-  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.78) 0%, rgba(20,28,20,0.72) 50%, rgba(20,28,20,0.85) 100%), url(${lilypadBg.url})`,
+  backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.35) 0%, rgba(20,28,20,0.30) 50%, rgba(20,28,20,0.45) 100%), url(${lilypadBg.url})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundAttachment: "fixed",
