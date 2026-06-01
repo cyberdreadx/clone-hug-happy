@@ -17,7 +17,7 @@ const bgStyle: React.CSSProperties = {
 };
 
 const inputClass =
-  "w-full px-4 py-3 rounded-lg bg-black/30 border border-white/25 text-white text-sm placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
+  "w-full px-4 py-3 rounded-lg bg-white/10 border border-white/25 text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent backdrop-blur-sm";
 const labelClass = "block text-[11px] tracking-[0.25em] uppercase text-white/85 mb-2 font-medium";
 
 const RSVPPage = () => {
@@ -152,7 +152,7 @@ const RSVPPage = () => {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6 h-full"
+            className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6 h-full"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -235,7 +235,7 @@ const RSVPPage = () => {
           </form>
 
           {/* PayPal panel */}
-          <div className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col justify-center">
+          <div className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col justify-center">
             <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
               Step 2 · Payment
             </p>
@@ -246,11 +246,11 @@ const RSVPPage = () => {
               Use your phone camera or the PayPal app to scan and secure your reservation.
             </p>
 
-            <div className="inline-block p-4 bg-white rounded-xl shadow-2xl mb-6">
+            <div className="inline-block rounded-xl overflow-hidden shadow-2xl mb-6">
               <img
                 src={paypalQr.url}
                 alt="PayPal QR code to reserve your seat"
-                className="w-56 h-56"
+                className="block w-72 h-72 object-cover"
               />
             </div>
 
