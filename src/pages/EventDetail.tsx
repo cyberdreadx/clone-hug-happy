@@ -317,21 +317,28 @@ const EventDetail = () => {
             </div>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-6" style={{ color: C.ink }}>
               An elevated wellness escape with{" "}
-              <em className="italic" style={{ color: C.rose }}>boutique hotel</em> energy.
+              <em className="italic" style={{ color: C.rose }}>tulum style + biohacking</em> energy.
             </h2>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              Half restorative practice, half curated experience. Every detail is considered — from the flowers on the table to the breath of the room — so you can arrive heavy and leave held.
+              A guided morning of somatic practices, movement, and recovery. In a private studio at SILA Miami, you'll move through breathwork, yoga, and contrast therapy.
+            </p>
+            <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
+              Tried and true methods for regulating the nervous system, lowering stress, and improving how you feel in your body.
+            </p>
+            <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
+              The session is structured to build resilience and help you manage stress under pressure. Each activity is designed to calm the nervous system, sharpen focus, and leave you feeling steadier and more grounded.
             </p>
             <p className="text-base leading-relaxed mb-10" style={{ color: C.inkSoft }}>
-              Think soft linens, warm botanicals, and a quietly assembled circle of women who came to remember themselves.
+              Your reservation includes access to the red light therapy room, sauna, and cold plunge — recovery tools that support circulation, muscle recovery, and stress reduction.
             </p>
 
             {/* stat row */}
-            <div className="grid grid-cols-3 gap-6 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
               {[
-                { value: dateObj?.getHours ? `${Math.max(Math.ceil((totalMinutes || 240) / 60), 4)}h+` : "4h+", label: "Of Intentional Programming" },
-                { value: `${event.max_guests || 25}`, label: "Guests Maximum, Always" },
-                { value: "1", label: "Held with Profound Care" },
+                { value: "4.5h", label: "Of Experience" },
+                { value: "10", label: "Person Intimate Group" },
+                { value: "Women", label: "Only" },
+                { value: "$150", label: "Investment" },
               ].map((s, i) => (
                 <div key={i}>
                   <p className="font-serif text-3xl mb-1" style={{ color: C.rose }}>{s.value}</p>
@@ -339,6 +346,7 @@ const EventDetail = () => {
                 </div>
               ))}
             </div>
+
           </div>
 
           <div className="relative">
