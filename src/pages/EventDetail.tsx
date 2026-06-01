@@ -1151,22 +1151,19 @@ const EventDetail = () => {
               className="h-16 sm:h-20 w-auto opacity-90"
             />
           </div>
+
+          <p className="mt-8 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
+            Curated Wellness · Held with Intention
+          </p>
+          <Link
+            to="/"
+            className="mt-5 inline-flex items-center gap-2 text-xs hover:opacity-80"
+            style={{ color: C.card }}
+          >
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to all experiences
+          </Link>
         </div>
       </section>
-
-      {/* ============ FOOTER ============ */}
-      <footer className="px-6 sm:px-10 lg:px-20 py-14 text-center" style={{ borderTop: `1px solid ${C.hairline}` }}>
-
-        <p className="font-serif text-2xl mb-2" style={{ color: C.ink }}>
-          Breathe <em className="italic" style={{ color: C.rose }}>&</em> Bloom
-        </p>
-        <p className="text-[10px] tracking-[0.35em] uppercase mb-6" style={{ color: C.taupe }}>
-          Curated Wellness · Held with Intention
-        </p>
-        <Link to="/" className="inline-flex items-center gap-2 text-xs hover:opacity-70" style={{ color: C.inkSoft }}>
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to all experiences
-        </Link>
-      </footer>
     </div>
   );
 };
