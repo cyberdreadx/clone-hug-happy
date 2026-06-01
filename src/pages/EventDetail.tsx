@@ -607,19 +607,26 @@ const EventDetail = () => {
           </div>
 
           {highlights.length > 0 && (
-            <div className="mb-6 rounded-2xl overflow-hidden" style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}>
+            <div
+              className="mb-10 grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-7 px-6 sm:px-8 py-8 rounded-2xl"
+              style={{ backgroundColor: C.card, border: `1px solid ${C.hairline}` }}
+            >
               {highlights.map((h, i) => (
-                <div
-                  key={i}
-                  className="px-6 sm:px-8 py-5 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-8"
-                  style={{ borderTop: i === 0 ? "none" : `1px solid ${C.hairline}` }}
-                >
-                  <h3 className="font-serif text-lg sm:w-48 shrink-0" style={{ color: C.ink }}>{h.label}</h3>
-                  <p className="text-sm leading-relaxed flex-1" style={{ color: C.inkSoft }}>{h.value}</p>
+                <div key={i} className="flex flex-col gap-1.5">
+                  <p
+                    className="text-[10px] tracking-[0.25em] uppercase"
+                    style={{ color: C.taupe }}
+                  >
+                    {h.label}
+                  </p>
+                  <p className="font-serif text-base leading-snug" style={{ color: C.ink }}>
+                    {h.value}
+                  </p>
                 </div>
               ))}
             </div>
           )}
+
 
           <div className="space-y-3">
             {faqs.map((f, i) => {
