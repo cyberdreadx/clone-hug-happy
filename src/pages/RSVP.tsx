@@ -6,6 +6,7 @@ import { CheckCircle, ArrowLeft, Download, CalendarPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { downloadICS } from "@/lib/calendar";
+import paypalQr from "@/assets/paypal-qr.png.asset.json";
 
 const RSVPPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -205,6 +206,26 @@ const RSVPPage = () => {
             {loading ? "Submitting..." : "Submit Application"}
           </button>
         </form>
+
+        <div className="mt-10 bg-card rounded-2xl p-8 shadow-lg text-center">
+          <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">
+            Reserve Your Seat
+          </p>
+          <h2 className="font-serif text-2xl text-foreground mb-3">
+            Secure Your Spot via PayPal
+          </h2>
+          <p className="text-muted-foreground text-sm max-w-md mx-auto mb-6">
+            Scan the QR code below with your phone's camera to complete your contribution
+            and confirm your attendance.
+          </p>
+          <div className="inline-block p-4 bg-white rounded-xl shadow-inner">
+            <img
+              src={paypalQr.url}
+              alt="PayPal QR code to reserve your seat"
+              className="w-56 h-56"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
