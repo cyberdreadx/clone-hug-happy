@@ -1171,7 +1171,7 @@ const EventDetail = () => {
               <img
                 src={partnerSilaAsset.url}
                 alt="Sila"
-                className="h-28 sm:h-36 w-auto opacity-90 hover:opacity-100 transition-opacity"
+                className="h-36 sm:h-48 w-auto opacity-90 hover:opacity-100 transition-opacity"
               />
               <img
                 src={partner2Asset.url}
