@@ -235,7 +235,7 @@ const RSVPPage = () => {
           </form>
 
           {/* PayPal panel */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
+          <div className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl text-center lg:sticky lg:top-8">
             <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-3">
               Step 2 · Payment
             </p>
