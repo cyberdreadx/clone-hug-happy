@@ -11,6 +11,7 @@ import { downloadICS } from "@/lib/calendar";
 import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
 const heroFloral = heroFloralAsset.url;
 import cacaoScrubAsset from "@/assets/red-light-therapy.jpg.asset.json";
+import cacaoShoulderAsset from "@/assets/cacao-scrub-shoulder.png.asset.json";
 import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
 import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 
