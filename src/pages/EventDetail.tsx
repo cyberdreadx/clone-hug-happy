@@ -40,6 +40,25 @@ const C = {
 const EventDetail = () => {
   const { id } = useParams();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeSegment, setActiveSegment] = useState<number>(0);
+  const segmentRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          const idx = Number((visible[0].target as HTMLElement).dataset.idx);
+          if (!Number.isNaN(idx)) setActiveSegment(idx);
+        }
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    segmentRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  });
 
   const { data: event, isLoading } = useQuery({
     queryKey: ["public-event", id],
