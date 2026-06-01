@@ -242,7 +242,7 @@ const RSVPPage = () => {
             <h2 className="font-serif text-2xl text-white mb-3">
               Scan to Pay
             </h2>
-            <p className="text-white/65 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
+            <p className="text-white/80 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
               Use your phone camera or the PayPal app to scan and secure your reservation.
             </p>
 
@@ -255,14 +255,14 @@ const RSVPPage = () => {
             </div>
 
             <p className="font-serif text-2xl text-white">
-              $150 <span className="text-white/50 text-xl">· per guest</span>
+              $150 <span className="text-white/70 text-xl">· per guest</span>
             </p>
-            <p className="text-white/40 text-[11px] tracking-[0.2em] uppercase mt-1">
+            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mt-1">
               Powered by PayPal
             </p>
 
-            <div className="mt-7 pt-6 border-t border-white/10">
-              <p className="text-white/50 text-xs leading-relaxed">
+            <div className="mt-7 pt-6 border-t border-white/15">
+              <p className="text-white/75 text-xs leading-relaxed">
                 Your spot is confirmed once payment is received. Seats are extremely limited.
               </p>
             </div>
