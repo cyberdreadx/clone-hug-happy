@@ -513,12 +513,18 @@ const EventDetail = () => {
 
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
-        <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>The Flow</p>
-              <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
-                A graceful rhythm from arrival to <em className="italic" style={{ color: C.rose }}>integration.</em>
+        <section className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16 lg:mb-20">
+              <div className="flex items-center justify-center gap-3 mb-5">
+                <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+                <p className="text-[10px] tracking-[0.5em] uppercase" style={{ color: C.taupe }}>The Flow</p>
+                <span className="h-px w-8" style={{ backgroundColor: C.taupe, opacity: 0.4 }} />
+              </div>
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight" style={{ color: C.ink }}>
+                A graceful rhythm from arrival
+                <br />
+                to <em className="italic font-normal" style={{ color: C.rose }}>integration.</em>
               </h2>
             </div>
 
@@ -528,151 +534,256 @@ const EventDetail = () => {
               const activeTime = getSegmentTime(activeSegment);
 
               const cx = 200, cy = 200;
-              const petalRy = 110;
-              const petalRx = 32;
-              const petalCy = cy - petalRy + 8;
+              // Refined almond petal path: tip at top, base at center, soft curves
+              const petalPath =
+                "M 0 0 C 14 -28, 20 -78, 14 -120 C 10 -138, 4 -148, 0 -152 C -4 -148, -10 -138, -14 -120 C -20 -78, -14 -28, 0 0 Z";
+              const petalPathInner =
+                "M 0 0 C 9 -22, 13 -64, 9 -100 C 6 -116, 2 -124, 0 -128 C -2 -124, -6 -116, -9 -100 C -13 -64, -9 -22, 0 0 Z";
 
               return (
-                <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-14 items-center">
+                <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-20 items-center">
                   {/* LOTUS */}
-                  <div className="relative mx-auto w-full max-w-[480px] aspect-square">
-                    <svg viewBox="0 0 400 400" className="w-full h-full" aria-hidden>
+                  <div className="relative mx-auto w-full max-w-[520px] aspect-square">
+                    <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible" aria-hidden>
                       <defs>
-                        <radialGradient id="petalActive" cx="50%" cy="30%" r="70%">
-                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.55" />
-                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.12" />
+                        <radialGradient id="petalActive" cx="50%" cy="20%" r="85%">
+                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.42" />
+                          <stop offset="60%" stopColor={C.rose} stopOpacity="0.14" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.02" />
                         </radialGradient>
-                        <radialGradient id="petalIdle" cx="50%" cy="30%" r="70%">
-                          <stop offset="0%" stopColor={C.cream} stopOpacity="0.9" />
-                          <stop offset="100%" stopColor={C.cream} stopOpacity="0.3" />
-                        </radialGradient>
-                        <radialGradient id="lotusCenter" cx="50%" cy="50%" r="50%">
-                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.25" />
+                        <radialGradient id="lotusCenterGlow" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.22" />
                           <stop offset="100%" stopColor={C.rose} stopOpacity="0" />
                         </radialGradient>
                       </defs>
 
-                      {/* Back petals (offset for layered bloom) */}
-                      {segments.map((_, i) => {
-                        const angle = (360 / N) * i + (360 / N) / 2;
-                        const isActive = i === activeSegment;
-                        return (
-                          <ellipse
-                            key={`back-${i}`}
-                            cx={cx}
-                            cy={petalCy + 14}
-                            rx={petalRx * 0.85}
-                            ry={petalRy * 0.85}
-                            fill={isActive ? "url(#petalActive)" : "url(#petalIdle)"}
-                            stroke={C.rose}
-                            strokeOpacity={isActive ? 0.5 : 0.18}
-                            strokeWidth="0.6"
-                            transform={`rotate(${angle} ${cx} ${cy})`}
-                            style={{ transition: "all 500ms ease" }}
-                          />
-                        );
-                      })}
+                      {/* Slow breath rotation on entire lotus */}
+                      <g
+                        style={{
+                          transformOrigin: `${cx}px ${cy}px`,
+                          animation: "lotus-breath 18s ease-in-out infinite",
+                        }}
+                      >
+                        {/* Outer ornamental ring */}
+                        <circle
+                          cx={cx}
+                          cy={cy}
+                          r="178"
+                          fill="none"
+                          stroke={C.taupe}
+                          strokeOpacity="0.18"
+                          strokeWidth="0.5"
+                          strokeDasharray="1 4"
+                        />
 
-                      {/* Front petals (interactive) */}
-                      {segments.map((_, i) => {
-                        const angle = (360 / N) * i;
-                        const isActive = i === activeSegment;
-                        const rad = ((angle - 90) * Math.PI) / 180;
-                        const labelR = petalRy + 28;
-                        const lx = cx + Math.cos(rad) * labelR;
-                        const ly = cy + Math.sin(rad) * labelR;
-                        return (
-                          <g key={`front-${i}`} style={{ cursor: "pointer" }} onMouseEnter={() => setActiveSegment(i)} onClick={() => setActiveSegment(i)}>
-                            <ellipse
-                              cx={cx}
-                              cy={petalCy}
-                              rx={petalRx}
-                              ry={petalRy}
-                              fill={isActive ? "url(#petalActive)" : "url(#petalIdle)"}
+                        {/* Back petal ring — offset by half angle, smaller */}
+                        {segments.map((_, i) => {
+                          const angle = (360 / N) * i + (360 / N) / 2;
+                          const isActive = i === activeSegment;
+                          return (
+                            <path
+                              key={`back-${i}`}
+                              d={petalPathInner}
+                              fill={isActive ? "url(#petalActive)" : "none"}
                               stroke={C.rose}
-                              strokeOpacity={isActive ? 0.85 : 0.28}
-                              strokeWidth={isActive ? 1.2 : 0.7}
-                              transform={`rotate(${angle} ${cx} ${cy}) ${isActive ? "translate(0 -6)" : ""}`}
-                              style={{ transition: "all 500ms cubic-bezier(.4,0,.2,1)" }}
+                              strokeOpacity={isActive ? 0.4 : 0.14}
+                              strokeWidth="0.5"
+                              transform={`translate(${cx} ${cy}) rotate(${angle})`}
+                              style={{
+                                transition: "all 700ms cubic-bezier(.2,.7,.2,1)",
+                                transformBox: "fill-box",
+                              }}
                             />
-                            <text
-                              x={lx}
-                              y={ly}
-                              textAnchor="middle"
-                              dominantBaseline="middle"
-                              fontSize="11"
-                              fontFamily="serif"
-                              fill={isActive ? C.rose : C.taupe}
-                              fontStyle="italic"
-                              style={{ transition: "all 400ms ease", fontWeight: isActive ? 600 : 400 }}
-                            >
-                              {String(i + 1).padStart(2, "0")}
-                            </text>
-                          </g>
-                        );
-                      })}
+                          );
+                        })}
 
-                      {/* Center */}
-                      <circle cx={cx} cy={cy} r="55" fill="url(#lotusCenter)" />
-                      <circle cx={cx} cy={cy} r="22" fill={C.cream} stroke={C.rose} strokeOpacity="0.5" strokeWidth="1" />
-                      <circle cx={cx} cy={cy} r="6" fill={C.rose} opacity="0.7" />
+                        {/* Front petal ring — hairline botanical illustration */}
+                        {segments.map((_, i) => {
+                          const angle = (360 / N) * i;
+                          const isActive = i === activeSegment;
+                          const rad = ((angle - 90) * Math.PI) / 180;
+                          const labelR = 178;
+                          const lx = cx + Math.cos(rad) * labelR;
+                          const ly = cy + Math.sin(rad) * labelR;
+                          return (
+                            <g
+                              key={`front-${i}`}
+                              style={{ cursor: "pointer" }}
+                              onMouseEnter={() => setActiveSegment(i)}
+                              onClick={() => setActiveSegment(i)}
+                            >
+                              {/* invisible larger hit target */}
+                              <path
+                                d={petalPath}
+                                fill="transparent"
+                                transform={`translate(${cx} ${cy}) rotate(${angle})`}
+                              />
+                              <path
+                                d={petalPath}
+                                fill={isActive ? "url(#petalActive)" : "transparent"}
+                                stroke={isActive ? C.rose : C.ink}
+                                strokeOpacity={isActive ? 0.85 : 0.32}
+                                strokeWidth={isActive ? 0.9 : 0.55}
+                                transform={`translate(${cx} ${cy}) rotate(${angle}) ${isActive ? "scale(1.04)" : ""}`}
+                                style={{
+                                  transition: "all 700ms cubic-bezier(.2,.7,.2,1)",
+                                  transformBox: "fill-box",
+                                  filter: isActive ? `drop-shadow(0 2px 6px ${C.rose}33)` : "none",
+                                }}
+                              />
+                              {/* Subtle inner vein on active */}
+                              {isActive && (
+                                <line
+                                  x1={cx}
+                                  y1={cy}
+                                  x2={cx}
+                                  y2={cy - 145}
+                                  stroke={C.rose}
+                                  strokeOpacity="0.35"
+                                  strokeWidth="0.4"
+                                  transform={`rotate(${angle} ${cx} ${cy})`}
+                                />
+                              )}
+                              {/* Numeral ornamentation */}
+                              <text
+                                x={lx}
+                                y={ly}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                fontSize={isActive ? "9" : "8"}
+                                fontFamily="serif"
+                                letterSpacing="2"
+                                fill={isActive ? C.rose : C.taupe}
+                                opacity={isActive ? 1 : 0.55}
+                                style={{ transition: "all 500ms ease" }}
+                              >
+                                {String(i + 1).padStart(2, "0")}
+                              </text>
+                            </g>
+                          );
+                        })}
+
+                        {/* Center seed pod — concentric refinement */}
+                        <circle cx={cx} cy={cy} r="56" fill="url(#lotusCenterGlow)" />
+                        <circle cx={cx} cy={cy} r="28" fill="none" stroke={C.rose} strokeOpacity="0.25" strokeWidth="0.5" />
+                        <circle cx={cx} cy={cy} r="20" fill={C.cream} stroke={C.rose} strokeOpacity="0.5" strokeWidth="0.7" />
+                        {/* Tiny seed dots */}
+                        {[0, 60, 120, 180, 240, 300].map((a) => {
+                          const r = (a * Math.PI) / 180;
+                          return (
+                            <circle
+                              key={a}
+                              cx={cx + Math.cos(r) * 9}
+                              cy={cy + Math.sin(r) * 9}
+                              r="1.1"
+                              fill={C.rose}
+                              opacity="0.55"
+                            />
+                          );
+                        })}
+                        <circle cx={cx} cy={cy} r="2.2" fill={C.rose} />
+                      </g>
                     </svg>
+
+                    <style>{`
+                      @keyframes lotus-breath {
+                        0%, 100% { transform: rotate(0deg) scale(1); }
+                        50% { transform: rotate(2deg) scale(1.012); }
+                      }
+                    `}</style>
                   </div>
 
-                  {/* ACTIVE DETAIL */}
-                  <div
-                    key={activeSegment}
-                    className="animate-fade-in"
-                    ref={(el) => (segmentRefs.current[activeSegment] = el)}
-                    data-idx={activeSegment}
-                  >
-                    <p className="text-[10px] tracking-[0.35em] uppercase mb-3" style={{ color: C.rose }}>
-                      {String(activeSegment + 1).padStart(2, "0")} · {activeTime}
-                    </p>
-                    <h3 className="font-serif text-3xl sm:text-4xl leading-tight mb-3" style={{ color: C.ink }}>
-                      {active.title}
-                    </h3>
-                    {active.description && (
-                      <p className="text-sm sm:text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-                        {active.description}
-                      </p>
-                    )}
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" style={{ color: C.taupe }}>
-                      <span>{active.duration_minutes} min</span>
-                      {active.facilitator && (
-                        <>
-                          <span>·</span>
-                          {active.facilitator_instagram ? (
-                            <a
-                              href={`https://instagram.com/${active.facilitator_instagram}`}
-                              target="_blank" rel="noopener noreferrer"
-                              className="hover:underline italic"
-                              style={{ color: C.rose }}
-                            >
-                              Led by {active.facilitator}
-                            </a>
-                          ) : (
-                            <span className="italic">Led by {active.facilitator}</span>
-                          )}
-                        </>
+                  {/* ACTIVE DETAIL — editorial side panel */}
+                  <div className="relative lg:pl-10">
+                    {/* Hairline vertical divider */}
+                    <div
+                      className="hidden lg:block absolute left-0 top-2 bottom-2 w-px"
+                      style={{ backgroundColor: C.hairline }}
+                    />
+
+                    <div key={activeSegment} className="animate-fade-in">
+                      {/* Chapter line */}
+                      <div className="flex items-baseline gap-3 mb-6">
+                        <span
+                          className="font-serif italic text-2xl leading-none"
+                          style={{ color: C.rose }}
+                        >
+                          {String(activeSegment + 1).padStart(2, "0")}
+                        </span>
+                        <span className="h-px flex-1 max-w-[40px]" style={{ backgroundColor: C.rose, opacity: 0.4 }} />
+                        <span
+                          className="text-[10px] tracking-[0.4em] uppercase"
+                          style={{ color: C.taupe }}
+                        >
+                          {activeTime}
+                        </span>
+                      </div>
+
+                      <h3
+                        className="font-serif text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.05] tracking-tight mb-5"
+                        style={{ color: C.ink }}
+                      >
+                        {active.title}
+                      </h3>
+
+                      {active.description && (
+                        <p
+                          className="text-[15px] leading-[1.7] mb-7 max-w-md"
+                          style={{ color: C.inkSoft }}
+                        >
+                          {active.description}
+                        </p>
                       )}
+
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] tracking-[0.15em] uppercase" style={{ color: C.taupe }}>
+                        <span>{active.duration_minutes} minutes</span>
+                        {active.facilitator && (
+                          <>
+                            <span style={{ color: C.rose, opacity: 0.5 }}>—</span>
+                            {active.facilitator_instagram ? (
+                              <a
+                                href={`https://instagram.com/${active.facilitator_instagram}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:opacity-70 transition-opacity normal-case tracking-normal italic font-serif text-sm"
+                                style={{ color: C.rose }}
+                              >
+                                Led by {active.facilitator}
+                              </a>
+                            ) : (
+                              <span className="normal-case tracking-normal italic font-serif text-sm" style={{ color: C.ink }}>
+                                Led by {active.facilitator}
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 mt-8">
-                      {segments.map((_, i) => (
-                        <button
-                          key={i}
-                          onMouseEnter={() => setActiveSegment(i)}
-                          onClick={() => setActiveSegment(i)}
-                          aria-label={`Segment ${i + 1}`}
-                          className="h-1.5 rounded-full transition-all duration-300"
-                          style={{
-                            width: i === activeSegment ? 24 : 8,
-                            backgroundColor: i === activeSegment ? C.rose : C.taupe,
-                            opacity: i === activeSegment ? 1 : 0.35,
-                          }}
-                        />
-                      ))}
+                    {/* Refined segment navigator */}
+                    <div className="mt-12 pt-8" style={{ borderTop: `1px solid ${C.hairline}` }}>
+                      <div className="flex items-center gap-4">
+                        <span className="text-[10px] tracking-[0.35em] uppercase" style={{ color: C.taupe }}>
+                          {String(activeSegment + 1).padStart(2, "0")} <span style={{ opacity: 0.4 }}>/ {String(N).padStart(2, "0")}</span>
+                        </span>
+                        <div className="flex-1 flex items-center gap-1">
+                          {segments.map((_, i) => (
+                            <button
+                              key={i}
+                              onMouseEnter={() => setActiveSegment(i)}
+                              onClick={() => setActiveSegment(i)}
+                              aria-label={`Segment ${i + 1}`}
+                              className="flex-1 h-px transition-all duration-500"
+                              style={{
+                                backgroundColor: i === activeSegment ? C.rose : C.taupe,
+                                opacity: i === activeSegment ? 1 : 0.25,
+                                transform: i === activeSegment ? "scaleY(3)" : "scaleY(1)",
+                                transformOrigin: "center",
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
