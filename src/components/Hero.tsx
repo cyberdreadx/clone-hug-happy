@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
+import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 
 const Hero = () => {
   const { data: nextEvent } = useQuery({
@@ -28,8 +29,13 @@ const Hero = () => {
     : "";
 
   return (
-    <section className="w-full bg-hero-bg/40 py-20 md:py-28 px-6 md:px-10">
-      <div className="max-w-6xl mx-auto">
+    <section
+      className="relative w-full py-20 md:py-28 px-6 md:px-10 bg-cover bg-center"
+      style={{ backgroundImage: `url(${heroBg.url})` }}
+    >
+      {/* Cream wash for legibility */}
+      <div className="absolute inset-0 bg-hero-bg/80 backdrop-blur-[2px]" />
+      <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
         <header className="flex flex-col items-center text-center mb-20">
           <div className="w-28 h-28 rounded-full border border-foreground/15 bg-card flex items-center justify-center mb-8 shadow-sm">
