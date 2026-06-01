@@ -148,11 +148,11 @@ const RSVPPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
+            className="bg-black/35 backdrop-blur-xl border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6 h-full"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
