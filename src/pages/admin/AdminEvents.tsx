@@ -190,8 +190,8 @@ const AdminEvents = () => {
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden md:block rounded-xl border border-sidebar-border overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="hidden md:block rounded-xl border border-sidebar-border overflow-x-auto">
+        <table className="w-full text-sm min-w-[900px]">
           <thead>
             <tr className="border-b border-sidebar-border">
               <th className="text-left px-5 py-3 text-sidebar-foreground/40 font-medium text-xs">
