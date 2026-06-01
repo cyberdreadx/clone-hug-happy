@@ -503,48 +503,146 @@ const EventDetail = () => {
               </h2>
             </div>
 
-            <div className="space-y-0">
-              {segments.map((seg: any, idx: number) => {
-                const startTime = getSegmentTime(idx);
-                return (
-                  <div
-                    key={seg.id}
-                    className="grid grid-cols-[80px_1fr] sm:grid-cols-[100px_1fr] gap-6 py-6"
-                    style={{ borderBottom: idx < segments.length - 1 ? `1px solid ${C.hairline}` : "none" }}
+            {(() => {
+              const ROW = 170;
+              const N = segments.length;
+              const totalH = N * ROW + ROW / 2;
+              const leftX = 22;
+              const rightX = 78;
+              const midX = 50;
+
+              // Build a smooth sinusoidal path threading each node
+              const nodes = segments.map((_: any, i: number) => ({
+                x: i % 2 === 0 ? leftX : rightX,
+                y: i * ROW + ROW / 2,
+              }));
+              let d = `M ${midX} 0`;
+              let prev = { x: midX, y: 0 };
+              nodes.forEach((p) => {
+                const midY = (prev.y + p.y) / 2;
+                d += ` C ${prev.x} ${midY}, ${p.x} ${midY}, ${p.x} ${p.y}`;
+                prev = p;
+              });
+              d += ` C ${prev.x} ${prev.y + ROW / 3}, ${midX} ${totalH}, ${midX} ${totalH}`;
+
+              return (
+                <div className="relative" style={{ minHeight: totalH }}>
+                  {/* Wave path */}
+                  <svg
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    viewBox={`0 0 100 ${totalH}`}
+                    preserveAspectRatio="none"
+                    fill="none"
+                    aria-hidden
                   >
-                    <div className="text-xs tracking-wider pt-1" style={{ color: C.rose }}>
-                      {startTime || `${seg.duration_minutes}m`}
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-xl mb-1.5" style={{ color: C.ink }}>{seg.title}</h3>
-                      {seg.description && (
-                        <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>{seg.description}</p>
-                      )}
-                      <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: C.taupe }}>
-                        <span>{seg.duration_minutes} min</span>
-                        {seg.facilitator && (
+                    <path
+                      d={d}
+                      stroke={C.rose}
+                      strokeWidth="0.35"
+                      strokeOpacity="0.55"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+
+                  {/* Node dots — separate SVG with aspect preserved so circles stay round */}
+                  <svg
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    viewBox={`0 0 100 ${totalH}`}
+                    preserveAspectRatio="none"
+                    aria-hidden
+                  >
+                    {nodes.map((p, i) => (
+                      <g key={i}>
+                        <circle cx={p.x} cy={p.y} r="0.9" fill={C.cream} stroke={C.rose} strokeWidth="0.35" vectorEffect="non-scaling-stroke" />
+                      </g>
+                    ))}
+                  </svg>
+
+                  {/* Segments */}
+                  {segments.map((seg: any, idx: number) => {
+                    const startTime = getSegmentTime(idx);
+                    const isLeft = idx % 2 === 0;
+                    return (
+                      <div
+                        key={seg.id}
+                        className="relative grid grid-cols-2 gap-4 sm:gap-10 items-center"
+                        style={{ height: ROW }}
+                      >
+                        {isLeft ? (
                           <>
-                            <span>·</span>
-                            {seg.facilitator_instagram ? (
-                              <a
-                                href={`https://instagram.com/${seg.facilitator_instagram}`}
-                                target="_blank" rel="noopener noreferrer"
-                                className="hover:underline italic"
-                                style={{ color: C.rose }}
-                              >
-                                Led by {seg.facilitator}
-                              </a>
-                            ) : (
-                              <span className="italic">Led by {seg.facilitator}</span>
-                            )}
+                            {/* Card on the left */}
+                            <div className="text-right pr-2 sm:pr-6">
+                              <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: C.rose }}>
+                                {startTime}
+                              </p>
+                              <h3 className="font-serif text-xl sm:text-2xl mb-1.5 leading-tight" style={{ color: C.ink }}>{seg.title}</h3>
+                              {seg.description && (
+                                <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>{seg.description}</p>
+                              )}
+                              <div className="flex flex-wrap items-center justify-end gap-2 text-xs" style={{ color: C.taupe }}>
+                                <span>{seg.duration_minutes} min</span>
+                                {seg.facilitator && (
+                                  <>
+                                    <span>·</span>
+                                    {seg.facilitator_instagram ? (
+                                      <a
+                                        href={`https://instagram.com/${seg.facilitator_instagram}`}
+                                        target="_blank" rel="noopener noreferrer"
+                                        className="hover:underline italic"
+                                        style={{ color: C.rose }}
+                                      >
+                                        Led by {seg.facilitator}
+                                      </a>
+                                    ) : (
+                                      <span className="italic">Led by {seg.facilitator}</span>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                            <div />
+                          </>
+                        ) : (
+                          <>
+                            <div />
+                            <div className="pl-2 sm:pl-6">
+                              <p className="text-[10px] tracking-[0.3em] uppercase mb-2" style={{ color: C.rose }}>
+                                {startTime}
+                              </p>
+                              <h3 className="font-serif text-xl sm:text-2xl mb-1.5 leading-tight" style={{ color: C.ink }}>{seg.title}</h3>
+                              {seg.description && (
+                                <p className="text-sm leading-relaxed mb-2" style={{ color: C.inkSoft }}>{seg.description}</p>
+                              )}
+                              <div className="flex flex-wrap items-center gap-2 text-xs" style={{ color: C.taupe }}>
+                                <span>{seg.duration_minutes} min</span>
+                                {seg.facilitator && (
+                                  <>
+                                    <span>·</span>
+                                    {seg.facilitator_instagram ? (
+                                      <a
+                                        href={`https://instagram.com/${seg.facilitator_instagram}`}
+                                        target="_blank" rel="noopener noreferrer"
+                                        className="hover:underline italic"
+                                        style={{ color: C.rose }}
+                                      >
+                                        Led by {seg.facilitator}
+                                      </a>
+                                    ) : (
+                                      <span className="italic">Led by {seg.facilitator}</span>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </div>
                           </>
                         )}
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+
           </div>
         </section>
       )}
