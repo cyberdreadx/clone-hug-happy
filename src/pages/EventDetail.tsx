@@ -1085,59 +1085,6 @@ const EventDetail = () => {
       )}
 
 
-      {/* ============ FINAL CTA ============ */}
-      <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto relative overflow-hidden rounded-[2rem] px-8 sm:px-16 py-20 text-center"
-          style={{ background: `linear-gradient(135deg, ${C.blush} 0%, ${C.champagne} 50%, ${C.butter}80 100%)` }}>
-          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style={{ backgroundColor: C.rose, opacity: 0.15 }} />
-          <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full blur-3xl" style={{ backgroundColor: C.sage, opacity: 0.18 }} />
-
-          <div className="relative">
-            <Bloom className="w-6 h-6 mx-auto mb-6" />
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-5" style={{ color: C.taupe }}>Your Seat Awaits</p>
-            <h2 className="font-serif text-4xl sm:text-6xl leading-[0.95] mb-6" style={{ color: C.ink }}>
-              Come as you are. <br />
-              <em className="italic" style={{ color: C.rose }}>Leave restored.</em>
-            </h2>
-            <p className="max-w-lg mx-auto text-base leading-relaxed mb-10" style={{ color: C.inkSoft }}>
-              Spaces are intimate and held with care. Reserve your seat for {event.name}
-              {dateShort && <> on <span style={{ color: C.ink }}>{dateShort}</span></>}.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/rsvp"
-                className="inline-flex items-center gap-2 px-10 py-4 rounded-full text-white text-sm tracking-wide transition-colors shadow-xl"
-                style={{ backgroundColor: C.rose, boxShadow: `0 20px 40px -15px ${C.rose}99` }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
-              >
-                Reserve Your Seat
-              </Link>
-              {dateObj && (
-                <button
-                  onClick={() => downloadICS({
-                    name: event.name, date: event.date!,
-                    time: (event as any).time, endTime: (event as any).end_time,
-                    location: event.location, description: event.description,
-                  })}
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm tracking-wide transition-colors"
-                  style={{ color: C.ink, border: `1px solid ${C.taupe}66`, backgroundColor: `${C.card}99` }}
-                >
-                  <CalendarPlus className="w-4 h-4" /> Save the Date
-                </button>
-              )}
-            </div>
-
-            {spotsLeft > 0 && spotsLeft <= 20 && (
-              <p className="mt-8 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.rose }}>
-                <Users className="w-3 h-3 inline mr-1.5" />
-                Only {spotsLeft} {spotsLeft === 1 ? "Seat" : "Seats"} Remaining
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* ============ FOOTER ============ */}
       <footer className="px-6 sm:px-10 lg:px-20 py-14 text-center" style={{ borderTop: `1px solid ${C.hairline}` }}>
