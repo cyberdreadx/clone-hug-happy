@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { downloadICS } from "@/lib/calendar";
 import paypalQr from "@/assets/paypal-qr.png.asset.json";
-import lilypadBg from "@/assets/rsvp-lilypads.jpg.asset.json";
+import lilypadBg from "@/assets/rsvp-orchids.jpg.asset.json";
 
 const bgStyle: React.CSSProperties = {
   backgroundImage: `linear-gradient(180deg, rgba(20,28,20,0.78) 0%, rgba(20,28,20,0.72) 50%, rgba(20,28,20,0.85) 100%), url(${lilypadBg.url})`,
