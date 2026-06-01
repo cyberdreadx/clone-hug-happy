@@ -16,7 +16,6 @@ const RSVPPage = () => {
     last_name: "",
     email: "",
     phone: "",
-    company: "",
     dietary_requirements: "",
     notes: "",
   });
@@ -177,14 +176,6 @@ const RSVPPage = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm text-foreground mb-1.5">Company / Organization</label>
-            <input
-              value={form.company}
-              onChange={(e) => setForm({ ...form, company: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-lg bg-section-light border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-            />
-          </div>
 
           <div>
             <label className="block text-sm text-foreground mb-1.5">Dietary Requirements</label>
