@@ -514,8 +514,8 @@ const EventDetail = () => {
       {/* ============ AGENDA / GRACEFUL RHYTHM ============ */}
       {segments.length > 0 && (
         <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-16">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
               <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>The Flow</p>
               <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
                 A graceful rhythm from arrival to <em className="italic" style={{ color: C.rose }}>integration.</em>
@@ -523,154 +523,161 @@ const EventDetail = () => {
             </div>
 
             {(() => {
-              const ROW = 115;
               const N = segments.length;
-              const totalH = N * ROW + ROW / 2;
-              const leftX = 24;
-              const rightX = 76;
-              const midX = 50;
+              const active = segments[activeSegment] ?? segments[0];
+              const activeTime = getSegmentTime(activeSegment);
 
-              const nodes = segments.map((_: any, i: number) => ({
-                x: i % 2 === 0 ? leftX : rightX,
-                y: i * ROW + ROW / 2,
-              }));
-              let d = `M ${midX} 0`;
-              let prev = { x: midX, y: 0 };
-              nodes.forEach((p) => {
-                const midY = (prev.y + p.y) / 2;
-                d += ` C ${prev.x} ${midY}, ${p.x} ${midY}, ${p.x} ${p.y}`;
-                prev = p;
-              });
-              d += ` C ${prev.x} ${prev.y + ROW / 3}, ${midX} ${totalH}, ${midX} ${totalH}`;
+              const cx = 200, cy = 200;
+              const petalRy = 110;
+              const petalRx = 32;
+              const petalCy = cy - petalRy + 8;
 
               return (
-                <div className="relative" style={{ minHeight: totalH }}>
-                  <svg
-                    className="absolute inset-0 w-full h-full pointer-events-none"
-                    viewBox={`0 0 100 ${totalH}`}
-                    preserveAspectRatio="none"
-                    fill="none"
-                    aria-hidden
-                  >
-                    <path
-                      d={d}
-                      stroke={C.rose}
-                      strokeWidth="0.35"
-                      strokeOpacity="0.4"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  </svg>
+                <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-14 items-center">
+                  {/* LOTUS */}
+                  <div className="relative mx-auto w-full max-w-[480px] aspect-square">
+                    <svg viewBox="0 0 400 400" className="w-full h-full" aria-hidden>
+                      <defs>
+                        <radialGradient id="petalActive" cx="50%" cy="30%" r="70%">
+                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.55" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0.12" />
+                        </radialGradient>
+                        <radialGradient id="petalIdle" cx="50%" cy="30%" r="70%">
+                          <stop offset="0%" stopColor={C.cream} stopOpacity="0.9" />
+                          <stop offset="100%" stopColor={C.cream} stopOpacity="0.3" />
+                        </radialGradient>
+                        <radialGradient id="lotusCenter" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor={C.rose} stopOpacity="0.25" />
+                          <stop offset="100%" stopColor={C.rose} stopOpacity="0" />
+                        </radialGradient>
+                      </defs>
 
-                  <svg
-                    className="absolute inset-0 w-full h-full pointer-events-none"
-                    viewBox={`0 0 100 ${totalH}`}
-                    preserveAspectRatio="none"
-                    aria-hidden
-                  >
-                    {nodes.map((p, i) => {
-                      const active = i === activeSegment;
-                      return (
-                        <g key={i}>
-
-                          <circle
-                            cx={p.x}
-                            cy={p.y}
-                            r={active ? 1.3 : 0.9}
-                            fill={active ? C.rose : C.cream}
+                      {/* Back petals (offset for layered bloom) */}
+                      {segments.map((_, i) => {
+                        const angle = (360 / N) * i + (360 / N) / 2;
+                        const isActive = i === activeSegment;
+                        return (
+                          <ellipse
+                            key={`back-${i}`}
+                            cx={cx}
+                            cy={petalCy + 14}
+                            rx={petalRx * 0.85}
+                            ry={petalRy * 0.85}
+                            fill={isActive ? "url(#petalActive)" : "url(#petalIdle)"}
                             stroke={C.rose}
-                            strokeWidth={active ? "0.6" : "0.35"}
-                            vectorEffect="non-scaling-stroke"
-                            style={{ transition: "all 400ms ease" }}
+                            strokeOpacity={isActive ? 0.5 : 0.18}
+                            strokeWidth="0.6"
+                            transform={`rotate(${angle} ${cx} ${cy})`}
+                            style={{ transition: "all 500ms ease" }}
                           />
-                        </g>
-                      );
-                    })}
-                  </svg>
+                        );
+                      })}
 
-                  {segments.map((seg: any, idx: number) => {
-                    const startTime = getSegmentTime(idx);
-                    const isLeft = idx % 2 === 0;
-                    const active = idx === activeSegment;
+                      {/* Front petals (interactive) */}
+                      {segments.map((_, i) => {
+                        const angle = (360 / N) * i;
+                        const isActive = i === activeSegment;
+                        const rad = ((angle - 90) * Math.PI) / 180;
+                        const labelR = petalRy + 28;
+                        const lx = cx + Math.cos(rad) * labelR;
+                        const ly = cy + Math.sin(rad) * labelR;
+                        return (
+                          <g key={`front-${i}`} style={{ cursor: "pointer" }} onMouseEnter={() => setActiveSegment(i)} onClick={() => setActiveSegment(i)}>
+                            <ellipse
+                              cx={cx}
+                              cy={petalCy}
+                              rx={petalRx}
+                              ry={petalRy}
+                              fill={isActive ? "url(#petalActive)" : "url(#petalIdle)"}
+                              stroke={C.rose}
+                              strokeOpacity={isActive ? 0.85 : 0.28}
+                              strokeWidth={isActive ? 1.2 : 0.7}
+                              transform={`rotate(${angle} ${cx} ${cy}) ${isActive ? "translate(0 -6)" : ""}`}
+                              style={{ transition: "all 500ms cubic-bezier(.4,0,.2,1)" }}
+                            />
+                            <text
+                              x={lx}
+                              y={ly}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                              fontSize="11"
+                              fontFamily="serif"
+                              fill={isActive ? C.rose : C.taupe}
+                              fontStyle="italic"
+                              style={{ transition: "all 400ms ease", fontWeight: isActive ? 600 : 400 }}
+                            >
+                              {String(i + 1).padStart(2, "0")}
+                            </text>
+                          </g>
+                        );
+                      })}
 
-                    const card = (
-                      <div
-                        className={`transition-all duration-500 ease-out ${isLeft ? "text-right pr-3 sm:pr-8" : "pl-3 sm:pl-8"}`}
-                        style={{
-                          opacity: active ? 1 : 0.4,
-                          transform: active ? "scale(1.03)" : "scale(0.97)",
-                          transformOrigin: isLeft ? "right center" : "left center",
-                          filter: active ? "none" : "blur(0.3px)",
-                        }}
-                      >
-                        <p
-                          className="text-[10px] tracking-[0.3em] uppercase mb-1.5 transition-colors duration-300"
-                          style={{ color: active ? C.rose : C.taupe }}
-                        >
-                          {startTime}
-                        </p>
-                        <h3 className="font-serif text-lg sm:text-xl mb-1 leading-tight" style={{ color: C.ink }}>
-                          {seg.title}
-                        </h3>
-                        {seg.description && (
-                          <p className="text-xs sm:text-sm leading-snug mb-1.5 line-clamp-2" style={{ color: C.inkSoft }}>
-                            {seg.description}
-                          </p>
-                        )}
-                        <div
-                          className={`flex flex-wrap items-center gap-2 text-[11px] ${isLeft ? "justify-end" : ""}`}
-                          style={{ color: C.taupe }}
-                        >
-                          <span>{seg.duration_minutes} min</span>
-                          {seg.facilitator && (
-                            <>
-                              <span>·</span>
-                              {seg.facilitator_instagram ? (
-                                <a
-                                  href={`https://instagram.com/${seg.facilitator_instagram}`}
-                                  target="_blank" rel="noopener noreferrer"
-                                  className="hover:underline italic"
-                                  style={{ color: C.rose }}
-                                >
-                                  Led by {seg.facilitator}
-                                </a>
-                              ) : (
-                                <span className="italic">Led by {seg.facilitator}</span>
-                              )}
-                            </>
+                      {/* Center */}
+                      <circle cx={cx} cy={cy} r="55" fill="url(#lotusCenter)" />
+                      <circle cx={cx} cy={cy} r="22" fill={C.cream} stroke={C.rose} strokeOpacity="0.5" strokeWidth="1" />
+                      <circle cx={cx} cy={cy} r="6" fill={C.rose} opacity="0.7" />
+                    </svg>
+                  </div>
+
+                  {/* ACTIVE DETAIL */}
+                  <div
+                    key={activeSegment}
+                    className="animate-fade-in"
+                    ref={(el) => (segmentRefs.current[activeSegment] = el)}
+                    data-idx={activeSegment}
+                  >
+                    <p className="text-[10px] tracking-[0.35em] uppercase mb-3" style={{ color: C.rose }}>
+                      {String(activeSegment + 1).padStart(2, "0")} · {activeTime}
+                    </p>
+                    <h3 className="font-serif text-3xl sm:text-4xl leading-tight mb-3" style={{ color: C.ink }}>
+                      {active.title}
+                    </h3>
+                    {active.description && (
+                      <p className="text-sm sm:text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
+                        {active.description}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" style={{ color: C.taupe }}>
+                      <span>{active.duration_minutes} min</span>
+                      {active.facilitator && (
+                        <>
+                          <span>·</span>
+                          {active.facilitator_instagram ? (
+                            <a
+                              href={`https://instagram.com/${active.facilitator_instagram}`}
+                              target="_blank" rel="noopener noreferrer"
+                              className="hover:underline italic"
+                              style={{ color: C.rose }}
+                            >
+                              Led by {active.facilitator}
+                            </a>
+                          ) : (
+                            <span className="italic">Led by {active.facilitator}</span>
                           )}
-                        </div>
-                      </div>
-                    );
+                        </>
+                      )}
+                    </div>
 
-                    return (
-                      <div
-                        key={seg.id}
-                        ref={(el) => (segmentRefs.current[idx] = el)}
-                        data-idx={idx}
-                        onMouseEnter={() => setActiveSegment(idx)}
-                        className="relative grid grid-cols-2 gap-4 sm:gap-10 items-center cursor-default"
-                        style={{ height: ROW }}
-                      >
-                        {isLeft ? (
-                          <>
-                            {card}
-                            <div />
-                          </>
-                        ) : (
-                          <>
-                            <div />
-                            {card}
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
+                    <div className="flex flex-wrap gap-1.5 mt-8">
+                      {segments.map((_, i) => (
+                        <button
+                          key={i}
+                          onMouseEnter={() => setActiveSegment(i)}
+                          onClick={() => setActiveSegment(i)}
+                          aria-label={`Segment ${i + 1}`}
+                          className="h-1.5 rounded-full transition-all duration-300"
+                          style={{
+                            width: i === activeSegment ? 24 : 8,
+                            backgroundColor: i === activeSegment ? C.rose : C.taupe,
+                            opacity: i === activeSegment ? 1 : 0.35,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               );
             })()}
-
-
-
           </div>
         </section>
       )}
