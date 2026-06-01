@@ -1162,13 +1162,34 @@ const EventDetail = () => {
           <p className="mt-10 text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
             Curated Wellness · Held with Intention
           </p>
+
+          {/* Partners */}
+          <div className="mt-10 pt-8" style={{ borderTop: `1px solid ${C.card}33` }}>
+            <p className="text-[10px] tracking-[0.45em] uppercase mb-5" style={{ color: C.card, opacity: 0.75 }}>
+              In Partnership With
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-6">
+              <img
+                src={partnerSilaAsset.url}
+                alt="Sila"
+                className="h-12 sm:h-14 w-auto opacity-90 hover:opacity-100 transition-opacity"
+              />
+              <img
+                src={partner2Asset.url}
+                alt="Vibranto"
+                className="h-12 sm:h-14 w-auto opacity-90 hover:opacity-100 transition-opacity"
+              />
+            </div>
+          </div>
+
           <Link
             to="/"
-            className="mt-5 inline-flex items-center gap-2 text-xs hover:opacity-80"
+            className="mt-8 inline-flex items-center gap-2 text-xs hover:opacity-80"
             style={{ color: C.card }}
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back to all experiences
           </Link>
+
         </div>
       </section>
     </div>
