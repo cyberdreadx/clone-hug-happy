@@ -15,6 +15,8 @@ import cacaoShoulderAsset from "@/assets/cacao-scrub-shoulder.png.asset.json";
 import alejandraAsset from "@/assets/host-alejandra.png.asset.json";
 import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
+import finalCtaBloomAsset from "@/assets/final-cta-bloom.jpg.asset.json";
+import breatheBloomLogoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
@@ -1086,8 +1088,80 @@ const EventDetail = () => {
 
 
 
+      {/* ============ FINAL CTA ============ */}
+      <section className="px-6 sm:px-10 lg:px-20 py-16 lg:py-20">
+        <div
+          className="relative max-w-6xl mx-auto overflow-hidden rounded-[2rem] px-8 sm:px-16 py-24 sm:py-32 text-center"
+          style={{ minHeight: 520 }}
+        >
+          {/* Background image */}
+          <img
+            src={finalCtaBloomAsset.url}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Soft warm overlay for legibility */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(180deg, ${C.blush}55 0%, ${C.champagne}66 55%, ${C.ink}55 100%)`,
+            }}
+          />
+
+          <div className="relative">
+            <p className="text-[10px] tracking-[0.4em] uppercase mb-6" style={{ color: C.card }}>
+              A Final Invitation
+            </p>
+            <h2 className="font-serif text-4xl sm:text-6xl leading-[0.95] mb-8" style={{ color: C.card }}>
+              Come as you are. <br />
+              <em className="italic" style={{ color: C.blush }}>Leave restored.</em>
+            </h2>
+            <p className="max-w-xl mx-auto text-base sm:text-lg leading-relaxed mb-10" style={{ color: C.card }}>
+              Some mornings change the shape of the season. <br className="hidden sm:block" />
+              This is one of them.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/rsvp"
+                className="inline-flex items-center gap-2 px-10 py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors shadow-xl"
+                style={{ backgroundColor: C.rose, boxShadow: `0 20px 40px -15px ${C.ink}99` }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
+              >
+                Reserve Your Seat
+              </Link>
+              {dateObj && (
+                <button
+                  onClick={() => downloadICS({
+                    name: event.name, date: event.date!,
+                    time: (event as any).time, endTime: (event as any).end_time,
+                    location: event.location, description: event.description,
+                  })}
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm tracking-[0.15em] uppercase transition-colors backdrop-blur"
+                  style={{ color: C.card, border: `1px solid ${C.card}99`, backgroundColor: `${C.ink}22` }}
+                >
+                  <CalendarPlus className="w-4 h-4" /> Save the Date
+                </button>
+              )}
+            </div>
+
+            {/* Logo */}
+            <div className="mt-16 flex justify-center">
+              <img
+                src={breatheBloomLogoAsset.url}
+                alt="Breathe & Bloom"
+                className="h-16 sm:h-20 w-auto opacity-90"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ============ FOOTER ============ */}
       <footer className="px-6 sm:px-10 lg:px-20 py-14 text-center" style={{ borderTop: `1px solid ${C.hairline}` }}>
+
         <p className="font-serif text-2xl mb-2" style={{ color: C.ink }}>
           Breathe <em className="italic" style={{ color: C.rose }}>&</em> Bloom
         </p>
