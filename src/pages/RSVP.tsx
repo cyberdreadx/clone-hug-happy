@@ -135,7 +135,7 @@ const RSVPPage = () => {
         </Link>
 
         <div className="text-center mb-12">
-          <p className="text-[11px] tracking-[0.4em] uppercase text-gold mb-4">
+          <p className="text-[11px] tracking-[0.4em] uppercase text-white font-medium mb-4">
             Secure Your Reservation
           </p>
           <div className="w-16 h-px bg-white/30 mx-auto mb-6" />
