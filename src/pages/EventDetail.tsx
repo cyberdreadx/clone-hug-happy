@@ -337,8 +337,9 @@ const EventDetail = () => {
               {[
                 { value: "4.5h", label: "Of Experience" },
                 { value: "10", label: "Intimate Group" },
-                { value: "Women", label: "Only" },
+                { value: "♀", label: "Women Only" },
                 { value: "$150", label: "Investment" },
+
               ].map((s, i) => (
                 <div
                   key={i}
