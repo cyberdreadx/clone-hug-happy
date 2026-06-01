@@ -1,32 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 
 const Hero = () => {
-  const { data: nextEvent } = useQuery({
-    queryKey: ["next-event-hero"],
-    queryFn: async () => {
-      const today = new Date().toISOString().split("T")[0];
-      const { data } = await supabase
-        .from("events")
-        .select("id, name, date, location")
-        .eq("status", "active")
-        .gte("date", today)
-        .order("date", { ascending: true })
-        .limit(1)
-        .single();
-      return data;
-    },
-  });
-
-  const dateLabel = nextEvent?.date
-    ? format(new Date(nextEvent.date + "T12:00:00"), "MMMM yyyy")
-    : "";
 
   return (
     <section
@@ -60,88 +36,43 @@ const Hero = () => {
           </p>
         </header>
 
-        {/* Editorial grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start border-t border-foreground/10 pt-16">
-          {/* Featured next event */}
-          <div className="lg:col-span-7">
-            <div className="relative mb-8 overflow-hidden">
-              <img
-                src={heroFloral.url}
-                alt="Upcoming Breathe & Bloom experience"
-                className="w-full aspect-[16/10] object-cover"
-              />
-              <div className="absolute top-6 left-6">
-                <span className="bg-card/90 backdrop-blur px-4 py-1 text-[10px] uppercase tracking-widest font-medium text-foreground">
-                  Upcoming Release
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row justify-between gap-8">
-              <div>
-                <h3 className="font-serif text-4xl mb-2 text-foreground">
-                  {nextEvent?.name ?? "Our Next Gathering"}
-                </h3>
-                <p className="text-gold uppercase tracking-widest text-xs mb-4">
-                  {dateLabel}
-                  {nextEvent?.location ? ` · ${nextEvent.location.split(",")[0]}` : ""}
-                </p>
-                {nextEvent?.location && (
-                  <p className="text-sm text-foreground/70 font-light max-w-sm mb-6">
-                    {nextEvent.location}
-                  </p>
-                )}
-              </div>
-              <div className="flex items-end">
-                {nextEvent && (
-                  <Link
-                    to={`/event/${nextEvent.id}`}
-                    className="bg-gold text-primary-foreground px-10 py-4 rounded-full uppercase tracking-widest text-xs hover:opacity-90 transition-opacity whitespace-nowrap"
-                  >
-                    Next Event
-                  </Link>
-                )}
-              </div>
-            </div>
+        {/* Editorial second half — philosophy + image diptych */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-t border-foreground/10 pt-16">
+          <div className="lg:col-span-5 lg:col-start-1">
+            <span className="block text-[10px] uppercase tracking-[0.3em] text-gold mb-4 font-bold">
+              Our Philosophy
+            </span>
+            <h4 className="font-serif text-3xl md:text-4xl mb-5 italic text-foreground leading-tight">
+              Mindful Connections
+            </h4>
+            <p className="text-base text-foreground/70 leading-relaxed font-light italic max-w-md">
+              "We curate spaces where vulnerability becomes strength, and
+              silence becomes a conversation."
+            </p>
           </div>
 
-          {/* Right column */}
-          <div className="lg:col-span-5 flex flex-col gap-12">
-            <div className="border-b border-foreground/10 pb-10">
-              <span className="block text-[10px] uppercase tracking-[0.3em] text-gold mb-4 font-bold">
-                Our Philosophy
+          <div className="lg:col-span-6 lg:col-start-7 grid grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <img
+                src={luxuryTea}
+                alt="Purposeful living"
+                className="w-full aspect-[4/5] object-cover mb-4"
+              />
+              <span className="text-[10px] uppercase tracking-widest text-gold">
+                Impact
               </span>
-              <h4 className="font-serif text-2xl mb-3 italic text-foreground">
-                Mindful Connections
-              </h4>
-              <p className="text-sm text-foreground/70 leading-relaxed font-light italic">
-                "We curate spaces where vulnerability becomes strength, and
-                silence becomes a conversation."
-              </p>
+              <p className="text-xs mt-1 text-foreground">Purposeful Living</p>
             </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <img
-                  src={luxuryTea}
-                  alt="Purposeful living"
-                  className="w-full aspect-[4/5] object-cover mb-4"
-                />
-                <span className="text-[10px] uppercase tracking-widest text-gold">
-                  Impact
-                </span>
-                <p className="text-xs mt-1 text-foreground">Purposeful Living</p>
-              </div>
-              <div className="flex flex-col pt-12">
-                <img
-                  src={plate}
-                  alt="Elevated care"
-                  className="w-full aspect-[4/5] object-cover mb-4"
-                />
-                <span className="text-[10px] uppercase tracking-widest text-gold">
-                  Experience
-                </span>
-                <p className="text-xs mt-1 text-foreground">Elevated Care</p>
-              </div>
+            <div className="flex flex-col pt-12">
+              <img
+                src={plate}
+                alt="Elevated care"
+                className="w-full aspect-[4/5] object-cover mb-4"
+              />
+              <span className="text-[10px] uppercase tracking-widest text-gold">
+                Experience
+              </span>
+              <p className="text-xs mt-1 text-foreground">Elevated Care</p>
             </div>
           </div>
         </div>

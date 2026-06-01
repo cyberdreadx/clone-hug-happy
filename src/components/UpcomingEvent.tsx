@@ -1,31 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { CalendarDays, MapPin, ChevronLeft, ChevronRight, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { format } from "date-fns";
+import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
 
 const UpcomingEvent = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
   const { data: events = [], isLoading } = useQuery({
-    queryKey: ["active-events-carousel"],
+    queryKey: ["active-events-editorial"],
     queryFn: async () => {
+      const today = new Date().toISOString().split("T")[0];
       const { data, error } = await supabase
         .from("events")
         .select("*")
         .eq("status", "active")
+        .gte("date", today)
         .order("date", { ascending: true });
       if (error) throw error;
       return data ?? [];
     },
   });
 
-  // Fetch main sponsors for all active events
   const eventIds = events.map((e) => e.id);
   const { data: mainSponsors = [] } = useQuery({
-    queryKey: ["main-sponsors-carousel", eventIds],
+    queryKey: ["main-sponsors-editorial", eventIds],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("event_sponsors")
@@ -39,267 +36,155 @@ const UpcomingEvent = () => {
     enabled: eventIds.length > 0,
   });
 
-  // Map: event_id -> first main sponsor
   const sponsorByEvent = mainSponsors.reduce<Record<string, any>>((acc, s) => {
     if (!acc[s.event_id]) acc[s.event_id] = s;
     return acc;
   }, {});
 
-  const updateScrollButtons = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  };
+  if (isLoading || !events.length) return null;
 
-  useEffect(() => {
-    if (events.length) {
-      setTimeout(updateScrollButtons, 100);
-    }
-  }, [events]);
+  const [featured, ...rest] = events;
+  const featuredSponsor = sponsorByEvent[featured.id];
 
-  const scroll = (dir: "left" | "right") => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -340 : 340, behavior: "smooth" });
-  };
-
-  if (!events.length && !isLoading) return null;
-
-  const formatDate = (date: string | null, time: string | null) => {
+  const longDate = (date: string | null, time: string | null) => {
     if (!date) return null;
-    const d = new Date(date + "T00:00:00");
-    const dayName = d.toLocaleDateString("en-US", { weekday: "short" });
-    const monthDay = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    let timeStr = "";
-    if (time) {
-      const [h, m] = time.split(":").map(Number);
-      const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
-      const ampm = h < 12 ? "AM" : "PM";
-      timeStr = ` · ${hour12}:${m.toString().padStart(2, "0")} ${ampm}`;
-    }
-    return `${dayName}, ${monthDay}${timeStr}`;
+    const d = new Date(date + "T12:00:00");
+    const dateStr = format(d, "EEEE, MMMM d, yyyy");
+    if (!time) return dateStr;
+    const [h, m] = time.split(":").map(Number);
+    const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    const ampm = h < 12 ? "AM" : "PM";
+    return `${dateStr} · ${hour12}:${m.toString().padStart(2, "0")} ${ampm}`;
   };
 
-  const shortLocation = (loc: string | null) => {
-    if (!loc) return null;
-    const parts = loc.split(",").map((s) => s.trim());
-    return parts.length > 2 ? `${parts[0]}, ${parts[1]}` : loc;
+  const shortDate = (date: string | null) => {
+    if (!date) return null;
+    return format(new Date(date + "T12:00:00"), "MMM d, yyyy");
   };
 
   return (
-    <section className="py-16 px-6 bg-section-light">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">
-              Don't Miss Out
+    <section className="py-24 md:py-32 px-6 md:px-10 bg-card">
+      <div className="max-w-6xl mx-auto">
+        {/* Section header */}
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
+            The Calendar
+          </span>
+          <h2 className="font-serif text-5xl md:text-6xl text-foreground italic leading-tight">
+            Upcoming Experiences
+          </h2>
+          <div className="w-12 h-px bg-foreground/20 mt-8" />
+        </div>
+
+        {/* Featured event — editorial feature */}
+        <article className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center mb-20">
+          <Link
+            to={`/event/${featured.id}`}
+            className="lg:col-span-7 group block relative overflow-hidden"
+          >
+            <img
+              src={featured.cover_image && featured.cover_image.trim() ? featured.cover_image : heroFloral.url}
+              alt={featured.name}
+              className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+            <span className="absolute top-6 left-6 bg-card/95 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-foreground">
+              Next Gathering
+            </span>
+          </Link>
+
+          <div className="lg:col-span-5">
+            <p className="text-[10px] uppercase tracking-[0.4em] text-gold mb-5">
+              {shortDate(featured.date)}
+              {featured.location ? ` · ${featured.location.split(",")[0]}` : ""}
             </p>
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground">
-              Upcoming Events
-            </h2>
+            <h3 className="font-serif text-4xl md:text-5xl text-foreground leading-[1.1] mb-6">
+              {featured.name}
+            </h3>
+            {featured.description && (
+              <p className="text-base text-foreground/70 font-light leading-relaxed mb-8 max-w-md">
+                {featured.description}
+              </p>
+            )}
+
+            <dl className="space-y-3 mb-10 text-sm">
+              {featured.date && (
+                <div className="flex gap-4">
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+                    Date
+                  </dt>
+                  <dd className="text-foreground/80 font-light">
+                    {longDate(featured.date, featured.time)}
+                  </dd>
+                </div>
+              )}
+              {featured.location && (
+                <div className="flex gap-4">
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+                    Venue
+                  </dt>
+                  <dd className="text-foreground/80 font-light">
+                    {featured.location}
+                  </dd>
+                </div>
+              )}
+              {(featured as any).ticket_price != null && (
+                <div className="flex gap-4">
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+                    From
+                  </dt>
+                  <dd className="text-foreground font-medium">
+                    ${Number((featured as any).ticket_price).toFixed(0)}
+                  </dd>
+                </div>
+              )}
+            </dl>
+
+            <Link
+              to={`/event/${featured.id}`}
+              className="inline-block bg-gold text-primary-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs hover:opacity-90 transition-opacity"
+            >
+              Reserve Your Place
+            </Link>
+
+            {featuredSponsor && (
+              <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-foreground/40 font-light italic">
+                In partnership with{" "}
+                <span className="text-foreground/70 not-italic">
+                  {featuredSponsor.name}
+                </span>
+              </p>
+            )}
           </div>
-          {events.length > 2 && (
-            <div className="hidden sm:flex items-center gap-2">
-              <button
-                onClick={() => scroll("left")}
-                disabled={!canScrollLeft}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors disabled:opacity-30"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => scroll("right")}
-                disabled={!canScrollRight}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors disabled:opacity-30"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          )}
-        </div>
+        </article>
 
-        {/* Stacked on mobile, horizontal scroll on desktop */}
-        <div className="flex flex-col gap-4 sm:hidden">
-          {events.map((event) => {
-            const sponsor = sponsorByEvent[event.id];
-            const spotsLeft = Math.max((event.max_guests || 100) - 0, 0);
-            const isSoldOut = spotsLeft <= 0;
-            const isAlmostFull = !isSoldOut && spotsLeft <= 10;
-            return (
-              <Link key={event.id} to={`/event/${event.id}`} className="group">
-                <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow flex flex-col" style={{ backgroundColor: '#ddedd7' }}>
-                  <div className="relative h-36 bg-muted">
-                    {event.cover_image ? (
-                      <img src={event.cover_image} alt={event.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-accent/30">
-                        <span className="font-serif text-2xl text-muted-foreground/40">{event.name.charAt(0)}</span>
-                      </div>
-                    )}
-                    {isAlmostFull && (
-                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-red-500/90 text-white backdrop-blur-sm">
-                        Almost Full
-                      </span>
-                    )}
-                    {isSoldOut && (
-                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-foreground/80 text-background backdrop-blur-sm">
-                        Sold Out
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-5 space-y-2.5 flex-1 flex flex-col">
-                    <h3 className="font-serif text-lg text-foreground leading-snug line-clamp-2">{event.name}</h3>
-                    {event.description && <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{event.description}</p>}
-                    {event.date && (
-                      <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CalendarDays className="w-3.5 h-3.5 text-gold shrink-0" />
-                        {formatDate(event.date, event.time)}
-                      </p>
-                    )}
-                    {event.location && (
-                      <p className="flex items-center gap-1.5 text-sm text-gold">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" />
-                        {shortLocation(event.location)}
-                      </p>
-                    )}
-                    <div className="flex-1" />
-                    {(event as any).ticket_price != null && (
-                      <p className="text-sm font-semibold text-foreground pt-1">From ${Number((event as any).ticket_price).toFixed(2)}</p>
-                    )}
-                    {sponsor && (
-                      <div className="flex items-center gap-2 pt-2 border-t border-border/50">
-                        {sponsor.logo_url ? (
-                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center overflow-hidden shrink-0">
-                            <img src={sponsor.logo_url} alt={sponsor.name} className="w-full h-full object-contain p-0.5" />
-                          </div>
-                        ) : (
-                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center shrink-0">
-                            <Crown className="w-3 h-3 text-gold" />
-                          </div>
-                        )}
-                        <div className="min-w-0">
-                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Presented by</p>
-                          <p className="text-xs font-medium text-foreground truncate">{sponsor.name}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
-        <div
-          ref={scrollRef}
-          onScroll={updateScrollButtons}
-          className="hidden sm:flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {events.map((event) => {
-            const sponsor = sponsorByEvent[event.id];
-            const spotsLeft = Math.max((event.max_guests || 100) - 0, 0); // approximate
-            const isSoldOut = spotsLeft <= 0;
-            const isAlmostFull = !isSoldOut && spotsLeft <= 10;
-
-            return (
-              <Link
-                key={event.id}
-                to={`/event/${event.id}`}
-                className="group flex-shrink-0 w-72 sm:w-80 snap-start"
-              >
-                {/* Card container */}
-                <div className="rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-shadow h-full flex flex-col" style={{ backgroundColor: '#ddedd7' }}>
-                  {/* Image area */}
-                  <div className="relative h-48 bg-muted">
-                    {event.cover_image ? (
-                      <img
-                        src={event.cover_image}
-                        alt={event.name}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-accent/30">
-                        <span className="font-serif text-2xl text-muted-foreground/40">
-                          {event.name.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Urgency badge */}
-                    {isAlmostFull && (
-                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-red-500/90 text-white backdrop-blur-sm">
-                        Almost Full
-                      </span>
-                    )}
-                    {isSoldOut && (
-                      <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-foreground/80 text-background backdrop-blur-sm">
-                        Sold Out
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Card body */}
-                  <div className="p-5 space-y-2.5 flex-1 flex flex-col">
-                    <h3 className="font-serif text-lg text-foreground leading-snug line-clamp-2">
+        {/* Additional events — quiet hairline list */}
+        {rest.length > 0 && (
+          <div className="border-t border-foreground/10 pt-10">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-foreground/50 mb-8 text-center">
+              Also On The Calendar
+            </p>
+            <ul className="divide-y divide-foreground/10">
+              {rest.map((event) => (
+                <li key={event.id}>
+                  <Link
+                    to={`/event/${event.id}`}
+                    className="group grid grid-cols-12 gap-6 items-baseline py-6 hover:bg-foreground/[0.02] transition-colors -mx-4 px-4"
+                  >
+                    <span className="col-span-3 text-[11px] uppercase tracking-[0.25em] text-gold pt-1">
+                      {shortDate(event.date)}
+                    </span>
+                    <h4 className="col-span-12 sm:col-span-6 font-serif text-2xl text-foreground leading-snug group-hover:italic transition-all">
                       {event.name}
-                    </h3>
-
-                    {event.description && (
-                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                        {event.description}
-                      </p>
-                    )}
-
-                    {event.date && (
-                      <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CalendarDays className="w-3.5 h-3.5 text-gold shrink-0" />
-                        {formatDate(event.date, event.time)}
-                      </p>
-                    )}
-
-                    {event.location && (
-                      <p className="flex items-center gap-1.5 text-sm text-gold">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" />
-                        {shortLocation(event.location)}
-                      </p>
-                    )}
-
-                    {/* Spacer to push bottom content down */}
-                    <div className="flex-1" />
-
-                    {/* Price */}
-                    {(event as any).ticket_price != null && (
-                      <p className="text-sm font-semibold text-foreground pt-1">
-                        From ${Number((event as any).ticket_price).toFixed(2)}
-                      </p>
-                    )}
-
-                    {/* Featured Sponsor */}
-                    {sponsor && (
-                      <div className="flex items-center gap-2 pt-2 border-t border-border/50">
-                        {sponsor.logo_url ? (
-                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center overflow-hidden shrink-0">
-                            <img src={sponsor.logo_url} alt={sponsor.name} className="w-full h-full object-contain p-0.5" />
-                          </div>
-                        ) : (
-                          <div className="w-7 h-7 rounded-md bg-muted border border-border/50 flex items-center justify-center shrink-0">
-                            <Crown className="w-3 h-3 text-gold" />
-                          </div>
-                        )}
-                        <div className="min-w-0">
-                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60 leading-none">Presented by</p>
-                          <p className="text-xs font-medium text-foreground truncate">{sponsor.name}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                    </h4>
+                    <span className="col-span-12 sm:col-span-3 text-xs text-foreground/60 font-light text-left sm:text-right">
+                      {event.location?.split(",")[0]}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );
