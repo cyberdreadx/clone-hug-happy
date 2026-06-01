@@ -152,7 +152,7 @@ const RSVPPage = () => {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
+            className="bg-white/8 backdrop-blur-xl border border-white/10 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
