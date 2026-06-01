@@ -350,7 +350,7 @@ const AdminEvents = () => {
                   <span>RSVPs: {counts ? `${counts.confirmed}/${counts.total}` : "0"}/{ev.max_guests}</span>
                   <span className="text-sidebar-foreground font-medium">${gross.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setEventModal({ open: true, event: ev })}
                     className="p-1.5 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground/40 hover:text-sidebar-foreground"
