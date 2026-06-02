@@ -39,7 +39,7 @@ const Hero = () => {
           {nextEvent && (
             <Link
               to={`/event/${nextEvent.id}`}
-              className="group mt-10 inline-flex items-center gap-2.5 md:gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-5 py-2.5 md:px-8 md:py-4 rounded-full transition-all shadow-sm hover:shadow-md max-w-[92vw]"
+              className="group mt-4 md:mt-10 inline-flex items-center gap-2.5 md:gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-5 py-2.5 md:px-8 md:py-4 rounded-full transition-all shadow-sm hover:shadow-md max-w-[92vw]"
             >
               <span className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] font-semibold opacity-70 whitespace-nowrap">
                 Next Immersion
