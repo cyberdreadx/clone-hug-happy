@@ -1,3 +1,5 @@
+import { Crown, Gem, Sparkles, Gift } from "lucide-react";
+
 const experiences = [
   { title: "Welcome Ritual", desc: "Begin your journey with a grounding ceremony and intention-setting workshop." },
   { title: "Yoga & Breathwork", desc: "Revitalizing movement and pranayama sessions led by world-class instructors." },
@@ -14,10 +16,10 @@ const audiences = [
 ];
 
 const tiers = [
-  { title: "Title Sponsor", tag: "Naming Rights" },
-  { title: "Premium Partner", tag: "VIP Access" },
-  { title: "Activation Partner", tag: "Brand Experience" },
-  { title: "Gift Bag Inclusion", tag: "Curated Reach" },
+  { title: "Title Sponsor", tag: "Naming Rights", Icon: Crown },
+  { title: "Premium Partner", tag: "VIP Access", Icon: Gem },
+  { title: "Activation Partner", tag: "Brand Experience", Icon: Sparkles },
+  { title: "Gift Bag Inclusion", tag: "Curated Reach", Icon: Gift },
 ];
 
 import experiencePhoto from "@/assets/experience-ritual.jpg.asset.json";
