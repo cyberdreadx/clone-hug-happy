@@ -20,6 +20,8 @@ const tiers = [
   { title: "Gift Bag Inclusion", tag: "Curated Reach" },
 ];
 
+import experiencePhoto from "@/assets/experience-ritual.jpg.asset.json";
+
 const BrandStory = () => {
   return (
     <section id="experience" className="py-14 md:py-32 px-6 md:px-12">
@@ -32,13 +34,23 @@ const BrandStory = () => {
           <h2 className="font-serif text-5xl md:text-7xl text-foreground leading-[1.1] mb-10">
             A curated journey of <span className="italic">unrivaled</span> elegance.
           </h2>
-          <div className="max-w-xl ml-auto space-y-6">
-            {experiences.map((e) => (
-              <div key={e.title}>
-                <h3 className="font-serif text-xl text-foreground mb-1">{e.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{e.desc}</p>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+            <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl">
+              <img
+                src={experiencePhoto.url}
+                alt="A moment of stillness — reading by the rocks at golden hour"
+                className="w-full aspect-[4/5] object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="space-y-6">
+              {experiences.map((e) => (
+                <div key={e.title}>
+                  <h3 className="font-serif text-xl text-foreground mb-1">{e.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{e.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
