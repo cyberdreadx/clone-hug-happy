@@ -65,6 +65,32 @@ const EventDetail = () => {
     return () => observer.disconnect();
   });
 
+  // Luxurious scroll reveal: stagger direct children of each section (skip the hero)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section"));
+    const targets = sections.slice(1); // skip hero
+    targets.forEach((el) => el.classList.add("lux-reveal"));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+    );
+
+    targets.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [event, segments.length, sponsors.length, ticketTiers.length]);
+
+
   const { data: event, isLoading } = useQuery({
     queryKey: ["public-event", id],
     queryFn: async () => {
