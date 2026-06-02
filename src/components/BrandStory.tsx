@@ -22,7 +22,7 @@ const tiers = [
 
 const BrandStory = () => {
   return (
-    <section id="experience" className="bg-section-light py-32 px-6 md:px-12">
+    <section id="experience" className="py-32 px-6 md:px-12">
       <div className="max-w-4xl mx-auto flex flex-col gap-32">
         {/* 01 — The Experience */}
         <div className="relative">
