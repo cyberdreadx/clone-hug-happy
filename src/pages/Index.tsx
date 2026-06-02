@@ -17,7 +17,7 @@ const Index = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="absolute inset-0 bg-background/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/55 pointer-events-none" />
       <div className="relative z-10">
 
         <Navbar />
