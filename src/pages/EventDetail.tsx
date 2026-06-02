@@ -690,7 +690,7 @@ const EventDetail = () => {
                 <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
                   dear body,
                   <br />
-                  I love you.
+                  I hear you.
                 </p>
               </div>
             </div>
