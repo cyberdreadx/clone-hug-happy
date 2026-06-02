@@ -389,7 +389,7 @@ const EventDetail = () => {
               <em className="italic" style={{ color: C.rose }}>tulum style + biohacking</em> energy.
             </h2>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa at SILA Miami, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work practice, soul gazing with yourself, contrast therapy, and sound bath experience.
+              A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa at SILA Miami, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work, soul gazing with yourself, contrast therapy, and sound bath experience.
             </p>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
               ​
