@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const publicLinks = [
     { label: "Home", to: "/" },
-    { label: "Experience", to: "/#experience" },
+    { label: "Experience", to: "/events" },
     { label: "Contact", to: "/#connect" },
   ];
 
