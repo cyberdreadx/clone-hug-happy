@@ -288,7 +288,7 @@ const EventDetail = () => {
         {/* Hero content */}
         <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-20 pb-20 pt-12">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-6">
+            <div className="flex items-center gap-2 mb-6 font-bold">
               <Bloom className="w-4 h-4" />
               <p className="text-[10px] tracking-[0.4em] uppercase font-semibold" style={{ color: C.taupe }}>
                 A Curated Wellness Experience
