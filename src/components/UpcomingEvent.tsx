@@ -96,17 +96,17 @@ const UpcomingEvent = () => {
           </Link>
 
           <div className="lg:col-span-6">
-            <h3 className="font-serif text-3xl md:text-4xl text-foreground leading-[1.1] mb-6 italic">
+            <h3 className="font-serif text-2xl md:text-4xl text-foreground leading-[1.1] mb-3 md:mb-6 italic">
               {featured.name}
             </h3>
 
             {featured.description && (
-              <p className="text-base text-foreground/70 font-light leading-relaxed mb-8 max-w-md">
+              <p className="text-sm md:text-base text-foreground/70 font-light leading-relaxed mb-5 md:mb-8 max-w-md">
                 {featured.description}
               </p>
             )}
 
-            <dl className="grid grid-cols-[5rem_1fr] gap-x-6 gap-y-4 mb-10 text-sm">
+            <dl className="grid grid-cols-[4.5rem_1fr] md:grid-cols-[5rem_1fr] gap-x-5 md:gap-x-6 gap-y-2.5 md:gap-y-4 mb-6 md:mb-10 text-sm">
               {featured.date && (
                 <>
                   <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
