@@ -80,7 +80,7 @@ const UpcomingEvent = () => {
         </div>
 
         {/* Featured event — editorial feature */}
-        <article className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-16">
+        <article className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center mb-10 md:mb-16">
           <Link
             to={`/event/${featured.id}`}
             className="lg:col-span-6 group block relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl"
