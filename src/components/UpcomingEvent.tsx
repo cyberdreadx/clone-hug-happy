@@ -150,7 +150,7 @@ const UpcomingEvent = () => {
 
             <Link
               to={`/event/${featured.id}`}
-              className="inline-block bg-gold text-primary-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs hover:opacity-90 transition-opacity"
+              className="inline-block bg-blush hover:bg-blush/90 text-blush-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs transition-colors"
             >
               Reserve Your Place
             </Link>
