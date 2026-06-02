@@ -25,11 +25,11 @@ const Hero = () => {
 
 
   return (
-    <section className="relative w-full py-20 md:py-28 px-6 md:px-10">
+    <section className="relative w-full pt-12 pb-8 md:py-28 px-6 md:px-10">
 
       <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
-        <header className="flex flex-col items-center text-center mb-20">
+        <header className="flex flex-col items-center text-center mb-0 md:mb-20">
           <img
             src={logo.url}
             alt="Breathe & Bloom"
@@ -39,7 +39,7 @@ const Hero = () => {
           {nextEvent && (
             <Link
               to={`/event/${nextEvent.id}`}
-              className="group mt-10 inline-flex items-center gap-2.5 md:gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-5 py-2.5 md:px-8 md:py-4 rounded-full transition-all shadow-sm hover:shadow-md max-w-[92vw]"
+              className="group mt-4 md:mt-10 inline-flex items-center gap-2.5 md:gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-5 py-2.5 md:px-8 md:py-4 rounded-full transition-all shadow-sm hover:shadow-md max-w-[92vw]"
             >
               <span className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] font-semibold opacity-70 whitespace-nowrap">
                 Next Immersion
@@ -51,7 +51,7 @@ const Hero = () => {
             </Link>
           )}
 
-          <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground mt-10">
+          <blockquote className="font-serif text-2xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.2] italic font-light text-foreground mt-6 md:mt-10">
             "An immersion for the modern seeker — blending elevated self-care,
             breathwork, mindful connections, and purposeful living in nature and
             intimate spaces."
