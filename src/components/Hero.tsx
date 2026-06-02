@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight } from "lucide-react";
-import luxuryTea from "@/assets/luxury-tea-detail.jpg";
-import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 import logo from "@/assets/breathe-bloom-logo.png.asset.json";
 
