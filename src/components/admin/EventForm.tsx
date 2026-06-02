@@ -219,7 +219,11 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
           </div>
         </div>
         <div>
-          <label className="block text-sm text-[#022701] mb-1.5">Location</label>
+          <label className="block text-sm text-[#022701] mb-1.5">Venue Name</label>
+          <input value={form.venue_name} onChange={(e) => setForm({ ...form, venue_name: e.target.value })} placeholder="e.g. SILA Miami" className={inputClass} />
+        </div>
+        <div>
+          <label className="block text-sm text-[#022701] mb-1.5">Venue Address</label>
           <LocationAutocomplete value={form.location} onChange={(val) => setForm({ ...form, location: val })} className={inputClass} />
         </div>
         <div>
