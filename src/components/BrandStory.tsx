@@ -57,18 +57,26 @@ const BrandStory = () => {
         </div>
 
         {/* 02 — The Audience */}
-        <div className="relative grid md:grid-cols-2 gap-12 items-start">
-          <div>
-            <span className="text-gold font-sans text-xs uppercase tracking-widest mb-6 block font-medium">
-              02. The Audience
-            </span>
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground leading-tight mb-6">
-              Connecting with the <br />discerning few.
-            </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mb-8">
-              An exclusive gathering of 80–100 influential individuals united by a passion for wellness, creativity, and purpose.
-            </p>
-            <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl">
+        <div className="relative">
+          <span className="text-gold font-sans text-xs uppercase tracking-widest mb-6 block font-medium">
+            02. The Audience
+          </span>
+          <h2 className="font-serif text-5xl md:text-7xl text-foreground leading-[1.1] mb-6">
+            Connecting with the <span className="italic">discerning</span> few.
+          </h2>
+          <p className="text-muted-foreground text-sm leading-relaxed max-w-md mb-10">
+            An exclusive gathering of 80–100 influential individuals united by a passion for wellness, creativity, and purpose.
+          </p>
+          <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+            <div className="space-y-6 md:order-1 order-2">
+              {audiences.map((a) => (
+                <div key={a.title}>
+                  <h4 className="font-serif text-xl text-foreground mb-1">{a.title}</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{a.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl md:order-2 order-1">
               <img
                 src={audiencePhoto.url}
                 alt="Guests exploring botanical oils at a Breathe & Bloom gathering"
@@ -76,14 +84,6 @@ const BrandStory = () => {
                 loading="lazy"
               />
             </div>
-          </div>
-          <div className="border-l border-foreground/10 pl-10 space-y-8">
-            {audiences.map((a) => (
-              <div key={a.title}>
-                <h4 className="font-serif text-xl text-foreground mb-1">{a.title}</h4>
-                <p className="text-muted-foreground text-sm leading-relaxed">{a.desc}</p>
-              </div>
-            ))}
           </div>
         </div>
 
