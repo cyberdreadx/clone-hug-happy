@@ -67,7 +67,6 @@ const UpcomingEvent = () => {
     <section className="relative py-24 md:py-32 px-6 md:px-10">
       <div className="relative max-w-6xl mx-auto">
 
-      <div className="relative max-w-6xl mx-auto">
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-16">
           <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
