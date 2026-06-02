@@ -56,14 +56,14 @@ const RSVPPage = () => {
       }).select("id").single();
       if (error) throw error;
       setGuestId(data.id);
-      setSubmitted(true);
-      toast.success("RSVP submitted successfully!");
+      toast.success("Reservation saved — redirecting to secure payment...");
+      window.location.href = "https://buy.stripe.com/test_3cI3cv2xVaAa0LHgQM1VK00";
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
+
 
   if (submitted) {
     const qrValue = guestId ? `bb-checkin:${guestId}` : "";
@@ -145,16 +145,14 @@ const RSVPPage = () => {
             Reserve Your Spot
           </h1>
           <p className="text-white/70 text-sm max-w-lg mx-auto">
-            Fill in your details, then scan the code to complete your $150 payment
-            and lock in your spot.
+            Fill in your details and complete your $150 payment to lock in your spot.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          {/* Form */}
+        <div className="max-w-xl mx-auto">
           <form
             onSubmit={handleSubmit}
-            className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6 h-full"
+            className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -222,58 +220,27 @@ const RSVPPage = () => {
               />
             </div>
 
+            <div className="pt-2 border-t border-white/15 flex items-baseline justify-between">
+              <span className="text-[11px] tracking-[0.25em] uppercase text-white/75">Total</span>
+              <span className="font-serif text-2xl text-white">
+                $150 <span className="text-white/70 text-base">· per guest</span>
+              </span>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
               className="w-full bg-gradient-to-r from-[#d4b483] via-[#d89b8a] to-[#c47e7e] text-white py-4 rounded-full text-sm tracking-[0.2em] uppercase font-medium hover:opacity-95 transition-opacity disabled:opacity-50 shadow-lg"
             >
-              {loading ? "Submitting..." : "Submit My Reservation"}
+              {loading ? "Submitting..." : "Reserve & Pay $150"}
             </button>
 
             <p className="text-white/75 text-xs text-center leading-relaxed">
-              After submitting, complete your payment using the code to the right.
-              A waiver will be provided upon arrival.
+              You'll be redirected to Stripe's secure checkout. A waiver will be provided upon arrival.
             </p>
           </form>
-
-          {/* Stripe Checkout panel */}
-          <div className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col items-center justify-center">
-            <p className="text-[11px] tracking-[0.4em] uppercase text-white font-medium mb-3">
-              Step 2 · Payment
-            </p>
-            <h2 className="font-serif text-2xl text-white mb-3">
-              Secure Checkout
-            </h2>
-            <p className="text-white/80 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
-              Complete your reservation with a secure card payment via Stripe.
-            </p>
-
-            <p className="font-serif text-4xl text-white mb-1">
-              $150 <span className="text-white/70 text-xl">· per guest</span>
-            </p>
-            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mb-7">
-              Secure payment
-            </p>
-
-            <a
-              href="https://buy.stripe.com/test_3cI3cv2xVaAa0LHgQM1VK00"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full max-w-xs inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4b483] via-[#d89b8a] to-[#c47e7e] text-white py-4 rounded-full text-sm tracking-[0.2em] uppercase font-medium hover:opacity-95 transition-opacity shadow-lg"
-            >
-              Pay $150 Now
-            </a>
-            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mt-4">
-              Powered by Stripe
-            </p>
-
-            <div className="mt-7 pt-6 border-t border-white/15 w-full">
-              <p className="text-white/75 text-xs leading-relaxed">
-                Your spot is confirmed once payment is received. Seats are extremely limited.
-              </p>
-            </div>
-          </div>
         </div>
+
       </div>
     </div>
   );
