@@ -1159,7 +1159,7 @@ const EventDetail = () => {
           <div className="flex justify-center -my-16 sm:-my-20 overflow-hidden">
             <img
               src={breatheBloomLogoAsset.url}
-              alt="Breathe & Bloom"
+              alt="Breathe&Bloom"
               className="h-56 sm:h-72 w-auto opacity-90"
             />
           </div>
