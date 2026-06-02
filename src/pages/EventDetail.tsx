@@ -326,10 +326,12 @@ const EventDetail = () => {
                   <span className="text-xs tracking-wide" style={{ color: C.ink }}>{formatTime12((event as any).time)}</span>
                 </div>
               )}
-              {event.location && (
+              {(event.location || (event as any).venue_name) && (
                 <div className="flex items-center gap-2 px-5 py-2.5 rounded-full backdrop-blur-sm" style={{ backgroundColor: `${C.card}b3`, border: `1px solid ${C.hairline}` }}>
                   <MapPin className="w-3.5 h-3.5" style={{ color: C.rose }} />
-                  <span className="text-xs tracking-wide" style={{ color: C.ink }}>{event.location}</span>
+                  <span className="text-xs tracking-wide" style={{ color: C.ink }}>
+                    {[(event as any).venue_name, event.location].filter(Boolean).join(" · ")}
+                  </span>
                 </div>
               )}
             </div>
