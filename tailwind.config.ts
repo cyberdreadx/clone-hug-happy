@@ -55,6 +55,10 @@ export default {
         "section-light": "hsl(var(--section-light))",
         "section-sage": "hsl(var(--section-sage))",
         gold: "hsl(var(--gold))",
+        blush: {
+          DEFAULT: "hsl(var(--blush))",
+          foreground: "hsl(var(--blush-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
