@@ -88,7 +88,7 @@ const EventDetail = () => {
 
     targets.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [event, segments.length, sponsors.length, ticketTiers.length]);
+  }, []);
 
 
   const { data: event, isLoading } = useQuery({
