@@ -10,8 +10,9 @@ const Navbar = () => {
   const publicLinks = [
     { label: "Home", to: "/" },
     { label: "Experience", to: "/#experience" },
-    { label: "RSVP", to: "/rsvp" },
+    { label: "Contact", to: "/#connect" },
   ];
+
 
   const dashboardLink = isAdmin
     ? { label: "Dashboard", to: "/admin" }
@@ -42,7 +43,8 @@ const Navbar = () => {
               to="/login"
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
-              Partner Login
+              Log In
+
             </Link>
           )}
 
@@ -91,7 +93,7 @@ const Navbar = () => {
 
           {!loading && !user && (
             <Link to="/login" onClick={() => setOpen(false)} className="block text-muted-foreground text-sm hover:text-foreground transition-colors">
-              Partner Login
+              Log In
             </Link>
           )}
 
