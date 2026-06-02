@@ -43,7 +43,8 @@ const Navbar = () => {
               to="/login"
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
-              Partner Login
+              Log In
+
             </Link>
           )}
 
