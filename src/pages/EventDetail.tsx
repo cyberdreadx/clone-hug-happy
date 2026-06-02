@@ -627,6 +627,8 @@ const EventDetail = () => {
                         {[
                           "4.5-hour guided wellness session",
                           "Functional welcome drinks",
+                          "Vinyasa Yoga",
+                          "Somatic Breathwork",
                           "Red light therapy (private + group)",
                           "Guided Contrast Therapy with Sauna & Cold Plunge",
                           "Cacao Body Scrub",
