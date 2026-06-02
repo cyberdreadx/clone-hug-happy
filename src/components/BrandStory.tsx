@@ -67,7 +67,7 @@ const BrandStory = () => {
           <p className="text-muted-foreground text-sm leading-relaxed max-w-md mb-10">
             An exclusive gathering of 80–100 influential individuals united by a passion for wellness, creativity, and purpose.
           </p>
-          <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
             <div className="space-y-6 md:order-1 order-2">
               {audiences.map((a) => (
                 <div key={a.title}>
