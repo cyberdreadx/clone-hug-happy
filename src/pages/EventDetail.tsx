@@ -389,16 +389,16 @@ const EventDetail = () => {
               <em className="italic" style={{ color: C.rose }}>tulum style + biohacking</em> energy.
             </h2>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              A guided morning of somatic practices, movement, and recovery. In a private studio at SILA Miami, you'll move through breathwork, yoga, and contrast therapy.
+              A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa at SILA Miami, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work practice, soul gazing with yourself, contrast therapy, and sound bath experience.
             </p>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              Tried and true methods for regulating the nervous system, lowering stress, and improving how you feel in your body.
+              ​
             </p>
-            <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              The session is structured to build resilience and help you manage stress under pressure. Each activity is designed to calm the nervous system, sharpen focus, and leave you feeling steadier and more grounded.
+            <p className="text-base leading-relaxed mb-4 whitespace-pre-line" style={{ color: C.inkSoft }}>
+              The session is structured to create a space of gentleness to release limiting beliefs within the mind and body, building resilience and help you manage stress under pressure. {"\n\n"}Each activity is designed to challenge and calm nervous system, sharpen focus, and leave you feeling steadier and more grounded.
             </p>
             <p className="text-base leading-relaxed mb-10" style={{ color: C.inkSoft }}>
-              Your reservation includes access to the red light therapy room, sauna, and cold plunge — recovery tools that support circulation, muscle recovery, and stress reduction.
+              Your reservation includes access to the red light therapy room, sauna, and cold plunge,  — recovery tools that support circulation, muscle recovery, and stress reduction.
             </p>
 
             {/* stat row */}
