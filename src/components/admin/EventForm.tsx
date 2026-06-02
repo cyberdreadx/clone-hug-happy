@@ -104,6 +104,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         date: form.date || null,
         time: form.time || null,
         end_time: form.end_time || null,
+        venue_name: form.venue_name || null,
         location: form.location || null,
         description: form.description || null,
         status: form.status,
