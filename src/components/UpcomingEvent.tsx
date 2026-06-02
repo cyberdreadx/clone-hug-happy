@@ -98,10 +98,6 @@ const UpcomingEvent = () => {
           </Link>
 
           <div className="lg:col-span-5">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-gold mb-5">
-              {shortDate(featured.date)}
-              {featured.location ? ` · ${featured.location.split(",")[0]}` : ""}
-            </p>
             <h3 className="font-serif text-4xl md:text-5xl text-foreground leading-[1.1] mb-6">
               {featured.name}
             </h3>
