@@ -47,6 +47,7 @@ const Navbar = () => {
             <Link
               key={l.label}
               to={l.to}
+              onClick={l.onClick}
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
               {l.label}
