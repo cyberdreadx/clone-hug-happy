@@ -64,11 +64,9 @@ const UpcomingEvent = () => {
   };
 
   return (
-    <section
-      className="relative py-24 md:py-32 px-6 md:px-10 bg-card bg-cover bg-center"
-      style={{ backgroundImage: `url(${sectionBg.url})` }}
-    >
-      <div className="absolute inset-0 bg-card/80 backdrop-blur-sm" />
+    <section className="relative py-24 md:py-32 px-6 md:px-10">
+      <div className="relative max-w-6xl mx-auto">
+
       <div className="relative max-w-6xl mx-auto">
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-16">
