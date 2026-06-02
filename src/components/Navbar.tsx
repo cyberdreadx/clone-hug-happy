@@ -93,7 +93,7 @@ const Navbar = () => {
 
           {!loading && !user && (
             <Link to="/login" onClick={() => setOpen(false)} className="block text-muted-foreground text-sm hover:text-foreground transition-colors">
-              Partner Login
+              Log In
             </Link>
           )}
 
