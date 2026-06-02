@@ -384,7 +384,7 @@ const EventDetail = () => {
           <div>
             <div className="flex items-center gap-2 mb-5">
               <div className="h-px w-8" style={{ backgroundColor: C.rose }} />
-              <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: C.taupe }}>The Vision</p>
+              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold" style={{ color: C.taupe }}>The Vision</p>
             </div>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-6" style={{ color: C.ink }}>
               An elevated wellness escape with{" "}
@@ -939,7 +939,7 @@ const EventDetail = () => {
                         </span>
                         <span className="h-px flex-1 max-w-[40px]" style={{ backgroundColor: C.rose, opacity: 0.4 }} />
                         <span
-                          className="text-[10px] tracking-[0.4em] uppercase"
+                          className="text-[10px] tracking-[0.4em] uppercase font-semibold"
                           style={{ color: C.taupe }}
                         >
                           {activeTime}
