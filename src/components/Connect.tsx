@@ -3,6 +3,7 @@ import { Mail, Send, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import logoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -41,6 +42,11 @@ const Connect = () => {
         <div className="relative max-w-2xl mx-auto">
 
           <div className="text-center mb-8">
+            <img
+              src={logoAsset.url}
+              alt="Breathe & Bloom"
+              className="w-40 md:w-52 mx-auto mb-5 opacity-80 mix-blend-screen select-none pointer-events-none"
+            />
             <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Let's Connect</h2>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto">
               Ready to be part of something extraordinary? Share a few details and our team will reach out.
