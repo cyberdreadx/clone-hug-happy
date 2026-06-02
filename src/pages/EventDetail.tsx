@@ -1003,7 +1003,7 @@ const EventDetail = () => {
                   >
                     {h.label}
                   </p>
-                  <p className="font-serif text-base leading-snug" style={{ color: C.ink }}>
+                  <p className="font-serif text-sm sm:text-base leading-snug break-words" style={{ color: C.ink }}>
                     {h.value}
                   </p>
                 </div>
