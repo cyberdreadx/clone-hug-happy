@@ -50,7 +50,9 @@ const Events = () => {
           backgroundPosition: "center",
         }}
       />
-      <div className="fixed inset-0 bg-black/55 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-b from-black/85 via-black/80 to-black/90 pointer-events-none" />
+      <div className="fixed inset-0 backdrop-blur-sm pointer-events-none" />
+
       <div className="relative z-10">
         <Navbar />
 
