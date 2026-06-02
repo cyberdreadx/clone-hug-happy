@@ -9,6 +9,7 @@ import GuestRow from "@/components/checkin/GuestRow";
 import QrScanner from "@/components/checkin/QrScanner";
 import ActivityFeed, { type ActivityEntry } from "@/components/checkin/ActivityFeed";
 import WalkInModal from "@/components/checkin/WalkInModal";
+import { useRequireAuth } from "@/hooks/useAuth";
 
 // 9. Sound feedback helper
 const playCheckInSound = () => {
@@ -30,6 +31,7 @@ const playCheckInSound = () => {
 type FilterTab = "all" | "checked_in" | "not_arrived" | "vip";
 
 const CheckIn = () => {
+  useRequireAuth("admin");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
