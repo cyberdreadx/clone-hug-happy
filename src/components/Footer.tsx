@@ -1,31 +1,25 @@
+import logoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
+
 const Footer = () => {
   return (
     <footer className="py-10 md:py-20 px-6 text-center">
-      {/* Large logo */}
-      <div className="relative mb-10 md:mb-16">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-32 h-32 rounded-full bg-card/30 blur-3xl" />
-        </div>
-        <h2 className="relative font-serif text-5xl md:text-7xl text-foreground/20 leading-tight">
-          BREATHE<br />&amp; BLOOM
-        </h2>
+      {/* Large transparent logo */}
+      <div className="relative mb-10 md:mb-16 flex items-center justify-center">
+        <div className="absolute w-64 h-64 rounded-full bg-card/30 blur-3xl" />
+        <img
+          src={logoAsset.url}
+          alt="Breathe & Bloom"
+          className="relative w-64 md:w-96 h-auto opacity-30 mix-blend-screen select-none pointer-events-none"
+        />
       </div>
 
       {/* Footer links */}
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-left text-sm mb-12">
-        <div>
-          <h4 className="font-serif text-foreground mb-3">Breathe &amp; Bloom</h4>
-          <p className="text-muted-foreground text-xs leading-relaxed">
-            A transformative wellness retreat experience in Palm Springs, California. Elevate your well-being and forge meaningful connections.
-          </p>
-        </div>
+      <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 text-left text-sm mb-12">
         <div>
           <h4 className="font-serif text-foreground mb-3">Quick Links</h4>
           <ul className="space-y-2 text-xs text-muted-foreground">
-            <li><a href="#experience" className="hover:text-foreground transition-colors">The Experience</a></li>
-            <li><a href="#" className="hover:text-foreground transition-colors">Partnership</a></li>
-            <li><a href="#" className="hover:text-foreground transition-colors">Apply to Attend</a></li>
-            <li><a href="#" className="hover:text-foreground transition-colors">Contact Us</a></li>
+            <li><a href="#upcoming" className="hover:text-foreground transition-colors">Next Immersion</a></li>
+            <li><a href="#connect" className="hover:text-foreground transition-colors">Contact Us</a></li>
           </ul>
         </div>
         <div>
