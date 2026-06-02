@@ -145,6 +145,41 @@ const EventDetail = () => {
   const waiverType = waiverSettings?.waiver_type;
   const waiverContent = typeof waiverSettings?.waiver_content === "string" ? waiverSettings.waiver_content : "";
 
+  // Luxurious scroll reveal: stagger direct children of each section (skip the hero)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!event) return;
+
+    const raf = requestAnimationFrame(() => {
+      const sections = Array.from(document.querySelectorAll<HTMLElement>("section"));
+      const targets = sections.slice(1);
+      targets.forEach((el) => el.classList.add("lux-reveal"));
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+      );
+
+      targets.forEach((el) => io.observe(el));
+      (window as any).__luxIO = io;
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      const io = (window as any).__luxIO as IntersectionObserver | undefined;
+      io?.disconnect();
+    };
+  }, [event, segments.length, sponsors.length, ticketTiers.length]);
+
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: C.cream }}>
