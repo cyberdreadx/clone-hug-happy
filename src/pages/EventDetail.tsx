@@ -290,7 +290,7 @@ const EventDetail = () => {
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-6">
               <Bloom className="w-4 h-4" />
-              <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: C.taupe }}>
+              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold" style={{ color: C.taupe }}>
                 A Curated Wellness Experience
               </p>
             </div>
