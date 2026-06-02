@@ -1,9 +1,30 @@
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight } from "lucide-react";
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 import logo from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const Hero = () => {
+  const { data: nextEvent } = useQuery({
+    queryKey: ["hero-next-event"],
+    queryFn: async () => {
+      const today = new Date().toISOString().split("T")[0];
+      const { data, error } = await supabase
+        .from("events")
+        .select("id, name")
+        .eq("status", "active")
+        .gte("date", today)
+        .order("date", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
 
   return (
     <section
