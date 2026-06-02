@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, ExternalLink, Crown,
@@ -145,39 +145,40 @@ const EventDetail = () => {
   const waiverType = waiverSettings?.waiver_type;
   const waiverContent = typeof waiverSettings?.waiver_content === "string" ? waiverSettings.waiver_content : "";
 
+  // Pre-paint: mark sections (except hero) as hidden so the fade starts from opacity 0
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section")).slice(1);
+    sections.forEach((el) => {
+      if (!el.classList.contains("is-visible")) el.classList.add("lux-reveal");
+    });
+  }, [event, segments.length, sponsors.length, ticketTiers.length]);
+
   // Luxurious scroll reveal: stagger direct children of each section (skip the hero)
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!event) return;
 
-    const raf = requestAnimationFrame(() => {
-      const sections = Array.from(document.querySelectorAll<HTMLElement>("section"));
-      const targets = sections.slice(1);
-      targets.forEach((el) => el.classList.add("lux-reveal"));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section")).slice(1);
 
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
-      );
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
 
-      targets.forEach((el) => io.observe(el));
-      (window as any).__luxIO = io;
-    });
-
-    return () => {
-      cancelAnimationFrame(raf);
-      const io = (window as any).__luxIO as IntersectionObserver | undefined;
-      io?.disconnect();
-    };
+    sections.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, [event, segments.length, sponsors.length, ticketTiers.length]);
+
 
 
   if (isLoading) {
