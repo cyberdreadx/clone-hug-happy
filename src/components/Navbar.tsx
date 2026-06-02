@@ -1,16 +1,31 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, LayoutDashboard, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, isAdmin, isPartner, loading, signOut } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const publicLinks = [
+  const scrollToConnect = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else {
+      document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const publicLinks: { label: string; to: string; onClick?: (e: React.MouseEvent) => void }[] = [
     { label: "Home", to: "/" },
     { label: "Experience", to: "/events" },
-    { label: "Contact", to: "/#connect" },
+    { label: "Contact", to: "/#connect", onClick: scrollToConnect },
   ];
 
 
