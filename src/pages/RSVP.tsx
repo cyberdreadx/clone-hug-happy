@@ -56,14 +56,14 @@ const RSVPPage = () => {
       }).select("id").single();
       if (error) throw error;
       setGuestId(data.id);
-      setSubmitted(true);
-      toast.success("RSVP submitted successfully!");
+      toast.success("Reservation saved — redirecting to secure payment...");
+      window.location.href = "https://buy.stripe.com/test_3cI3cv2xVaAa0LHgQM1VK00";
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
+
 
   if (submitted) {
     const qrValue = guestId ? `bb-checkin:${guestId}` : "";
