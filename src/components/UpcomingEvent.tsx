@@ -65,7 +65,8 @@ const UpcomingEvent = () => {
 
   return (
     <section className="relative py-24 md:py-32 px-6 md:px-10">
-      <div className="relative max-w-6xl mx-auto">
+      <div className="relative max-w-6xl mx-auto rounded-3xl border border-white/15 bg-white/5 backdrop-blur-2xl shadow-[0_20px_80px_-20px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.25)] px-6 md:px-14 py-16 md:py-20 overflow-hidden before:pointer-events-none before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60">
+
 
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-16">
