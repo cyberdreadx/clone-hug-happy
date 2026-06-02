@@ -185,8 +185,10 @@ const UpcomingEvent = () => {
             </ul>
           </div>
         )}
+        </div>
       </div>
     </section>
+
   );
 };
 
