@@ -42,14 +42,10 @@ const Hero = () => {
             className="w-[28rem] md:w-[40rem] lg:w-[52rem] max-w-full h-auto my-0 object-contain"
           />
 
-          <h2 className="uppercase tracking-[0.4em] text-[10px] text-gold font-semibold mb-6 italic">
-            Wellness · Community · Impact
-          </h2>
-
           <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground">
-            "A transformative retreat for the modern seeker — blending elevated
-            self-care, mindful connections, and purposeful living in an intimate
-            desert oasis."
+            "An immersion for the modern seeker — blending elevated self-care,
+            breathwork, mindful connections, and purposeful living in nature and
+            intimate spaces."
           </blockquote>
 
           {nextEvent && (
