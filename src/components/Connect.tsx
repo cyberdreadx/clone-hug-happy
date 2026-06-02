@@ -23,7 +23,8 @@ const Connect = () => {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.from("contact_submissions").insert([parsed.data]);
+    const { name, email, message } = parsed.data;
+    const { error } = await supabase.from("contact_submissions").insert([{ name, email, message }]);
     setLoading(false);
     if (error) {
       toast.error("Something went wrong. Please try again.");
