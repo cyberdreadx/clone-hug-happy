@@ -4,7 +4,7 @@ const experiences = [
   { title: "Welcome Drinks and Introduction", desc: "Begin your journey with a grounding ceremony and intention-setting workshop." },
   { title: "Wellness Experience", desc: "Revitalizing movement and pranayama sessions led by world-class instructors." },
   { title: "Curated Journeys", desc: "Special experiences curated just for your group." },
-  { title: "Sound Bath", desc: "Deep meditative healing through crystal singing bowls and vibration therapy." },
+  { title: "Sound Bath", desc: "Deep meditative healing through live music and frequencies." },
   { title: "Community & Discussion", desc: "Win your guest's hearts with Integration modalities and sharing as it is one of the most powerful ways for people to bond over shared experiences. " },
 ];
 
