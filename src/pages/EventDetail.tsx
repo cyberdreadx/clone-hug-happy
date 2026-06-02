@@ -63,7 +63,7 @@ const EventDetail = () => {
     );
     segmentRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
-  });
+  }, []);
 
 
 
