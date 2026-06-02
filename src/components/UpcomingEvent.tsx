@@ -65,22 +65,22 @@ const UpcomingEvent = () => {
 
   return (
     <section className="relative py-10 md:py-28 px-4 md:px-10">
-      <div className="relative max-w-5xl mx-auto rounded-[2rem] border border-white/20 bg-white/[0.06] backdrop-blur-2xl shadow-[0_30px_120px_-30px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.3)] px-5 md:px-16 py-10 md:py-24 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent after:pointer-events-none after:absolute after:-top-1/3 after:-left-1/4 after:w-[80%] after:h-[60%] after:rounded-full after:bg-gradient-to-br after:from-white/15 after:to-transparent after:blur-3xl">
+      <div className="relative max-w-5xl mx-auto rounded-[2rem] border border-white/20 bg-white/[0.06] backdrop-blur-2xl shadow-[0_30px_120px_-30px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.3)] px-5 md:px-16 py-6 md:py-24 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent after:pointer-events-none after:absolute after:-top-1/3 after:-left-1/4 after:w-[80%] after:h-[60%] after:rounded-full after:bg-gradient-to-br after:from-white/15 after:to-transparent after:blur-3xl">
         <div className="relative">
 
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-8 md:mb-14">
-          <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
+        <div className="flex flex-col items-center text-center mb-5 md:mb-14">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-2 md:mb-4">
             The Calendar
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground italic leading-tight">
+          <h2 className="font-serif text-3xl md:text-5xl text-foreground italic leading-tight">
             Upcoming Experiences
           </h2>
-          <div className="w-10 h-px bg-foreground/30 mt-7" />
+          <div className="w-10 h-px bg-foreground/30 mt-4 md:mt-7" />
         </div>
 
         {/* Featured event — editorial feature */}
-        <article className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center mb-10 md:mb-16">
+        <article className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-14 items-center mb-8 md:mb-16">
           <Link
             to={`/event/${featured.id}`}
             className="lg:col-span-6 group block relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl"
@@ -96,17 +96,17 @@ const UpcomingEvent = () => {
           </Link>
 
           <div className="lg:col-span-6">
-            <h3 className="font-serif text-3xl md:text-4xl text-foreground leading-[1.1] mb-6 italic">
+            <h3 className="font-serif text-2xl md:text-4xl text-foreground leading-[1.1] mb-3 md:mb-6 italic">
               {featured.name}
             </h3>
 
             {featured.description && (
-              <p className="text-base text-foreground/70 font-light leading-relaxed mb-8 max-w-md">
+              <p className="text-sm md:text-base text-foreground/70 font-light leading-relaxed mb-5 md:mb-8 max-w-md">
                 {featured.description}
               </p>
             )}
 
-            <dl className="grid grid-cols-[5rem_1fr] gap-x-6 gap-y-4 mb-10 text-sm">
+            <dl className="grid grid-cols-[4.5rem_1fr] md:grid-cols-[5rem_1fr] gap-x-5 md:gap-x-6 gap-y-2.5 md:gap-y-4 mb-6 md:mb-10 text-sm">
               {featured.date && (
                 <>
                   <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
