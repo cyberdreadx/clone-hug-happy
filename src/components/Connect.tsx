@@ -101,7 +101,7 @@ const Connect = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 bg-gold text-primary-foreground px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 bg-blush hover:bg-blush/90 text-blush-foreground px-6 py-3 rounded-full text-sm font-medium transition-colors disabled:opacity-60"
               >
                 {loading ? (
                   <>
