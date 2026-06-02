@@ -10,8 +10,9 @@ const Navbar = () => {
   const publicLinks = [
     { label: "Home", to: "/" },
     { label: "Experience", to: "/#experience" },
-    { label: "RSVP", to: "/rsvp" },
+    { label: "Contact", to: "/#connect" },
   ];
+
 
   const dashboardLink = isAdmin
     ? { label: "Dashboard", to: "/admin" }
