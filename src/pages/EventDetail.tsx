@@ -474,7 +474,7 @@ const EventDetail = () => {
           <div className="lg:col-span-7">
             <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>What's Included</p>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-4" style={{ color: C.ink }}>
-              Everything you need <em className="italic" style={{ color: C.rose }}>to bloom.</em>
+              Everything you want <em className="italic" style={{ color: C.rose }}>to bloom.</em>
             </h2>
             <div className="h-px w-16 mb-10" style={{ backgroundColor: C.rose, opacity: 0.4 }} />
 
