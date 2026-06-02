@@ -1,9 +1,30 @@
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight } from "lucide-react";
 import luxuryTea from "@/assets/luxury-tea-detail.jpg";
 import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 import logo from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const Hero = () => {
+  const { data: nextEvent } = useQuery({
+    queryKey: ["hero-next-event"],
+    queryFn: async () => {
+      const today = new Date().toISOString().split("T")[0];
+      const { data, error } = await supabase
+        .from("events")
+        .select("id, name")
+        .eq("status", "active")
+        .gte("date", today)
+        .order("date", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
 
   return (
     <section
@@ -30,6 +51,21 @@ const Hero = () => {
             self-care, mindful connections, and purposeful living in an intimate
             desert oasis."
           </blockquote>
+
+          {nextEvent && (
+            <Link
+              to={`/event/${nextEvent.id}`}
+              className="group mt-10 inline-flex items-center gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-8 py-4 rounded-full transition-all shadow-sm hover:shadow-md"
+            >
+              <span className="text-[10px] uppercase tracking-[0.3em] font-semibold opacity-70">
+                Next Immersion
+              </span>
+              <span className="font-serif italic text-lg">
+                {nextEvent.name}
+              </span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          )}
         </header>
 
         {/* Editorial second half — philosophy + image diptych */}
