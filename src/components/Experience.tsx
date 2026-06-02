@@ -1,9 +1,9 @@
 const experiences = [
-  { num: "01", title: "Welcome Ritual", desc: "Begin your journey with a grounding ceremony and intention-setting workshop." },
-  { num: "02", title: "Yoga & Breathwork", desc: "Revitalizing movement and pranayama sessions led by world-class instructors." },
-  { num: "03", title: "Curated Sauna Journeys", desc: "Cold plunge and infrared sauna rituals for deep restoration." },
+  { num: "01", title: "Welcome Drinks and Introduction", desc: "Begin your journey with a grounding ceremony and intention-setting workshop." },
+  { num: "02", title: "Wellness Experience", desc: "Revitalizing movement and pranayama sessions led by world-class instructors." },
+  { num: "03", title: "Curated Journeys", desc: "Special experiences curated just for your group." },
   { num: "04", title: "Sound Bath", desc: "Deep meditative healing through crystal singing bowls and vibration therapy." },
-  { num: "05", title: "Community & Discussion", desc: "Panel discussions on mindful living and building conscious enterprises." },
+  { num: "05", title: "Community & Discussion", desc: "Win your guest's hearts with Integration modalities and sharing as it is one of the most powerful ways for people to bond over shared experiences. " },
 ];
 
 const Experience = () => {
