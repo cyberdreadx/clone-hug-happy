@@ -39,15 +39,15 @@ const Hero = () => {
           {nextEvent && (
             <Link
               to={`/event/${nextEvent.id}`}
-              className="group mt-10 inline-flex items-center gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-8 py-4 rounded-full transition-all shadow-sm hover:shadow-md"
+              className="group mt-10 inline-flex items-center gap-2.5 md:gap-3 bg-blush hover:bg-blush/90 text-blush-foreground px-5 py-2.5 md:px-8 md:py-4 rounded-full transition-all shadow-sm hover:shadow-md max-w-[92vw]"
             >
-              <span className="text-[10px] uppercase tracking-[0.3em] font-semibold opacity-70">
+              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] font-semibold opacity-70 whitespace-nowrap">
                 Next Immersion
               </span>
-              <span className="font-serif italic text-lg">
+              <span className="font-serif italic text-sm md:text-lg truncate">
                 {nextEvent.name}
               </span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 transition-transform group-hover:translate-x-1" />
             </Link>
           )}
 
