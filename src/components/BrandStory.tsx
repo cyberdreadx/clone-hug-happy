@@ -146,7 +146,10 @@ const BrandStory = () => {
                 key={t.title}
                 className="flex justify-between items-baseline py-6 border-b border-foreground/10 hover:bg-accent/20 px-4 -mx-4 transition-colors"
               >
-                <span className="font-serif text-2xl italic text-foreground">{t.title}</span>
+                <span className="flex items-center gap-3 font-serif text-2xl italic text-foreground">
+                  <t.Icon size={20} strokeWidth={1.5} className="text-gold" />
+                  {t.title}
+                </span>
                 <span className="font-sans text-xs uppercase tracking-tighter text-muted-foreground">{t.tag}</span>
               </div>
             ))}
