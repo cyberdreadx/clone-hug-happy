@@ -90,7 +90,7 @@ const UpcomingEvent = () => {
             <img
               src={featured.cover_image && featured.cover_image.trim() ? featured.cover_image : heroFloral.url}
               alt={featured.name}
-              className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02] rounded-2xl"
             />
             <span className="absolute top-6 left-6 bg-card/95 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-foreground">
               Next Gathering
