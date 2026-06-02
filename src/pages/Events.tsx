@@ -67,7 +67,7 @@ const Events = () => {
                 Upcoming Experiences
               </h1>
               <div className="w-10 h-px bg-foreground/30 mt-5 md:mt-8" />
-              <p className="mt-5 text-sm md:text-base text-foreground/60 font-light max-w-lg">
+              <p className="mt-5 text-sm md:text-base text-foreground/85 font-light max-w-lg">
                 Immersive gatherings designed to deepen your connection to self, community, and nature.
               </p>
             </div>
