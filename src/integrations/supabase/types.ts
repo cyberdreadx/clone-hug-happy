@@ -215,6 +215,7 @@ export type Database = {
           ticket_price: number | null
           time: string | null
           updated_at: string
+          venue_name: string | null
         }
         Insert: {
           cover_image?: string | null
@@ -231,6 +232,7 @@ export type Database = {
           ticket_price?: number | null
           time?: string | null
           updated_at?: string
+          venue_name?: string | null
         }
         Update: {
           cover_image?: string | null
@@ -247,6 +249,7 @@ export type Database = {
           ticket_price?: number | null
           time?: string | null
           updated_at?: string
+          venue_name?: string | null
         }
         Relationships: []
       }
