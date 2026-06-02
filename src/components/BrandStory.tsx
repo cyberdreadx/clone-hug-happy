@@ -94,7 +94,15 @@ const BrandStory = () => {
               <span className="text-gold font-sans text-xs uppercase tracking-widest mb-6 block font-medium">
                 03. Synergy
               </span>
-              <h2 className="font-serif text-4xl text-foreground">Why Partner With Us</h2>
+              <h2 className="font-serif text-4xl text-foreground mb-8">Why Partner With Us</h2>
+              <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl">
+                <img
+                  src={synergyPhoto.url}
+                  alt="Guests bathing in golden light during a Breathe & Bloom retreat"
+                  className="w-full aspect-[4/5] object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
             <div className="md:w-2/3 space-y-12">
               <div className="group">
