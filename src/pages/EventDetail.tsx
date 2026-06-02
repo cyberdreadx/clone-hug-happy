@@ -629,7 +629,6 @@ const EventDetail = () => {
                           "Functional welcome drinks",
                           "Vinyasa Yoga",
                           "Somatic Breathwork",
-                          "Red light therapy (private + group)",
                           "Guided Contrast Therapy with Sauna & Cold Plunge",
                           "Cacao Body Scrub",
                           "Live Sound Bath Session",
@@ -637,6 +636,7 @@ const EventDetail = () => {
                           "Post-Retreat SILA Access",
                           "15% off Devia Juice Bar",
                           "Bio-hacking amenities at 20% off",
+                          "Red light therapy (private + group)",
                         ].map((item, i) => (
                           <li key={i} className="flex items-start gap-3 text-[15px] leading-snug" style={{ color: C.inkSoft }}>
                             <span className="mt-2 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: C.rose }} />
