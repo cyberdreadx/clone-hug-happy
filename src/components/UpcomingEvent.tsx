@@ -98,7 +98,7 @@ const UpcomingEvent = () => {
           </Link>
 
           <div className="lg:col-span-5">
-            <h3 className="font-serif text-4xl md:text-5xl text-foreground leading-[1.1] mb-6">
+            <h3 className="font-serif text-4xl md:text-5xl text-lime-950 leading-[1.1] mb-6">
               {featured.name}
             </h3>
             {featured.description && (
