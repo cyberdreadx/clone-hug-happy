@@ -37,8 +37,9 @@ const Connect = () => {
 
   return (
     <section className="py-12 md:py-24 px-6">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-card/80 backdrop-blur rounded-2xl p-8 md:p-14 shadow-lg">
+      <div className="relative max-w-5xl mx-auto rounded-[2rem] border border-white/20 bg-white/[0.06] backdrop-blur-2xl shadow-[0_30px_120px_-30px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.3)] px-5 md:px-16 py-10 md:py-20 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent after:pointer-events-none after:absolute after:-top-1/3 after:-left-1/4 after:w-[80%] after:h-[60%] after:rounded-full after:bg-gradient-to-br after:from-white/15 after:to-transparent after:blur-3xl">
+        <div className="relative max-w-2xl mx-auto">
+
           <div className="text-center mb-8">
             <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Let's Connect</h2>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto">
