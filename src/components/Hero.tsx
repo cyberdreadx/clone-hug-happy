@@ -25,11 +25,11 @@ const Hero = () => {
 
 
   return (
-    <section className="relative w-full py-20 md:py-28 px-6 md:px-10">
+    <section className="relative w-full pt-12 pb-8 md:py-28 px-6 md:px-10">
 
       <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
-        <header className="flex flex-col items-center text-center mb-20">
+        <header className="flex flex-col items-center text-center mb-0 md:mb-20">
           <img
             src={logo.url}
             alt="Breathe & Bloom"
