@@ -21,6 +21,7 @@ const tiers = [
 ];
 
 import experiencePhoto from "@/assets/experience-ritual.jpg.asset.json";
+import audiencePhoto from "@/assets/audience-oils.jpg.asset.json";
 
 const BrandStory = () => {
   return (
