@@ -236,34 +236,38 @@ const RSVPPage = () => {
             </p>
           </form>
 
-          {/* PayPal panel */}
+          {/* Stripe Checkout panel */}
           <div className="bg-[#c47e7e]/25 backdrop-blur-xl border border-white/20 rounded-2xl p-8 sm:p-10 shadow-2xl text-center h-full flex flex-col items-center justify-center">
             <p className="text-[11px] tracking-[0.4em] uppercase text-white font-medium mb-3">
               Step 2 · Payment
             </p>
             <h2 className="font-serif text-2xl text-white mb-3">
-              Scan to Pay
+              Secure Checkout
             </h2>
             <p className="text-white/80 text-sm leading-relaxed mb-7 max-w-xs mx-auto">
-              Use your phone camera or the PayPal app to scan and secure your reservation.
+              Complete your reservation with a secure card payment via Stripe.
             </p>
 
-            <div className="inline-block rounded-xl overflow-hidden shadow-2xl mb-6">
-              <img
-                src={paypalQr.url}
-                alt="PayPal QR code to reserve your seat"
-                className="block w-72 h-72 object-cover"
-              />
-            </div>
-
-            <p className="font-serif text-2xl text-white">
+            <p className="font-serif text-4xl text-white mb-1">
               $150 <span className="text-white/70 text-xl">· per guest</span>
             </p>
-            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mt-1">
-              Powered by PayPal
+            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mb-7">
+              Secure payment
             </p>
 
-            <div className="mt-7 pt-6 border-t border-white/15">
+            <a
+              href="https://buy.stripe.com/test_3cI3cv2xVaAa0LHgQM1VK00"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full max-w-xs inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4b483] via-[#d89b8a] to-[#c47e7e] text-white py-4 rounded-full text-sm tracking-[0.2em] uppercase font-medium hover:opacity-95 transition-opacity shadow-lg"
+            >
+              Pay $150 Now
+            </a>
+            <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase mt-4">
+              Powered by Stripe
+            </p>
+
+            <div className="mt-7 pt-6 border-t border-white/15 w-full">
               <p className="text-white/75 text-xs leading-relaxed">
                 Your spot is confirmed once payment is received. Seats are extremely limited.
               </p>
