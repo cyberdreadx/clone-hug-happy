@@ -5,7 +5,7 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, ExternalLink, Crown,
-  ShieldCheck, CalendarPlus, Plus, Minus,
+  ShieldCheck, CalendarPlus, Plus, Minus, Sun,
 } from "lucide-react";
 import { downloadICS } from "@/lib/calendar";
 import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
@@ -481,7 +481,7 @@ const EventDetail = () => {
             <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
               {[
                 { icon: Sparkles, title: "Reset Kit", body: "Sponsored gift bag with probiotic drinks, electrolyte packs, skin care, and more." },
-                { icon: Sparkles, title: "Red Light Therapy", body: "Private and group red light therapy sessions throughout the experience." },
+                { icon: Sun, title: "Red Light Therapy", body: "Private and group red light therapy sessions throughout the experience." },
                 { icon: Heart, title: "Sauna & Cold Plunge", body: "Full access to SILA Miami's contrast therapy suite to support recovery and circulation." },
                 { icon: Music, title: "Guided Practices", body: "Breathwork, journaling, yoga, a cacao body scrub, and a sound bath experience." },
                 { icon: Coffee, title: "Welcome Drinks", body: "Functional welcome drinks to hydrate and start the morning." },
