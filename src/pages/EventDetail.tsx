@@ -364,7 +364,7 @@ const EventDetail = () => {
 
             {/* tiny meta row */}
             <div className="mt-10 flex items-center gap-4 text-[10px] tracking-[0.3em] uppercase" style={{ color: C.taupe }}>
-              <span>Intimate · {event.max_guests || 25} Seats</span>
+              <span>Intimate Setting</span>
               <span style={{ color: C.hairline }}>·</span>
               <span>All Levels Welcome</span>
               {spotsLeft > 0 && spotsLeft <= 20 && (
