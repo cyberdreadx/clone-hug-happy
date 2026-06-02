@@ -391,9 +391,6 @@ const EventDetail = () => {
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
               A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa at SILA Miami, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work, soul gazing with yourself, contrast therapy, and sound bath experience.
             </p>
-            <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              ​
-            </p>
             <p className="text-base leading-relaxed mb-4 whitespace-pre-line" style={{ color: C.inkSoft }}>
               The session is structured to create a space of gentleness to release limiting beliefs within the mind and body, building resilience and help you manage stress under pressure. {"\n\n"}Each activity is designed to challenge and calm nervous system, sharpen focus, and leave you feeling steadier and more grounded.
             </p>
