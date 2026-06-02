@@ -286,7 +286,7 @@ const EventDetail = () => {
         <div className="h-20" />
 
         {/* Hero content */}
-        <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-20 pb-20">
+        <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 lg:px-20 pb-20 pt-12">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-6">
               <Bloom className="w-4 h-4" />
