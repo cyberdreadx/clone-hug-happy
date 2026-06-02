@@ -64,41 +64,42 @@ const UpcomingEvent = () => {
   };
 
   return (
-    <section className="relative py-24 md:py-32 px-6 md:px-10">
-      <div className="relative max-w-6xl mx-auto rounded-3xl border border-white/15 bg-white/5 backdrop-blur-2xl shadow-[0_20px_80px_-20px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.25)] px-6 md:px-14 py-16 md:py-20 overflow-hidden before:pointer-events-none before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60">
-
+    <section className="relative py-20 md:py-28 px-6 md:px-10">
+      <div className="relative max-w-5xl mx-auto rounded-[2rem] border border-white/20 bg-white/[0.06] backdrop-blur-2xl shadow-[0_30px_120px_-30px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.3)] px-8 md:px-16 py-16 md:py-24 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent after:pointer-events-none after:absolute after:-top-1/3 after:-left-1/4 after:w-[80%] after:h-[60%] after:rounded-full after:bg-gradient-to-br after:from-white/15 after:to-transparent after:blur-3xl">
+        <div className="relative">
 
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-14">
           <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
             The Calendar
           </span>
-          <h2 className="font-serif text-5xl md:text-6xl text-foreground italic leading-tight">
+          <h2 className="font-serif text-4xl md:text-5xl text-foreground italic leading-tight">
             Upcoming Experiences
           </h2>
-          <div className="w-12 h-px bg-foreground/20 mt-8" />
+          <div className="w-10 h-px bg-foreground/30 mt-7" />
         </div>
 
         {/* Featured event — editorial feature */}
-        <article className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center mb-20">
+        <article className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-16">
           <Link
             to={`/event/${featured.id}`}
-            className="lg:col-span-7 group block relative overflow-hidden"
+            className="lg:col-span-6 group block relative overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl"
           >
             <img
               src={featured.cover_image && featured.cover_image.trim() ? featured.cover_image : heroFloral.url}
               alt={featured.name}
-              className="w-full aspect-[5/4] object-cover transition-transform duration-700 group-hover:scale-[1.02] rounded-2xl"
+              className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
-            <span className="absolute top-6 left-6 bg-card/95 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-foreground">
+            <span className="absolute top-5 left-5 bg-black/40 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-white border border-white/20 rounded-full">
               Next Gathering
             </span>
           </Link>
 
-          <div className="lg:col-span-5">
-            <h3 className="font-serif text-4xl md:text-5xl text-lime-950 leading-[1.1] mb-6">
+          <div className="lg:col-span-6">
+            <h3 className="font-serif text-3xl md:text-4xl text-foreground leading-[1.1] mb-6 italic">
               {featured.name}
             </h3>
+
             {featured.description && (
               <p className="text-base text-foreground/70 font-light leading-relaxed mb-8 max-w-md">
                 {featured.description}
@@ -184,8 +185,10 @@ const UpcomingEvent = () => {
             </ul>
           </div>
         )}
+        </div>
       </div>
     </section>
+
   );
 };
 
