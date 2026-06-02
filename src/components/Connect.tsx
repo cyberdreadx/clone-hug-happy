@@ -41,13 +41,13 @@ const Connect = () => {
       <div className="relative max-w-5xl mx-auto rounded-[2rem] border border-white/20 bg-white/[0.06] backdrop-blur-2xl shadow-[0_30px_120px_-30px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.3)] px-5 md:px-16 py-10 md:py-20 overflow-hidden before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent after:pointer-events-none after:absolute after:-top-1/3 after:-left-1/4 after:w-[80%] after:h-[60%] after:rounded-full after:bg-gradient-to-br after:from-white/15 after:to-transparent after:blur-3xl">
         <div className="relative max-w-2xl mx-auto">
 
-          <div className="text-center mb-8">
+          <div className="relative text-center mb-8">
             <img
               src={logoAsset.url}
               alt="Breathe & Bloom"
-              className="w-40 md:w-52 mx-auto mb-5 opacity-80 mix-blend-screen select-none pointer-events-none"
+              className="w-48 md:w-64 mx-auto opacity-80 mix-blend-screen select-none pointer-events-none"
             />
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Let's Connect</h2>
+            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4 -mt-10 md:-mt-14 relative">Let's Connect</h2>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md mx-auto">
               Ready to be part of something extraordinary? Share a few details and our team will reach out.
             </p>
