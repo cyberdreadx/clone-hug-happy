@@ -5,7 +5,7 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, ExternalLink, Crown,
-  ShieldCheck, CalendarPlus, Plus, Minus,
+  ShieldCheck, CalendarPlus, Plus, Minus, Sun,
 } from "lucide-react";
 import { downloadICS } from "@/lib/calendar";
 import heroFloralAsset from "@/assets/hero-floral-blurred.jpeg.asset.json";
