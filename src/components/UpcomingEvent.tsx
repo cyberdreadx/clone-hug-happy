@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import heroFloral from "@/assets/hero-floral-blurred.jpeg.asset.json";
+import sectionBg from "@/assets/hero-bg.jpeg.asset.json";
 
 const UpcomingEvent = () => {
   const { data: events = [], isLoading } = useQuery({
@@ -63,8 +64,12 @@ const UpcomingEvent = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 px-6 md:px-10 bg-card">
-      <div className="max-w-6xl mx-auto">
+    <section
+      className="relative py-24 md:py-32 px-6 md:px-10 bg-card bg-cover bg-center"
+      style={{ backgroundImage: `url(${sectionBg.url})` }}
+    >
+      <div className="absolute inset-0 bg-card/80 backdrop-blur-sm" />
+      <div className="relative max-w-6xl mx-auto">
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-16">
           <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
