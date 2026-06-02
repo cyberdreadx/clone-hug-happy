@@ -30,20 +30,21 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [form, setForm] = useState({
-    name: "", date: "", time: "", end_time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
+    name: "", date: "", time: "", end_time: "", venue_name: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "",
   });
 
   useEffect(() => {
     if (event) {
       setForm({
         name: event.name || "", date: event.date || "", time: event.time || "", end_time: event.end_time || "",
+        venue_name: (event as any).venue_name || "",
         location: event.location || "", description: event.description || "", status: event.status || "draft",
         max_guests: event.max_guests || 100, ticket_price: event.ticket_price != null ? String(event.ticket_price) : "",
       });
       setImagePreview(event.cover_image || null);
       setHighlights(Array.isArray(event.highlights) ? event.highlights : []);
     } else {
-      setForm({ name: "", date: "", time: "", end_time: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
+      setForm({ name: "", date: "", time: "", end_time: "", venue_name: "", location: "", description: "", status: "draft", max_guests: 100, ticket_price: "" });
       setImagePreview(null);
       setHighlights([]);
     }
