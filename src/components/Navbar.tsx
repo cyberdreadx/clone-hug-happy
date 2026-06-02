@@ -100,7 +100,10 @@ const Navbar = () => {
             <Link
               key={l.label}
               to={l.to}
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                if (l.onClick) l.onClick(e);
+                else setOpen(false);
+              }}
               className="block text-muted-foreground text-sm hover:text-foreground transition-colors"
             >
               {l.label}
