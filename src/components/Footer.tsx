@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <footer className="py-20 px-6 text-center">
+    <footer className="py-10 md:py-20 px-6 text-center">
       {/* Large logo */}
-      <div className="relative mb-16">
+      <div className="relative mb-10 md:mb-16">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-32 h-32 rounded-full bg-card/30 blur-3xl" />
         </div>
