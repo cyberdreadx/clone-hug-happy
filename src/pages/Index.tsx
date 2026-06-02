@@ -9,7 +9,7 @@ import waterfall from "@/assets/waterfall.jpg.asset.json";
 const Index = () => {
   return (
     <div
-      className="min-h-screen relative"
+      className="on-dark-bg min-h-screen relative"
       style={{
         backgroundImage: `url(${waterfall.url})`,
         backgroundSize: "cover",

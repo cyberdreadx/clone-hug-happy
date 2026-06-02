@@ -65,3 +65,26 @@
     font-family: 'Playfair Display', serif;
   }
 }
+
+/* Scoped overrides for pages rendered over a dark imagery backdrop (waterfall hero). */
+.on-dark-bg {
+  --foreground: 48 30% 96%;
+  --card: 118 30% 12%;
+  --card-foreground: 48 30% 96%;
+  --muted: 118 25% 18%;
+  --muted-foreground: 48 15% 82%;
+  --accent: 118 25% 22%;
+  --accent-foreground: 48 30% 96%;
+  --border: 48 20% 90% / 0.18;
+  --section-light: transparent;
+  --section-sage: transparent;
+  --hero-bg: transparent;
+  --secondary: 118 25% 20%;
+  --secondary-foreground: 48 30% 96%;
+  color: hsl(48 30% 96%);
+}
+.on-dark-bg .bg-card {
+  background-color: hsl(118 30% 8% / 0.55);
+  backdrop-filter: blur(6px);
+}
+
