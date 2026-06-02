@@ -227,7 +227,7 @@ const EventDetail = () => {
 
   const faqs = [
     { q: "What should I bring?", a: "Just yourself, comfortable clothing, and an open heart. We provide everything else — mats, blankets, eye pillows, refreshments, and all journey materials." },
-    { q: "What is the cancellation policy?", a: "Full refund up to 14 days before the event. Within 14 days, your ticket can be transferred to a future experience. Spaces are intimate and limited." },
+    { q: "What is the cancellation policy?", a: "Tickets are non-refundable but are transferable to another woman if you're unable to attend. Please reach out at least 48 hours before the event to arrange a transfer." },
     { q: "Is this beginner friendly?", a: "Absolutely. Our experiences are held with care for all levels — first-timers and seasoned practitioners alike. Facilitators guide you gently throughout." },
     { q: "Are food and drinks provided?", a: "Yes. Welcome drinks, light bites, and a closing tea are included. Please share any dietary preferences when you RSVP." },
     { q: "Can I come with a friend?", a: "Of course. Many guests come solo and leave with new connections, but you're welcome to invite someone special. Each guest needs their own ticket." },
