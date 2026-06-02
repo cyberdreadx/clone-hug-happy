@@ -1,16 +1,6 @@
-import logoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
-
 const Footer = () => {
   return (
     <footer className="relative -mt-24 md:-mt-40 pt-4 pb-6 px-6 text-center">
-      {/* Logo + links tight cluster */}
-      <div className="relative mb-3 flex items-center justify-center">
-        <img
-          src={logoAsset.url}
-          alt="Breathe & Bloom"
-          className="relative w-40 md:w-56 h-auto opacity-30 mix-blend-screen select-none pointer-events-none"
-        />
-      </div>
 
       <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 text-sm mb-4">
         <div className="text-center">
