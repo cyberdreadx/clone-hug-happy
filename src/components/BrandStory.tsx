@@ -89,7 +89,7 @@ const BrandStory = () => {
 
         {/* 03 — Why Partner */}
         <div className="relative">
-          <div className="flex flex-col md:flex-row gap-12">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/3">
               <span className="text-gold font-sans text-xs uppercase tracking-widest mb-6 block font-medium">
                 03. Synergy
