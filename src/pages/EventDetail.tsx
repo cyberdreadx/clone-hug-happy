@@ -264,8 +264,8 @@ const EventDetail = () => {
           className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4 backdrop-blur-md border-b"
           style={{ backgroundColor: `${C.cream}d9`, borderColor: `${C.ink}10` }}
         >
-          <Link to="/" className="font-serif text-lg tracking-wide" style={{ color: C.ink }}>
-            Breathe & Bloom
+          <Link to="/" className="font-serif text-lg tracking-wide uppercase" style={{ color: C.ink }}>
+            Breathe&Bloom
           </Link>
           <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.18em] uppercase" style={{ color: C.inkSoft }}>
             <a href="#experience" className="hover:opacity-70">Experience</a>
