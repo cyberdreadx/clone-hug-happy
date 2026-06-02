@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight } from "lucide-react";
-import luxuryTea from "@/assets/luxury-tea-detail.jpg";
-import plate from "@/assets/plate.jpg";
 import heroBg from "@/assets/hero-wheat-field.jpeg.asset.json";
 import logo from "@/assets/breathe-bloom-logo.png.asset.json";
 
@@ -64,46 +62,6 @@ const Hero = () => {
           </blockquote>
         </header>
 
-        {/* Editorial second half — philosophy + image diptych */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-t border-foreground/10 pt-16">
-          <div className="lg:col-span-5 lg:col-start-1">
-            <span className="block text-[10px] uppercase tracking-[0.3em] text-gold mb-4 font-bold">
-              Our Philosophy
-            </span>
-            <h4 className="font-serif text-3xl md:text-4xl mb-5 italic text-foreground leading-tight">
-              Mindful Connections
-            </h4>
-            <p className="text-base text-foreground/70 leading-relaxed font-light italic max-w-md">
-              "We curate spaces where vulnerability becomes strength, and
-              silence becomes a conversation."
-            </p>
-          </div>
-
-          <div className="lg:col-span-6 lg:col-start-7 grid grid-cols-2 gap-6">
-            <div className="flex flex-col">
-              <img
-                src={luxuryTea}
-                alt="Purposeful living"
-                className="w-full aspect-[4/5] object-cover mb-4"
-              />
-              <span className="text-[10px] uppercase tracking-widest text-gold">
-                Impact
-              </span>
-              <p className="text-xs mt-1 text-foreground">Purposeful Living</p>
-            </div>
-            <div className="flex flex-col pt-12">
-              <img
-                src={plate}
-                alt="Elevated care"
-                className="w-full aspect-[4/5] object-cover mb-4"
-              />
-              <span className="text-[10px] uppercase tracking-widest text-gold">
-                Experience
-              </span>
-              <p className="text-xs mt-1 text-foreground">Elevated Care</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
