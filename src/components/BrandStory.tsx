@@ -120,7 +120,7 @@ const BrandStory = () => {
             ))}
           </div>
 
-          <div className="mt-20 text-center">
+          <div className="mt-10 md:mt-20 text-center">
             <a
               href="#connect"
               className="inline-block font-serif text-foreground text-xl border-b border-gold pb-1 hover:text-gold transition-colors duration-500"
