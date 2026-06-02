@@ -64,10 +64,10 @@ const SponsorCard = ({ sponsor, onEdit, onDelete }: SponsorCardProps) => {
       </div>
 
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button onClick={() => onEdit(sponsor)} className="p-1.5 rounded-lg hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors">
+        <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEdit(sponsor); }} className="p-1.5 rounded-lg hover:bg-sidebar-accent text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors">
           <Pencil className="w-4 h-4" />
         </button>
-        <button onClick={() => onDelete(sponsor.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-sidebar-foreground/40 hover:text-red-400 transition-colors">
+        <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(sponsor.id); }} className="p-1.5 rounded-lg hover:bg-red-500/10 text-sidebar-foreground/40 hover:text-red-400 transition-colors">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
