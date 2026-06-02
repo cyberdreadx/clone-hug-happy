@@ -69,7 +69,7 @@ const UpcomingEvent = () => {
         <div className="relative">
 
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-14">
+        <div className="flex flex-col items-center text-center mb-8 md:mb-14">
           <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-4">
             The Calendar
           </span>
