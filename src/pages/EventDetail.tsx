@@ -481,7 +481,7 @@ const EventDetail = () => {
                 { icon: Sparkles, title: "Reset Kit", body: "Sponsored gift bag with probiotic drinks, electrolyte packs, skin care, and more." },
                 { icon: Sparkles, title: "Red Light Therapy", body: "Private and group red light therapy sessions throughout the experience." },
                 { icon: Heart, title: "Sauna & Cold Plunge", body: "Full access to SILA Miami's contrast therapy suite to support recovery and circulation." },
-                { icon: Music, title: "Guided Practices", body: "Breathwork, journaling, yoga, a cacao body scrub, and a live sound session." },
+                { icon: Music, title: "Guided Practices", body: "Breathwork, journaling, yoga, a cacao body scrub, and a sound bath experience." },
                 { icon: Coffee, title: "Welcome Drinks", body: "Functional welcome drinks to hydrate and start the morning." },
                 { icon: Crown, title: "SILA Access", body: "SILA Miami remains available to you after the retreat, plus 15% off at Devia Juice Bar." },
               ].map((item, i) => {
