@@ -70,7 +70,7 @@ const UpcomingEvent = () => {
 
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-5 md:mb-14">
-          <span className="text-[10px] tracking-[0.4em] uppercase text-gold font-semibold mb-2 md:mb-4">
+          <span className="text-[10px] tracking-[0.4em] uppercase font-semibold text-gold font-semibold mb-2 md:mb-4">
             The Calendar
           </span>
           <h2 className="font-serif text-3xl md:text-5xl text-foreground italic leading-tight">
@@ -169,7 +169,7 @@ const UpcomingEvent = () => {
         {/* Additional events — quiet hairline list */}
         {rest.length > 0 && (
           <div className="border-t border-foreground/10 pt-10">
-            <p className="text-[10px] tracking-[0.4em] uppercase text-foreground/50 mb-8 text-center">
+            <p className="text-[10px] tracking-[0.4em] uppercase font-semibold text-foreground/50 mb-8 text-center">
               Also On The Calendar
             </p>
             <ul className="divide-y divide-foreground/10">

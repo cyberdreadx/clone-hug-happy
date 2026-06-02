@@ -290,7 +290,7 @@ const EventDetail = () => {
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 mb-6">
               <Bloom className="w-4 h-4" />
-              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold" style={{ color: C.taupe }}>
+              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold font-semibold" style={{ color: C.taupe }}>
                 A Curated Wellness Experience
               </p>
             </div>
@@ -384,7 +384,7 @@ const EventDetail = () => {
           <div>
             <div className="flex items-center gap-2 mb-5">
               <div className="h-px w-8" style={{ backgroundColor: C.rose }} />
-              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold" style={{ color: C.taupe }}>The Vision</p>
+              <p className="text-[10px] tracking-[0.4em] uppercase font-semibold font-semibold" style={{ color: C.taupe }}>The Vision</p>
             </div>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-6" style={{ color: C.ink }}>
               An elevated wellness escape with{" "}
@@ -472,7 +472,7 @@ const EventDetail = () => {
 
           {/* Content */}
           <div className="lg:col-span-7">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>What's Included</p>
+            <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-4" style={{ color: C.taupe }}>What's Included</p>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] mb-4" style={{ color: C.ink }}>
               Everything you want <em className="italic" style={{ color: C.rose }}>to bloom.</em>
             </h2>
@@ -508,7 +508,7 @@ const EventDetail = () => {
       <section id="hosts" className="px-6 sm:px-10 lg:px-20 py-16" style={{ backgroundColor: C.champagne + "40" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Your Hosts</p>
+            <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-4" style={{ color: C.taupe }}>Your Hosts</p>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05] max-w-3xl mx-auto" style={{ color: C.ink }}>
               Hosted by women who blend emotional depth with{" "}
               <em className="italic" style={{ color: C.rose }}>elevated care.</em>
@@ -593,7 +593,7 @@ const EventDetail = () => {
                 return (
                   <>
                     <div className="pb-7 mb-7" style={{ borderBottom: `1px solid ${C.hairline}` }}>
-                      <p className="text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: C.rose }}>
+                      <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-3" style={{ color: C.rose }}>
                         Investment
                       </p>
                       <div className="flex items-baseline justify-between gap-6 mb-3">
@@ -617,7 +617,7 @@ const EventDetail = () => {
                     </div>
 
                     <div className="flex-1">
-                      <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>
+                      <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-4" style={{ color: C.taupe }}>
                         Included With Care
                       </p>
                       <h4 className="font-serif text-xl sm:text-2xl leading-tight mb-4" style={{ color: C.ink }}>
@@ -939,7 +939,7 @@ const EventDetail = () => {
                         </span>
                         <span className="h-px flex-1 max-w-[40px]" style={{ backgroundColor: C.rose, opacity: 0.4 }} />
                         <span
-                          className="text-[10px] tracking-[0.4em] uppercase font-semibold"
+                          className="text-[10px] tracking-[0.4em] uppercase font-semibold font-semibold"
                           style={{ color: C.taupe }}
                         >
                           {activeTime}
@@ -1025,7 +1025,7 @@ const EventDetail = () => {
       <section id="faq" className="px-6 sm:px-10 lg:px-20 py-16" style={{ backgroundColor: C.blush + "30" }}>
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-14">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.taupe }}>Good to Know</p>
+            <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-4" style={{ color: C.taupe }}>Good to Know</p>
             <h2 className="font-serif text-4xl sm:text-5xl leading-[1.05]" style={{ color: C.ink }}>
               Everything you may want to know before <em className="italic" style={{ color: C.rose }}>reserving.</em>
             </h2>
@@ -1086,7 +1086,7 @@ const EventDetail = () => {
       {sponsorsEnabled && sponsors.length > 0 && (
         <section className="px-6 sm:px-10 lg:px-20 py-14">
           <div className="max-w-5xl mx-auto text-center">
-            <p className="text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: C.taupe }}>In Beautiful Partnership With</p>
+            <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-3" style={{ color: C.taupe }}>In Beautiful Partnership With</p>
             <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 mt-8">
               {sponsors.map((s: any) => (
                 <a
@@ -1153,7 +1153,7 @@ const EventDetail = () => {
         />
 
         <div className="relative px-6 sm:px-10 lg:px-20 py-12 sm:py-16 text-center">
-          <p className="text-[10px] tracking-[0.4em] uppercase mb-4" style={{ color: C.card }}>
+          <p className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-4" style={{ color: C.card }}>
             A Final Invitation
           </p>
 
