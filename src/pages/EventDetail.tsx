@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ArrowLeft, Calendar, Clock, MapPin, Users, Sparkles, Play, Music,
   Heart, MessageCircle, Coffee, Mic, Loader2, ExternalLink, Crown,
