@@ -42,12 +42,6 @@ const Hero = () => {
             className="w-[28rem] md:w-[40rem] lg:w-[52rem] max-w-full h-auto my-0 object-contain"
           />
 
-          <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground">
-            "An immersion for the modern seeker — blending elevated self-care,
-            breathwork, mindful connections, and purposeful living in nature and
-            intimate spaces."
-          </blockquote>
-
           {nextEvent && (
             <Link
               to={`/event/${nextEvent.id}`}
@@ -62,6 +56,12 @@ const Hero = () => {
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           )}
+
+          <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground mt-10">
+            "An immersion for the modern seeker — blending elevated self-care,
+            breathwork, mindful connections, and purposeful living in nature and
+            intimate spaces."
+          </blockquote>
         </header>
 
         {/* Editorial second half — philosophy + image diptych */}
