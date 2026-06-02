@@ -106,36 +106,45 @@ const UpcomingEvent = () => {
               </p>
             )}
 
-            <dl className="space-y-3 mb-10 text-sm">
+            <dl className="grid grid-cols-[5rem_1fr] gap-x-6 gap-y-4 mb-10 text-sm">
               {featured.date && (
-                <div className="flex gap-4">
-                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+                <>
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
                     Date
                   </dt>
                   <dd className="text-foreground/80 font-light">
                     {longDate(featured.date, featured.time)}
                   </dd>
-                </div>
+                </>
               )}
-              {featured.location && (
-                <div className="flex gap-4">
-                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+              {((featured as any).venue_name || featured.location) && (
+                <>
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
                     Venue
                   </dt>
-                  <dd className="text-foreground/80 font-light">
-                    {featured.location}
+                  <dd className="text-foreground/80 font-light leading-relaxed">
+                    {(featured as any).venue_name && (
+                      <div className="text-foreground font-normal">
+                        {(featured as any).venue_name}
+                      </div>
+                    )}
+                    {featured.location && (
+                      <div className="text-foreground/60">
+                        {featured.location}
+                      </div>
+                    )}
                   </dd>
-                </div>
+                </>
               )}
               {(featured as any).ticket_price != null && (
-                <div className="flex gap-4">
-                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 w-20 pt-1">
+                <>
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
                     From
                   </dt>
                   <dd className="text-foreground font-medium">
                     ${Number((featured as any).ticket_price).toFixed(0)}
                   </dd>
-                </div>
+                </>
               )}
             </dl>
 
