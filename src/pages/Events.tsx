@@ -50,7 +50,9 @@ const Events = () => {
           backgroundPosition: "center",
         }}
       />
-      <div className="fixed inset-0 bg-black/55 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-b from-black/85 via-black/80 to-black/90 pointer-events-none" />
+      <div className="fixed inset-0 backdrop-blur-sm pointer-events-none" />
+
       <div className="relative z-10">
         <Navbar />
 
@@ -65,7 +67,7 @@ const Events = () => {
                 Upcoming Experiences
               </h1>
               <div className="w-10 h-px bg-foreground/30 mt-5 md:mt-8" />
-              <p className="mt-5 text-sm md:text-base text-foreground/60 font-light max-w-lg">
+              <p className="mt-5 text-sm md:text-base text-foreground/85 font-light max-w-lg">
                 Immersive gatherings designed to deepen your connection to self, community, and nature.
               </p>
             </div>
@@ -81,9 +83,7 @@ const Events = () => {
                 {events.map((event, i) => (
                   <article
                     key={event.id}
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center ${
-                      i !== 0 ? "border-t border-foreground/10 pt-10 md:pt-16" : ""
-                    }`}
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch bg-card/70 backdrop-blur-xl rounded-3xl ring-1 ring-white/10 shadow-2xl p-5 md:p-8"
                   >
                     <Link
                       to={`/event/${event.id}`}
@@ -100,18 +100,18 @@ const Events = () => {
                         alt={event.name}
                         className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
-                      <span className="absolute top-5 left-5 bg-black/40 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-white border border-white/20 rounded-full">
+                      <span className="absolute top-5 left-5 bg-black/60 backdrop-blur px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-white border border-white/20 rounded-full">
                         {shortDate(event.date)}
                       </span>
                     </Link>
 
-                    <div className={`lg:col-span-7 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
+                    <div className={`lg:col-span-7 flex flex-col justify-center ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                       <h3 className="font-serif text-2xl md:text-4xl text-foreground leading-[1.1] mb-4 md:mb-6 italic">
                         {event.name}
                       </h3>
 
                       {event.description && (
-                        <p className="text-sm md:text-base text-foreground/70 font-light leading-relaxed mb-5 md:mb-8 max-w-md">
+                        <p className="text-sm md:text-base text-foreground/85 font-light leading-relaxed mb-5 md:mb-8 max-w-md">
                           {event.description}
                         </p>
                       )}
@@ -119,27 +119,27 @@ const Events = () => {
                       <dl className="grid grid-cols-[4.5rem_1fr] md:grid-cols-[5rem_1fr] gap-x-5 md:gap-x-6 gap-y-2.5 md:gap-y-4 mb-6 md:mb-10 text-sm">
                         {event.date && (
                           <>
-                            <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
+                            <dt className="text-[10px] uppercase tracking-widest text-foreground/60 pt-1">
                               Date
                             </dt>
-                            <dd className="text-foreground/80 font-light">
+                            <dd className="text-foreground font-light">
                               {longDate(event.date, event.time)}
                             </dd>
                           </>
                         )}
                         {((event as any).venue_name || event.location) && (
                           <>
-                            <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
+                            <dt className="text-[10px] uppercase tracking-widest text-foreground/60 pt-1">
                               Venue
                             </dt>
-                            <dd className="text-foreground/80 font-light leading-relaxed">
+                            <dd className="text-foreground font-light leading-relaxed">
                               {(event as any).venue_name && (
                                 <div className="text-foreground font-normal">
                                   {(event as any).venue_name}
                                 </div>
                               )}
                               {event.location && (
-                                <div className="text-foreground/60">
+                                <div className="text-foreground/75">
                                   {event.location}
                                 </div>
                               )}
@@ -148,7 +148,7 @@ const Events = () => {
                         )}
                         {(event as any).ticket_price != null && (
                           <>
-                            <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
+                            <dt className="text-[10px] uppercase tracking-widest text-foreground/60 pt-1">
                               From
                             </dt>
                             <dd className="text-foreground font-medium">
@@ -160,7 +160,7 @@ const Events = () => {
 
                       <Link
                         to={`/event/${event.id}`}
-                        className="inline-block bg-blush hover:bg-blush/90 text-blush-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs transition-colors"
+                        className="inline-block self-start bg-blush hover:bg-blush/90 text-blush-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs transition-colors"
                       >
                         Reserve Your Place
                       </Link>
