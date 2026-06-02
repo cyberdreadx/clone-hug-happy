@@ -2,7 +2,7 @@ import logoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
 
 const Footer = () => {
   return (
-    <footer className="pt-4 pb-6 px-6 text-center">
+    <footer className="relative -mt-24 md:-mt-40 pt-4 pb-6 px-6 text-center">
       {/* Logo + links tight cluster */}
       <div className="relative mb-3 flex items-center justify-center">
         <img
