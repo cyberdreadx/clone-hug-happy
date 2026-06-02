@@ -51,7 +51,7 @@ const Hero = () => {
             </Link>
           )}
 
-          <blockquote className="font-serif text-3xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.15] italic font-light text-foreground mt-10">
+          <blockquote className="font-serif text-2xl md:text-5xl lg:text-6xl max-w-4xl leading-[1.2] italic font-light text-foreground mt-6 md:mt-10">
             "An immersion for the modern seeker — blending elevated self-care,
             breathwork, mindful connections, and purposeful living in nature and
             intimate spaces."
