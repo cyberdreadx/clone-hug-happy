@@ -677,8 +677,15 @@ const EventDetail = () => {
               />
               <div
                 className="absolute inset-0"
-                style={{ background: `linear-gradient(180deg, transparent 40%, ${C.ink}55 100%)` }}
+                style={{ background: `linear-gradient(180deg, ${C.ink}55 0%, transparent 35%, transparent 60%, ${C.ink}55 100%)` }}
               />
+              <div className="absolute top-0 right-0 p-8 sm:p-10 lg:p-12 text-right">
+                <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
+                  dear soul,
+                  <br />
+                  I hear you.
+                </p>
+              </div>
               <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10 lg:p-12">
                 <p className="font-serif italic text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight" style={{ color: C.cream }}>
                   dear body,
