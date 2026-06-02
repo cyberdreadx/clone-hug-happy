@@ -398,7 +398,7 @@ const EventDetail = () => {
               The session is structured to create a space of gentleness to release limiting beliefs within the mind and body, building resilience and help you manage stress under pressure. {"\n\n"}Every practice is chosen to both challenge and soften the nervous system , sharpen focus, and leave you feeling steadier, lighter, and more grounded.
             </p>
             <p className="text-base leading-relaxed mb-10" style={{ color: C.inkSoft }}>
-              Your reservation includes access to the red light therapy room, sauna, and cold plunge,  — recovery tools that support circulation, muscle recovery, and stress reduction.
+              Your reservation includes access to the red light therapy room, sauna, and cold plunge,  — recovery tools that support circulation, muscle recovery, and stress reduction. Alongside, curated sponsored  gifts for you to pamper yourself with at home.
             </p>
 
             {/* stat row */}
