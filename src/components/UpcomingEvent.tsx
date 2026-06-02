@@ -70,7 +70,7 @@ const UpcomingEvent = () => {
 
         {/* Section header */}
         <div className="flex flex-col items-center text-center mb-5 md:mb-14">
-          <span className="text-[10px] tracking-[0.4em] uppercase font-semibold text-gold font-semibold mb-2 md:mb-4">
+          <span className="text-[10px] tracking-[0.4em] uppercase font-semibold text-gold mb-2 md:mb-4">
             The Calendar
           </span>
           <h2 className="font-serif text-3xl md:text-5xl text-foreground italic leading-tight">
