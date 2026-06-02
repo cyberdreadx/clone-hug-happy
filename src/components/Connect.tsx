@@ -2,7 +2,7 @@ import { Mail, Phone } from "lucide-react";
 
 const Connect = () => {
   return (
-    <section className="py-24 px-6 bg-section-light">
+    <section className="py-24 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="bg-card/80 backdrop-blur rounded-2xl p-10 md:p-14 text-center shadow-lg">
           <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Let's Connect</h2>

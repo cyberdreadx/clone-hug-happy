@@ -25,12 +25,8 @@ const Hero = () => {
 
 
   return (
-    <section
-      className="relative w-full py-20 md:py-28 px-6 md:px-10 bg-cover bg-center"
-      style={{ backgroundImage: `url(${heroBg.url})` }}
-    >
-      {/* Cream wash for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-hero/85 via-hero/75 to-hero/95" />
+    <section className="relative w-full py-20 md:py-28 px-6 md:px-10">
+
       <div className="relative max-w-6xl mx-auto">
         {/* Editorial header */}
         <header className="flex flex-col items-center text-center mb-20">
