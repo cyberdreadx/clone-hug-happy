@@ -54,13 +54,24 @@ const Navbar = () => {
             </Link>
           ))}
 
+          <a
+            href="https://tr.ee/SzxICJnhQp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-1.5 rounded-full text-white text-xs tracking-wide uppercase transition-colors"
+            style={{ backgroundColor: "#c87a6f" }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b66a5f")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#c87a6f")}
+          >
+            Reserve
+          </a>
+
           {!loading && !user && (
             <Link
               to="/login"
               className="text-muted-foreground text-xs tracking-wide uppercase hover:text-foreground transition-colors"
             >
               Log In
-
             </Link>
           )}
 
@@ -109,6 +120,17 @@ const Navbar = () => {
               {l.label}
             </Link>
           ))}
+
+          <a
+            href="https://tr.ee/SzxICJnhQp"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="block text-sm font-medium"
+            style={{ color: "#c87a6f" }}
+          >
+            Reserve Your Seat
+          </a>
 
           {!loading && !user && (
             <Link to="/login" onClick={() => setOpen(false)} className="block text-muted-foreground text-sm hover:text-foreground transition-colors">
