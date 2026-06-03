@@ -339,15 +339,17 @@ const EventDetail = () => {
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4">
-              <Link
-                to="/rsvp"
+              <a
+                href="https://tr.ee/SzxICJnhQp"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white text-sm tracking-wide transition-all shadow-lg"
                 style={{ backgroundColor: C.rose, boxShadow: `0 20px 40px -15px ${C.rose}66` }}
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
               >
                 Reserve Your Seat
-              </Link>
+              </a>
               {dateObj && (
                 <button
                   onClick={() => downloadICS({
@@ -1177,15 +1179,17 @@ const EventDetail = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              to="/rsvp"
+            <a
+              href="https://tr.ee/SzxICJnhQp"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-10 py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors shadow-xl"
               style={{ backgroundColor: C.rose, boxShadow: `0 20px 40px -15px ${C.ink}99` }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
             >
               Reserve Your Seat
-            </Link>
+            </a>
             {dateObj && (
               <button
                 onClick={() => downloadICS({
