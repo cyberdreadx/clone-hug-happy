@@ -273,15 +273,17 @@ const EventDetail = () => {
             <a href="#pricing" className="hover:opacity-70">Pricing</a>
             <a href="#faq" className="hover:opacity-70">FAQ</a>
           </div>
-          <Link
-            to="/rsvp"
+          <a
+            href="https://tr.ee/SzxICJnhQp"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-xs tracking-[0.18em] uppercase px-5 py-2.5 rounded-full text-white transition-colors"
             style={{ backgroundColor: C.rose }}
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
           >
             Reserve
-          </Link>
+          </a>
         </nav>
         <div className="h-20" />
 
