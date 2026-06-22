@@ -27,15 +27,17 @@ export const useAuth = () => {
       }
 
       try {
-        const { data: roles } = await supabase
+        const { data: roles, error } = await supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", nextUser.id);
 
+        if (error) console.error("[useAuth] role fetch error:", error);
         if (!mountedRef.current) return;
         setIsAdmin(roles?.some((r) => r.role === "admin") ?? false);
         setIsPartner(roles?.some((r) => r.role === "partner") ?? false);
-      } catch {
+      } catch (e) {
+        console.error("[useAuth] role fetch threw:", e);
         if (!mountedRef.current) return;
         setIsAdmin(false);
         setIsPartner(false);
