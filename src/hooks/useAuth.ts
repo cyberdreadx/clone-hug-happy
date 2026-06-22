@@ -45,7 +45,10 @@ export const useAuth = () => {
     };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      void applySession(session);
+      // Defer Supabase calls to avoid deadlocking the auth client
+      setTimeout(() => {
+        void applySession(session);
+      }, 0);
     });
 
     void supabase.auth.getSession().then(({ data: { session } }) => {
