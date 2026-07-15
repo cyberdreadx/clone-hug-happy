@@ -25,7 +25,7 @@ const SEGMENT_ICONS: Record<string, typeof Play> = {
   closing: MessageCircle, mingle: Coffee, partner: Mic, custom: Clock,
 };
 
-const STRIPE_PAYMENT_URL = "https://buy.stripe.com/4gM00icFZc4zdsk3X01VK00";
+const STRIPE_PAYMENT_URL = "https://buy.stripe.com/14A5kC7lFgkPgEw8dg1VK01";
 
 // Luxury wellness palette
 const C = {
