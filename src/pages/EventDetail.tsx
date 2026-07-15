@@ -25,6 +25,8 @@ const SEGMENT_ICONS: Record<string, typeof Play> = {
   closing: MessageCircle, mingle: Coffee, partner: Mic, custom: Clock,
 };
 
+const STRIPE_PAYMENT_URL = "https://buy.stripe.com/4gM00icFZc4zdsk3X01VK00";
+
 // Luxury wellness palette
 const C = {
   cream: "#faf5ee",
@@ -274,7 +276,7 @@ const EventDetail = () => {
             <a href="#faq" className="hover:opacity-70">FAQ</a>
           </div>
           <a
-            href="https://tr.ee/SzxICJnhQp"
+            href={STRIPE_PAYMENT_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs tracking-[0.18em] uppercase px-5 py-2.5 rounded-full text-white transition-colors"
@@ -342,7 +344,7 @@ const EventDetail = () => {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href="https://tr.ee/SzxICJnhQp"
+                href={STRIPE_PAYMENT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white text-sm tracking-wide transition-all shadow-lg"
@@ -658,15 +660,17 @@ const EventDetail = () => {
                           Sold Out
                         </span>
                       ) : (
-                        <Link
-                          to="/rsvp"
+                        <a
+                          href={STRIPE_PAYMENT_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center justify-center w-full py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors"
                           style={{ backgroundColor: C.rose }}
                           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = C.roseHover)}
                           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = C.rose)}
                         >
                           {price > 0 ? "Claim Your Seat" : "Request Invitation"}
-                        </Link>
+                        </a>
                       )}
                     </div>
                   </>
@@ -1182,7 +1186,7 @@ const EventDetail = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://tr.ee/SzxICJnhQp"
+              href={STRIPE_PAYMENT_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-10 py-4 rounded-full text-white text-sm tracking-[0.15em] uppercase transition-colors shadow-xl"

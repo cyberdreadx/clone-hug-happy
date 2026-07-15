@@ -55,7 +55,7 @@ const Navbar = () => {
           ))}
 
           <a
-            href="https://tr.ee/SzxICJnhQp"
+            href="https://buy.stripe.com/4gM00icFZc4zdsk3X01VK00"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1.5 rounded-full text-white text-xs tracking-wide uppercase transition-colors"
@@ -122,7 +122,7 @@ const Navbar = () => {
           ))}
 
           <a
-            href="https://tr.ee/SzxICJnhQp"
+            href="https://buy.stripe.com/4gM00icFZc4zdsk3X01VK00"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
