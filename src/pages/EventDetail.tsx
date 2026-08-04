@@ -413,7 +413,7 @@ const EventDetail = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 pt-8 gap-y-6" style={{ borderTop: `1px solid ${C.hairline}` }}>
               {[
                 { value: "4.5", suffix: "hrs", label: "Experience" },
-                { value: "10", label: "Guests" },
+                { value: "20", label: "Guests" },
                 { value: "Women", label: "Only" },
                 { value: "$150", label: "Investment" },
 
