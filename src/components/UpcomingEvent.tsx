@@ -136,6 +136,16 @@ const UpcomingEvent = () => {
                   </dd>
                 </>
               )}
+              {(featured as any).max_guests != null && (
+                <>
+                  <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
+                    Guests
+                  </dt>
+                  <dd className="text-foreground font-medium">
+                    {(featured as any).max_guests}
+                  </dd>
+                </>
+              )}
               {(featured as any).ticket_price != null && (
                 <>
                   <dt className="text-[10px] uppercase tracking-widest text-foreground/40 pt-1">
