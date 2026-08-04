@@ -398,7 +398,10 @@ const EventDetail = () => {
               <em className="italic" style={{ color: C.rose }}>tulum style + biohacking</em> energy.
             </h2>
             <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
-              A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa at SILA Miami, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work, soul gazing with yourself, contrast therapy, and sound bath experience.
+              A guided morning of somatic practices, movement, and recovery. In a private outdoor palapa, you'll move through an opening circle with nourishing drinks, yoga, somatic breath work, soul gazing with yourself, contrast therapy, and sound bath experience.
+            </p>
+            <p className="text-base leading-relaxed mb-4" style={{ color: C.inkSoft }}>
+              This is our flagship series of retreat experiences, held for intimate groups of no more than 20. Small by design — so we can take our time with everyone, build real community, and make sure you leave with newfound friends.
             </p>
             <p className="text-base leading-relaxed mb-4 whitespace-pre-line" style={{ color: C.inkSoft }}>
               The session is structured to create a space of gentleness to release limiting beliefs within the mind and body, building resilience and help you manage stress under pressure. {"\n\n"}Every practice is chosen to both challenge and soften the nervous system , sharpen focus, and leave you feeling steadier, lighter, and more grounded.
@@ -489,10 +492,10 @@ const EventDetail = () => {
               {[
                 { icon: Sparkles, title: "Reset Kit", body: "Sponsored gift bag with probiotic drinks, electrolyte packs, skin care, and more." },
                 { icon: Sun, title: "Red Light Therapy", body: "Private and group red light therapy sessions throughout the experience." },
-                { icon: Heart, title: "Sauna & Cold Plunge", body: "Full access to SILA Miami's contrast therapy suite to support recovery and circulation." },
+                { icon: Heart, title: "Sauna & Cold Plunge", body: "Full access to the contrast therapy suite to support recovery and circulation." },
                 { icon: Music, title: "Guided Practices", body: "Breathwork, journaling, yoga, a cacao body scrub, and a sound bath experience." },
                 { icon: Coffee, title: "Welcome Drinks", body: "Functional welcome drinks to hydrate and start the morning." },
-                { icon: Crown, title: "SILA Access", body: "SILA Miami remains available to you after the retreat, plus 15% off at Devia Juice Bar." },
+                { icon: Crown, title: "Intimate by Design", body: "Never more than 20 guests, so everyone is truly seen and leaves with newfound friends." },
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
@@ -640,7 +643,7 @@ const EventDetail = () => {
                           "Cacao Body Scrub",
                           "Live Sound Bath Session",
                           "Sponsored Reset Gift Kit",
-                          "Post-Retreat SILA Access",
+                          "Intimate group of 20 or fewer",
                           "15% off Devia Juice Bar",
                           "Bio-hacking amenities at 20% off",
                           "Red light therapy (private + group)",
