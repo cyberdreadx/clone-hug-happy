@@ -148,12 +148,14 @@ const UpcomingEvent = () => {
               )}
             </dl>
 
-            <Link
-              to={`/event/${featured.id}`}
+            <a
+              href="https://short.sweatpals.com/188606ae"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-blush hover:bg-blush/90 text-blush-foreground px-10 py-4 rounded-full uppercase tracking-[0.25em] text-xs transition-colors"
             >
               Reserve Your Place
-            </Link>
+            </a>
 
             {featuredSponsor && (
               <p className="mt-8 text-[10px] uppercase tracking-[0.3em] text-foreground/40 font-light italic">
