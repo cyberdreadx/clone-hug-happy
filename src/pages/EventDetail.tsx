@@ -17,7 +17,6 @@ import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
 import finalCtaBloomAsset from "@/assets/final-cta-bloom.jpg.asset.json";
 import breatheBloomLogoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
-import partnerSilaAsset from "@/assets/partner-sila.png.asset.json";
 import partner2Asset from "@/assets/partner-2.png.asset.json";
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
