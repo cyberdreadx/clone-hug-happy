@@ -534,7 +534,7 @@ const EventDetail = () => {
               },
               {
                 name: "Carla Masquida",
-                role: "Host & Vinyasa Yoga Teacher",
+                role: "Co-Host & Vinyasa Yoga Teacher",
                 photo: carlaAsset.url,
                 bio: "Carla teaches vinyasa yoga focused on strength, mobility, and breath. Her classes are approachable and grounded, helping women build physical resilience and move with confidence.",
               },
