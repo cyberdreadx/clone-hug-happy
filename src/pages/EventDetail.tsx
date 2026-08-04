@@ -17,7 +17,7 @@ import carlaAsset from "@/assets/host-carla.jpg.asset.json";
 import dearBodyAsset from "@/assets/dear-body.jpg.asset.json";
 import finalCtaBloomAsset from "@/assets/final-cta-bloom.jpg.asset.json";
 import breatheBloomLogoAsset from "@/assets/breathe-bloom-logo.png.asset.json";
-import partner2Asset from "@/assets/partner-2.png.asset.json";
+
 
 const SEGMENT_ICONS: Record<string, typeof Play> = {
   welcome: Sparkles, breathwork: Play, sound: Music, integration: Heart,
@@ -1218,18 +1218,6 @@ const EventDetail = () => {
             <p className="text-[10px] tracking-[0.35em] uppercase" style={{ color: C.card, opacity: 0.9 }}>
               Curated Wellness · Held with Intention
             </p>
-            <p className="text-[10px] tracking-[0.45em] uppercase" style={{ color: C.card, opacity: 0.75 }}>
-              In Partnership With
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
-              <div className="flex items-center justify-center h-36 sm:h-48">
-                <img
-                  src={partner2Asset.url}
-                  alt="Vibranto"
-                  className="max-h-28 sm:max-h-36 w-auto opacity-90 hover:opacity-100 transition-opacity"
-                />
-              </div>
-            </div>
           </div>
 
           <Link
