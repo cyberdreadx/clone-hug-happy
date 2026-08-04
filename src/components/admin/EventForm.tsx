@@ -220,7 +220,7 @@ const EventForm = ({ open, onClose, event }: EventFormProps) => {
         </div>
         <div>
           <label className="block text-sm text-[#022701] mb-1.5">Venue Name</label>
-          <input value={form.venue_name} onChange={(e) => setForm({ ...form, venue_name: e.target.value })} placeholder="e.g. SILA Miami" className={inputClass} />
+          <input value={form.venue_name} onChange={(e) => setForm({ ...form, venue_name: e.target.value })} placeholder="e.g. Private Palapa Studio" className={inputClass} />
         </div>
         <div>
           <label className="block text-sm text-[#022701] mb-1.5">Venue Address</label>
