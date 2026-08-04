@@ -57,7 +57,7 @@ const RSVPPage = () => {
       if (error) throw error;
       setGuestId(data.id);
       toast.success("Reservation saved — redirecting to secure payment...");
-      window.location.href = "https://buy.stripe.com/14A5kC7lFgkPgEw8dg1VK01";
+      window.location.href = "https://short.sweatpals.com/188606ae";
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
       setLoading(false);
