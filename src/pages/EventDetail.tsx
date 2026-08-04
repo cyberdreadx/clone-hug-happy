@@ -271,7 +271,7 @@ const EventDetail = () => {
           <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.18em] uppercase" style={{ color: C.inkSoft }}>
             <a href="#experience" className="hover:opacity-70">Experience</a>
             <a href="#hosts" className="hover:opacity-70">Hosts</a>
-            <a href="#pricing" className="hover:opacity-70">Pricing</a>
+            <a href="#pricing" className="hover:opacity-70">Investment</a>
             <a href="#faq" className="hover:opacity-70">FAQ</a>
           </div>
           <a
@@ -568,7 +568,7 @@ const EventDetail = () => {
         </div>
       </section>
 
-      {/* ============ PRICING + DETAILS ============ */}
+      {/* ============ INVESTMENT + DETAILS ============ */}
       <section id="pricing" className="px-6 sm:px-10 lg:px-20 py-20 lg:py-28">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
